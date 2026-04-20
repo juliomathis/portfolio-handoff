@@ -1,7 +1,20 @@
 import { describe, expect, it } from 'vitest';
+import { brainHeader, brainNodes } from '../../src/content/brain-section';
 import { bodyCards, bodyHeader } from '../../src/content/body-section';
+import { contactHeading, contactLinks } from '../../src/content/contact';
 import { heroColumns, heroTitle } from '../../src/content/hero';
+import {
+  allProjects,
+  projectsIntro,
+  vennLegend,
+} from '../../src/content/projects';
+import {
+  roomPosters,
+  roomsHeader,
+  roomsSummary,
+} from '../../src/content/rooms-section';
 import { navBrand, navLinks, siteMeta } from '../../src/content/site';
+import * as content from '../../src/content';
 
 describe('site content data', () => {
   it('keeps required site metadata fields populated', () => {
@@ -108,5 +121,130 @@ describe('body section content data', () => {
         expect(['sm', 'md', 'lg']).toContain(card.size);
       }
     }
+  });
+});
+
+describe('brain section content data', () => {
+  it('keeps brain header anchored to software track', () => {
+    expect(brainHeader).toMatchObject({
+      section: 'brain',
+      num: '/ 02 - BRAIN',
+      title: expect.any(String),
+      subtitle: expect.any(String),
+    });
+
+    expect(brainHeader.title.toLowerCase()).toContain('brain');
+    expect(brainHeader.subtitle?.toUpperCase()).toContain('SOFTWARE TRACK');
+  });
+
+  it('keeps five node cards with valid widths and domain tags', () => {
+    expect(brainNodes).toHaveLength(5);
+    expect(brainNodes.filter((node) => node.width === 'w6')).toHaveLength(2);
+    expect(brainNodes.filter((node) => node.width === 'w4')).toHaveLength(3);
+
+    const titles = brainNodes.map((node) => node.title);
+    expect(new Set(titles).size).toBe(titles.length);
+
+    for (const node of brainNodes) {
+      expect(node.description.length).toBeGreaterThan(30);
+      expect(node.tags.length).toBeGreaterThan(0);
+      expect(node.tags.every((tag) => ['hw', 'sw', 'eco'].includes(tag))).toBe(true);
+    }
+  });
+});
+
+describe('rooms section content data', () => {
+  it('keeps rooms header and summary focused on ecosystem building', () => {
+    expect(roomsHeader).toMatchObject({
+      section: 'rooms',
+      num: '/ 03 - ROOMS',
+      title: expect.any(String),
+      subtitle: expect.any(String),
+    });
+
+    expect(roomsHeader.title.toLowerCase()).toContain('rooms');
+    expect(roomsHeader.subtitle?.toUpperCase()).toContain('ECOSYSTEM TRACK');
+
+    expect(roomsSummary.title.toLowerCase()).toContain('builders');
+    expect(roomsSummary.body.length).toBeGreaterThan(40);
+    expect(roomsSummary.tags).toEqual(['eco']);
+  });
+
+  it('keeps three poster cards with unique labels', () => {
+    expect(roomPosters).toHaveLength(3);
+    expect(roomPosters[0]?.size).toBe('lg');
+
+    const titles = roomPosters.map((poster) => poster.title);
+    const labels = roomPosters.map((poster) => poster.imageLabel);
+
+    expect(new Set(titles).size).toBe(titles.length);
+    expect(new Set(labels).size).toBe(labels.length);
+
+    for (const poster of roomPosters) {
+      expect(poster.subtitle.length).toBeGreaterThan(6);
+      expect(poster.description.length).toBeGreaterThan(30);
+      expect(poster.imageLabel).toMatch(/^[a-z0-9_\-\.]+$/i);
+    }
+  });
+});
+
+describe('projects content data', () => {
+  it('keeps projects intro and venn legend aligned with three-domain framing', () => {
+    expect(projectsIntro.length).toBeGreaterThan(100);
+    expect(projectsIntro.toLowerCase()).toContain('territories');
+
+    expect(vennLegend).toEqual({
+      hw: expect.stringContaining('hardware'),
+      sw: expect.stringContaining('intelligence'),
+      eco: expect.stringContaining('space'),
+    });
+  });
+
+  it('keeps twelve projects with valid years and domain booleans', () => {
+    expect(allProjects).toHaveLength(12);
+
+    const titles = allProjects.map((project) => project.title);
+    expect(new Set(titles).size).toBe(titles.length);
+
+    const trinityProjects = allProjects.filter((project) => project.hw && project.sw && project.eco);
+    expect(trinityProjects).toHaveLength(1);
+
+    for (const project of allProjects) {
+      expect(project.year).toMatch(/^[0-9]{4}(-|—)?$/);
+      expect(typeof project.hw).toBe('boolean');
+      expect(typeof project.sw).toBe('boolean');
+      expect(typeof project.eco).toBe('boolean');
+      expect(project.description.length).toBeGreaterThan(15);
+    }
+  });
+});
+
+describe('contact content data', () => {
+  it('keeps triptych call-to-action heading and stable contact links', () => {
+    const headingLower = contactHeading.toLowerCase();
+    expect(headingLower).toContain('body');
+    expect(headingLower).toContain('brain');
+    expect(headingLower).toContain('rooms');
+
+    expect(contactLinks).toHaveLength(5);
+
+    const labels = contactLinks.map((link) => link.label);
+    const hrefs = contactLinks.map((link) => link.href);
+
+    expect(new Set(labels).size).toBe(labels.length);
+    expect(new Set(hrefs).size).toBe(hrefs.length);
+    expect(contactLinks.some((link) => link.href.startsWith('mailto:'))).toBe(true);
+  });
+});
+
+describe('content barrel exports', () => {
+  it('re-exports all content modules through src/content/index.ts', () => {
+    expect(content.bodyHeader).toBe(bodyHeader);
+    expect(content.brainHeader).toBe(brainHeader);
+    expect(content.roomsHeader).toBe(roomsHeader);
+    expect(content.projectsIntro).toBe(projectsIntro);
+    expect(content.contactHeading).toBe(contactHeading);
+    expect(content.siteMeta).toBe(siteMeta);
+    expect(content.heroTitle).toBe(heroTitle);
   });
 });
