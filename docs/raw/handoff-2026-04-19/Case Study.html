@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1280"/>
+<title>Case Study — Bipedal Walker v3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hifi.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body class="cs-body">
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function Nav() {
+  return (
+    <div className="nav">
+      <div className="nav-brand">
+        <div className="joint"/>
+        robot<span style={{color:'var(--ink-3)'}}>.dev</span>
+      </div>
+      <div className="nav-links">
+        <a href="Portfolio.html">← back to work</a>
+        <a href="#">pdf ↓</a>
+        <a href="#" className="cta">hire me →</a>
+      </div>
+    </div>
+  );
+}
+
+function SchematicHero() {
+  return (
+    <div className="cs-media">
+      {/* dimension lines & callouts via SVG */}
+      <svg className="dims" viewBox="0 0 1600 900" preserveAspectRatio="none">
+        {/* top dimension */}
+        <line x1="120" y1="80" x2="1480" y2="80" stroke="#141413" strokeWidth="1.2"/>
+        <line x1="120" y1="70" x2="120" y2="90" stroke="#141413" strokeWidth="1.2"/>
+        <line x1="1480" y1="70" x2="1480" y2="90" stroke="#141413" strokeWidth="1.2"/>
+        <line x1="120" y1="80" x2="1480" y2="80" stroke="#141413" strokeWidth="1.2" strokeDasharray="0"/>
+        {/* callout leader lines */}
+        <line x1="560" y1="300" x2="360" y2="180" stroke="#141413" strokeWidth="1"/>
+        <circle cx="560" cy="300" r="4" fill="#141413"/>
+        <line x1="1080" y1="440" x2="1280" y2="320" stroke="#141413" strokeWidth="1"/>
+        <circle cx="1080" cy="440" r="4" fill="#141413"/>
+        <line x1="800" y1="620" x2="800" y2="780" stroke="#141413" strokeWidth="1"/>
+        <circle cx="800" cy="620" r="4" fill="#141413"/>
+        {/* left dimension */}
+        <line x1="80" y1="120" x2="80" y2="780" stroke="#141413" strokeWidth="1.2"/>
+        <line x1="70" y1="120" x2="90" y2="120" stroke="#141413" strokeWidth="1.2"/>
+        <line x1="70" y1="780" x2="90" y2="780" stroke="#141413" strokeWidth="1.2"/>
+      </svg>
+
+      <span className="callout" style={{top: '38px', left: '48%'}}>1360 mm ←→</span>
+      <span className="callout" style={{top: '44%', left: '24px', transform: 'rotate(-90deg)', transformOrigin: 'left center'}}>↕ 720 mm</span>
+
+      <span className="callout" style={{top: '18%', left: '18%'}}>[01] HEAD · cam + compute</span>
+      <span className="callout" style={{top: '34%', left: '76%'}}>[02] HIP JOINT · 2× torque-ctrl</span>
+      <span className="callout" style={{bottom: '8%', left: '46%'}}>[03] ANKLE · series-elastic</span>
+
+      <div className="ph-center">BIPEDAL-WALKER-V3 · DWG-001 · HERO.JPG</div>
+    </div>
+  );
+}
+
+function CaseStudy() {
+  return (
+    <>
+      <Nav/>
+      <div className="cs-hero">
+        <div className="cs-crumb">
+          <a href="Portfolio.html">← work</a>
+          <span>/</span>
+          <span>01 · 2026</span>
+          <span>/</span>
+          <span style={{color:'var(--ink)'}}>bipedal walker v3</span>
+        </div>
+
+        <h1 className="cs-title">a biped that<br/>taught <em>itself</em><br/>to walk.</h1>
+
+        <div className="cs-meta">
+          <div className="item">
+            <div className="k">// role</div>
+            <div className="v big">lead</div>
+          </div>
+          <div className="item">
+            <div className="k">// team</div>
+            <div className="v big">3</div>
+          </div>
+          <div className="item">
+            <div className="k">// duration</div>
+            <div className="v big">4 mo</div>
+          </div>
+          <div className="item">
+            <div className="k">// stack</div>
+            <div className="v">Isaac Sim · PyTorch<br/>C++ · STM32</div>
+          </div>
+          <div className="item">
+            <div className="k">// status</div>
+            <div className="v">deployed · cited</div>
+          </div>
+        </div>
+      </div>
+
+      <SchematicHero/>
+
+      {/* PROBLEM */}
+      <div className="cs-section">
+        <div className="cs-section-2col">
+          <h3>/problem</h3>
+          <div className="content">
+            <p>
+              Bipedal walking is hard. Most student bipeds either stagger a few
+              steps with handcrafted gaits, or rely on million-dollar sim compute
+              to train a policy that falls over the moment it hits real hardware.
+            </p>
+            <p>
+              I wanted to build a walking biped on a student budget — a robot that
+              would be trained end-to-end in simulation, then cross the sim-to-real
+              gap on the first try with no hand-tuning.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* RESULTS */}
+      <div className="cs-section" style={{background:'var(--paper-2)'}}>
+        <div className="cs-section-2col" style={{marginBottom: 32}}>
+          <h3>/results</h3>
+          <div className="content">
+            <p style={{fontSize: 28, lineHeight: 1.3, color: 'var(--ink)'}}>
+              It walked <b>42 m unassisted</b> — the first time the trained policy
+              was loaded onto the real robot. No tuning, no falls.
+            </p>
+          </div>
+        </div>
+        <div className="cs-stats">
+          <div className="cs-stat">
+            <div className="v"><em>42</em>m</div>
+            <div className="k">// first-try traverse</div>
+          </div>
+          <div className="cs-stat">
+            <div className="v">–<em>68</em>%</div>
+            <div className="k">// sim-to-real gap</div>
+          </div>
+          <div className="cs-stat">
+            <div className="v"><em>2.4</em>M</div>
+            <div className="k">// env steps / sec</div>
+          </div>
+          <div className="cs-stat">
+            <div className="v"><em>$</em>840</div>
+            <div className="k">// total bom cost</div>
+          </div>
+        </div>
+      </div>
+
+      {/* APPROACH */}
+      <div className="cs-section">
+        <div className="sec-head">
+          <div className="sec-head-num">// 03</div>
+          <h2><em>approach</em></h2>
+          <div className="sec-head-count">04 STEPS · θ=090°</div>
+        </div>
+
+        {[
+          {n: '01', t: 'designed custom torque-controlled actuators', d: 'Off-the-shelf servos lie about their dynamics. I designed a 6-DOF leg around BLDC motors with on-board torque sensing, so the simulated and real actuators would actually agree.', media: 'actuator.cad'},
+          {n: '02', t: 'built a fast, accurate Isaac Sim scene', d: 'Matched inertia and friction to the physical robot from CAD and 5 minutes of real-robot system-ID. Parallelized 4096 environments on a single GPU.', media: 'isaac_scene.gif'},
+          {n: '03', t: 'trained a PPO policy with domain randomization', d: 'Observation: joint encoders + IMU. Action: torque setpoints. Randomized mass, friction, motor gains, and sensor delay at training time.', media: 'reward_curve.png'},
+          {n: '04', t: 'deployed to hardware — no tuning', d: 'On-board STM32 runs the policy at 500 Hz. First boot: walked 42 m before the battery died. We filmed it to make sure no one would say we made it up.', media: 'real_walk.mp4'},
+        ].map(s => (
+          <div className="cs-step" key={s.n}>
+            <div className="num">{s.n}</div>
+            <div>
+              <h4>{s.t}</h4>
+              <p>{s.d}</p>
+            </div>
+            <div className="media">
+              <div className="img-ph" style={{height: '100%'}}>
+                <span className="ph-label">{s.media}</span>
+                <span className="ph-meta">step {s.n}</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* REFLECTION */}
+      <div className="cs-section" style={{background: 'var(--ink)', color: 'var(--paper)'}}>
+        <div className="cs-section-2col">
+          <h3 style={{color: 'var(--ink-4)'}}>/reflection</h3>
+          <div className="content">
+            <p style={{color: 'var(--paper)'}}>
+              The most useful thing I learned was that <b>actuator modeling</b>,
+              not reward shaping, was the sim-to-real bottleneck.
+            </p>
+            <p style={{color: 'var(--ink-4)'}}>
+              Next version: compliant feet, and a contact-implicit planner on top
+              of the learned policy so we can ask the robot to step onto specific
+              places — not just walk forward. Filed for ICRA 2026.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* NEXT */}
+      <div className="cs-next">
+        <div className="prev">
+          <span className="lbl">← previous</span>
+          <a href="#">delivery rover<em> · 07</em></a>
+        </div>
+        <a href="Portfolio.html" className="back">all work ↗</a>
+        <div className="next">
+          <span className="lbl">next →</span>
+          <a href="#">slam rover<em> · 02</em></a>
+        </div>
+      </div>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<CaseStudy/>);
+</script>
+</body>
+</html>
