@@ -1,0 +1,26 @@
+:root {
+  --paper: #F5F1E8;
+  --paper-2: #EBE6D7;
+  --paper-3: #DDD6C2;
+  --ink: #141413;
+  --ink-2: #3A3A37;
+  --ink-3: #6F6E68;
+  --ink-4: #A8A59A;
+
+  --body-bg: #F5F1E8;
+  --body-bg-2: #EBE6D7;
+  --body-accent: oklch(0.82 0.11 130);
+  --body-accent-deep: oklch(0.52 0.13 140);
+
+  --brain-bg: #0F1620;
+  --brain-bg-2: #172235;
+  --brain-fg: #E8ECF5;
+  --brain-fg-2: #9AA5BC;
+  --brain-accent: oklch(0.75 0.16 280);
+  --brain-accent-2: oklch(0.75 0.14 230);
+
+  --rooms-bg: #F6ECD9;
+  --rooms-bg-2: #EDDFC2;
+  --rooms-accent: oklch(0.74 0.15 50);
+  --rooms-accent-deep: oklch(0.5 0.17 40);
+}

@@ -1,0 +1,69 @@
+---
+import { siteMeta } from '../content';
+import Base from '../layouts/Base.astro';
+---
+
+<Base title={siteMeta.title} description={siteMeta.description}>
+  <header class="phase-header">
+    <p class="phase-kicker mono">/ phase 1</p>
+    <h1>Phase 1 scaffold</h1>
+    <p class="phase-lede">
+      Structural sections are in place for the triptych narrative. Content components land in later tasks.
+    </p>
+  </header>
+
+  <main id="main">
+    <section id="body"><h2>/ body</h2></section>
+    <section id="brain"><h2>/ brain</h2></section>
+    <section id="rooms"><h2>/ rooms</h2></section>
+    <section id="all"><h2>/ all projects</h2></section>
+    <section id="contact"><h2>/ contact</h2></section>
+  </main>
+</Base>
+
+<style>
+  .phase-header,
+  main {
+    width: min(72rem, 100% - 2rem);
+    margin-inline: auto;
+  }
+
+  .phase-header {
+    padding-block: 3rem 2rem;
+    border-bottom: 1px solid var(--ink);
+  }
+
+  .phase-kicker {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .phase-header h1 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+  }
+
+  .phase-lede {
+    max-width: 60ch;
+    margin: 1rem 0 0;
+    color: var(--ink-2);
+  }
+
+  main {
+    padding-block: 1.5rem 4rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  section {
+    min-height: 12rem;
+    padding: 1.5rem;
+    border: 1px dashed var(--ink-3);
+    background: color-mix(in oklab, var(--paper), white 20%);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+  }
+</style>
