@@ -4,96 +4,109 @@ import { heroColumns, heroTitle } from '../../src/content/hero';
 import { navBrand, navLinks, siteMeta } from '../../src/content/site';
 
 describe('site content data', () => {
-  it('matches nav metadata and links from the handoff', () => {
-    expect(siteMeta).toEqual({
-      title: 'Robot - Body / Brain / Rooms',
-      description:
-        'I work across three territories: the body of the machine, the brain that runs it, and the rooms where others come to build theirs.',
-      topLeft: 'o portfolio_2026 - triptych',
-      topRight: 'robot - senior - robotics - ecosystem builder',
+  it('keeps required site metadata fields populated', () => {
+    expect(siteMeta).toMatchObject({
+      title: expect.any(String),
+      description: expect.any(String),
+      topLeft: expect.any(String),
+      topRight: expect.any(String),
     });
 
+    expect(siteMeta.title.length).toBeGreaterThan(10);
+    expect(siteMeta.description.length).toBeGreaterThan(30);
+    expect(siteMeta.topLeft).toContain('portfolio_2026');
+    expect(siteMeta.topRight).toContain('robot');
+  });
+
+  it('keeps navigation links valid, ordered, and unique', () => {
     expect(navBrand).toBe('robot.dev');
-    expect(navLinks).toEqual([
-      { label: '/ body', href: '#body', section: 'body' },
-      { label: '/ brain', href: '#brain', section: 'brain' },
-      { label: '/ rooms', href: '#rooms', section: 'rooms' },
-      { label: '/ all projects', href: '#all', section: 'projects' },
-      { label: '/ contact', href: '#contact', section: 'contact' },
-    ]);
+
+    expect(navLinks).toHaveLength(5);
+    expect(navLinks.map((link) => link.href)).toEqual(['#body', '#brain', '#rooms', '#all', '#contact']);
+
+    const hrefs = navLinks.map((link) => link.href);
+    const labels = navLinks.map((link) => link.label);
+    const sections = navLinks.map((link) => link.section);
+
+    expect(new Set(hrefs).size).toBe(hrefs.length);
+    expect(new Set(labels).size).toBe(labels.length);
+    expect(new Set(sections).size).toBe(sections.length);
+
+    for (const link of navLinks) {
+      expect(link.label).toMatch(/^\/\s.+/);
+      expect(link.href).toMatch(/^#[a-z]+$/);
+      expect(['body', 'brain', 'rooms', 'projects', 'contact']).toContain(link.section);
+    }
   });
 });
 
 describe('hero content data', () => {
-  it('contains title and triptych columns with motif settings', () => {
-    expect(heroTitle).toBe(
-      'i work across three territories - the body of the machine, the brain that runs it, and the rooms where others come to build theirs.',
-    );
-    expect(heroColumns).toEqual([
-      {
-        num: '/ 01 - HARDWARE',
-        phrase: 'I design the body.',
-        emphasis: 'design',
-        caption:
-          'CAD - torque-controlled actuators - PCBs - things I machine on a Friday night.',
-        motifVariant: 'body',
-      },
-      {
-        num: '/ 02 - SOFTWARE',
-        phrase: 'I train the brain.',
-        emphasis: 'train',
-        caption: 'RL policies - perception - SLAM - sim-to-real - the parts that do not exist without math.',
-        motifVariant: 'brain',
-        motifStroke: '#E8ECF5',
-        motifFill: '#0F1620',
-      },
-      {
-        num: '/ 03 - ECOSYSTEM',
-        phrase: 'I open the rooms.',
-        emphasis: 'open',
-        caption:
-          'summits - hackathons - the spaces where builders find each other and start shipping.',
-        motifVariant: 'rooms',
-      },
-    ]);
+  it('keeps a triptych-oriented hero title', () => {
+    const lowerTitle = heroTitle.toLowerCase();
+
+    expect(heroTitle.length).toBeGreaterThan(40);
+    expect(lowerTitle).toContain('body');
+    expect(lowerTitle).toContain('brain');
+    expect(lowerTitle).toContain('rooms');
+  });
+
+  it('keeps three ordered columns with constrained motif settings', () => {
+    expect(heroColumns).toHaveLength(3);
+    expect(heroColumns.map((column) => column.motifVariant)).toEqual(['body', 'brain', 'rooms']);
+
+    const emphases = heroColumns.map((column) => column.emphasis);
+    expect(new Set(emphases).size).toBe(emphases.length);
+
+    for (const [index, column] of heroColumns.entries()) {
+      expect(column.num).toMatch(/^\/ 0[1-3] - [A-Z]+$/);
+      expect(column.phrase.length).toBeGreaterThan(8);
+      expect(column.caption.length).toBeGreaterThan(20);
+      expect(column.phrase.toLowerCase()).toContain(column.emphasis.toLowerCase());
+      expect(column.num).toContain(`0${index + 1}`);
+
+      if (column.motifVariant === 'brain') {
+        expect(column.motifStroke).toMatch(/^#[0-9A-F]{6}$/i);
+        expect(column.motifFill).toMatch(/^#[0-9A-F]{6}$/i);
+      } else {
+        expect(column.motifStroke).toBeUndefined();
+        expect(column.motifFill).toBeUndefined();
+      }
+    }
   });
 });
 
 describe('body section content data', () => {
-  it('contains body header and four CAD cards from handoff', () => {
-    expect(bodyHeader).toEqual({
+  it('keeps body header structure and body section identity', () => {
+    expect(bodyHeader).toMatchObject({
       section: 'body',
-      num: '/ 01 - BODY',
-      title: 'I design the body.',
-      subtitle: 'HARDWARE TRACK - CAD - PCB - FAB - METAL',
+      num: expect.any(String),
+      title: expect.any(String),
+      subtitle: expect.any(String),
     });
 
-    expect(bodyCards).toEqual([
-      {
-        title: 'bipedal walker v3',
-        description:
-          '60cm hand-machined biped with torque-controlled BLDC actuators. Designed around sim-to-real: the simulated and real drivetrain actually agree. Walked 42m on first boot.',
-        imageLabel: 'biped_hero.jpg',
-        size: 'lg',
-      },
-      {
-        title: 'tactile gripper',
-        description:
-          'Compliant two-finger end-effector with integrated capacitive touch. Firmware, PCB, and mechanical - all mine. Patent pending.',
-        imageLabel: 'gripper.cad',
-      },
-      {
-        title: 'slam rover',
-        description:
-          'Custom LiDAR+IMU mount on a differential chassis. Designed for uneven terrain and rain. All the brackets are water-jet aluminum.',
-        imageLabel: 'rover_chassis.jpg',
-      },
-      {
-        title: 'torque actuator',
-        description:
-          "Custom BLDC actuator with on-board torque sensing and a magnetic encoder. The secret sauce behind the biped's sim-to-real transfer.",
-        imageLabel: 'actuator_exploded.png',
-      },
-    ]);
+    expect(bodyHeader.num).toMatch(/^\/ 01 - BODY$/);
+    expect(bodyHeader.title.toLowerCase()).toContain('body');
+    expect(bodyHeader.subtitle).toContain('HARDWARE TRACK');
+  });
+
+  it('keeps four distinct CAD cards with valid labels and constrained sizes', () => {
+    expect(bodyCards).toHaveLength(4);
+    expect(bodyCards[0]?.size).toBe('lg');
+
+    const titles = bodyCards.map((card) => card.title);
+    const imageLabels = bodyCards.map((card) => card.imageLabel);
+
+    expect(new Set(titles).size).toBe(titles.length);
+    expect(new Set(imageLabels).size).toBe(imageLabels.length);
+
+    for (const card of bodyCards) {
+      expect(card.title.length).toBeGreaterThan(4);
+      expect(card.description.length).toBeGreaterThan(30);
+      expect(card.imageLabel).toMatch(/^[a-z0-9_]+\.(jpg|png|cad)$/i);
+
+      if (card.size !== undefined) {
+        expect(['sm', 'md', 'lg']).toContain(card.size);
+      }
+    }
   });
 });

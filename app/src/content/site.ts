@@ -1,9 +1,4 @@
-import type { NavLink, SiteMeta } from '../lib/types';
-
-type SiteDisplayMeta = Omit<SiteMeta, 'canonicalUrl'> & {
-  topLeft: string;
-  topRight: string;
-};
+import type { NavLink, SiteDisplayMeta } from '../lib/types';
 
 export const siteMeta: SiteDisplayMeta = {
   title: 'Robot - Body / Brain / Rooms',

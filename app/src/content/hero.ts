@@ -1,9 +1,4 @@
-import type { HeroColumn } from '../lib/types';
-
-type HeroColumnWithMotif = HeroColumn & {
-  motifStroke?: string;
-  motifFill?: string;
-};
+import type { HeroColumnWithMotif } from '../lib/types';
 
 export const heroTitle =
   'i work across three territories - the body of the machine, the brain that runs it, and the rooms where others come to build theirs.';

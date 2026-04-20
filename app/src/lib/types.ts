@@ -10,6 +10,11 @@ export type SiteMeta = {
   canonicalUrl: string;
 };
 
+export type SiteDisplayMeta = Omit<SiteMeta, 'canonicalUrl'> & {
+  topLeft: string;
+  topRight: string;
+};
+
 export type NavLink = {
   label: string;
   href: string;
@@ -31,6 +36,11 @@ export type HeroColumn = {
   emphasis: string;
   caption: string;
   motifVariant: 'body' | 'brain' | 'rooms';
+};
+
+export type HeroColumnWithMotif = HeroColumn & {
+  motifStroke?: string;
+  motifFill?: string;
 };
 
 export type SectionHeader = {
