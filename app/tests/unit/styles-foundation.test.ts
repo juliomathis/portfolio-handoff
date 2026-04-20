@@ -30,10 +30,12 @@ describe('styles foundation files', () => {
     expect(globalCss).toContain('.skip-link');
   });
 
-  it('keeps app entrypoint wired to the global stylesheet', () => {
+  it('keeps app entrypoint wired through the shared base layout', () => {
     const indexAstro = readFileSync(resolve(appDir, 'src/pages/index.astro'), 'utf8');
+    const baseAstro = readFileSync(resolve(appDir, 'src/layouts/Base.astro'), 'utf8');
 
-    expect(indexAstro).toContain("import '../styles/global.css';");
+    expect(indexAstro).toContain("import Base from '../layouts/Base.astro';");
+    expect(baseAstro).toContain("import '../styles/global.css';");
   });
 
   it('preserves canonical triptych color tokens and breakpoints', () => {
