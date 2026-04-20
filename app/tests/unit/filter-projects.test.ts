@@ -64,11 +64,70 @@ const PROJECTS: Project[] = [
 const projectTitles = (projects: Project[]) => projects.map((project) => project.title);
 
 describe('filterProjects', () => {
-  it('filters projects across all supported keys', () => {
+  it('returns all projects for all filter', () => {
     expect(projectTitles(filterProjects(PROJECTS, 'all'))).toEqual(projectTitles(PROJECTS));
+  });
+
+  it('returns only hardware projects for hw filter', () => {
     expect(projectTitles(filterProjects(PROJECTS, 'hw'))).toEqual([
       'hardware solo',
       'hardware + software',
+      'hardware + ecology',
+      'trinity project',
+    ]);
+  });
+
+  it('returns only software projects for sw filter', () => {
+    expect(projectTitles(filterProjects(PROJECTS, 'sw'))).toEqual([
+      'software solo',
+      'hardware + software',
+      'software + ecology',
+      'trinity project',
+    ]);
+  });
+
+  it('returns only ecology projects for eco filter', () => {
+    expect(projectTitles(filterProjects(PROJECTS, 'eco'))).toEqual([
+      'ecology solo',
+      'software + ecology',
+      'hardware + ecology',
+      'trinity project',
+    ]);
+  });
+
+  it('returns projects with at least two active domains for overlap filter', () => {
+    expect(projectTitles(filterProjects(PROJECTS, 'overlap'))).toEqual([
+      'hardware + software',
+      'software + ecology',
+      'hardware + ecology',
+      'trinity project',
+    ]);
+  });
+
+  it('returns only projects with all three active domains for trinity filter', () => {
+    expect(projectTitles(filterProjects(PROJECTS, 'trinity'))).toEqual(['trinity project']);
+  });
+
+  it('returns empty output for empty input', () => {
+    expect(filterProjects([], 'all')).toEqual([]);
+    expect(filterProjects([], 'hw')).toEqual([]);
+    expect(filterProjects([], 'overlap')).toEqual([]);
+  });
+
+  it('returns empty output when no project matches filter', () => {
+    const noHardwareProjects: Project[] = PROJECTS.map((project) => ({
+      ...project,
+      hw: false,
+    }));
+
+    expect(filterProjects(noHardwareProjects, 'hw')).toEqual([]);
+    expect(filterProjects(noHardwareProjects, 'trinity')).toEqual([]);
+  });
+
+  it('preserves input order in filtered output', () => {
+    expect(projectTitles(filterProjects(PROJECTS, 'overlap'))).toEqual([
+      'hardware + software',
+      'software + ecology',
       'hardware + ecology',
       'trinity project',
     ]);
@@ -78,18 +137,5 @@ describe('filterProjects', () => {
       'software + ecology',
       'trinity project',
     ]);
-    expect(projectTitles(filterProjects(PROJECTS, 'eco'))).toEqual([
-      'ecology solo',
-      'software + ecology',
-      'hardware + ecology',
-      'trinity project',
-    ]);
-    expect(projectTitles(filterProjects(PROJECTS, 'overlap'))).toEqual([
-      'hardware + software',
-      'software + ecology',
-      'hardware + ecology',
-      'trinity project',
-    ]);
-    expect(projectTitles(filterProjects(PROJECTS, 'trinity'))).toEqual(['trinity project']);
   });
 });

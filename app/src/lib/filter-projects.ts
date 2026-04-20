@@ -1,4 +1,9 @@
-import type { FilterKey, Project } from './types';
+import type { DomainTag, FilterKey, Project } from './types';
+
+const DOMAIN_TAGS: DomainTag[] = ['hw', 'sw', 'eco'];
+
+const countMatchingDomains = (project: Project): number =>
+  DOMAIN_TAGS.reduce((count, domainTag) => count + Number(project[domainTag]), 0);
 
 export const filterProjects = (projects: Project[], filter: FilterKey): Project[] => {
   if (filter === 'all') {
@@ -6,11 +11,11 @@ export const filterProjects = (projects: Project[], filter: FilterKey): Project[
   }
 
   if (filter === 'overlap') {
-    return projects.filter((project) => Number(project.hw) + Number(project.sw) + Number(project.eco) >= 2);
+    return projects.filter((project) => countMatchingDomains(project) >= 2);
   }
 
   if (filter === 'trinity') {
-    return projects.filter((project) => project.hw && project.sw && project.eco);
+    return projects.filter((project) => countMatchingDomains(project) === DOMAIN_TAGS.length);
   }
 
   return projects.filter((project) => project[filter]);
