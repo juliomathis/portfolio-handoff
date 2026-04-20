@@ -1,39 +1,59 @@
 import type { PosterCard, SectionHeader, SummaryPanel } from '../lib/types';
 
 export const roomsHeader: SectionHeader = {
-  section: 'rooms',
-  num: '/ 03 - ROOMS',
-  title: 'I open the rooms.',
-  subtitle: 'ECOSYSTEM TRACK - EVENTS - SUMMITS - HACKS',
+  tag: '/ 03 · ROOMS',
+  headingLead: 'I',
+  headingEmphasis: 'open',
+  headingTail: 'the rooms.',
+  countTitle: 'ECOSYSTEM TRACK',
+  countMeta: 'EVENTS · SUMMITS · HACKS',
 };
 
 export const roomPosters: PosterCard[] = [
   {
-    title: 'Robotics Builders Summit',
-    subtitle: 'The flagship',
+    large: true,
+    stubLeft: 'EST. 2024',
+    stubRight: 'N° 01',
+    kicker: 'The flagship -',
+    title: 'the Robotics',
+    titleEmphasis: 'Builders Summit',
     description:
-      'Annual gathering founded for student roboticists across the region. It started in a 30-person lecture hall and is now projected at 240 attendees for edition III.',
-    imageLabel: 'robotics_builders_summit.jpg',
-    size: 'lg',
+      'An annual gathering I founded for student roboticists across the region. Two days, live demos, late-night hacking. Started in a 30-person lecture hall; now it fills a real one.',
+    statValue: '240',
+    statLabel: '// attendees · edition III (projected)',
+    tags: ['eco'],
   },
   {
-    title: 'robohack /24',
-    subtitle: 'Hack weekend format',
+    variant: 'accent',
+    stubLeft: 'WEEKEND FORMAT',
+    stubRight: '24 HR',
+    kicker: 'Hack -',
+    title: 'robo',
+    titleEmphasis: 'hack /24',
     description:
-      '24-hour robotics hackathon where physical robots are required. Led logistics, judging, and partner operations for 18 teams, 6 mentors, and 3 sponsors.',
-    imageLabel: 'robohack_24.jpg',
+      '24-hour robotics hackathon. Physical robots required - no pure-software entries. I ran logistics, judging, and the midnight pizza.',
+    statLabel: '// 18 teams · 6 mentors · 3 sponsors',
+    tags: ['eco'],
   },
   {
-    title: 'workshop series',
-    subtitle: 'Small rooms',
+    variant: 'dark',
+    stubLeft: 'INVITE-ONLY',
+    stubRight: 'QUARTERLY',
+    kicker: 'Small rooms -',
+    title: 'the',
+    titleEmphasis: 'workshop series',
     description:
-      'Invite-only quarterly working sessions for 12 to 20 builders tackling hard robotics problems with no talks and direct peer review.',
-    imageLabel: 'workshop_series.jpg',
+      'Quarterly closed-door working sessions for 12-20 builders working on hard problems. No talks. Just bench time and peer review.',
+    statLabel: '// 4 sessions / yr · 64 builders to date',
+    tags: ['eco'],
   },
 ];
 
 export const roomsSummary: SummaryPanel = {
-  title: 'good work happens where builders meet.',
-  body: 'Across summits, hackathons, and workshops, these rooms have convened more than 410 builders and helped launch 17 projects on stage.',
-  tags: ['eco'],
+  kicker: 'Why rooms -',
+  titleLine1: 'good work',
+  titleLine2: 'happens where',
+  emphasis: 'builders meet.',
+  totalBuilders: '410+',
+  launchedProjects: '17',
 };

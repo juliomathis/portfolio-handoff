@@ -4,11 +4,15 @@ import '../styles/global.css';
 interface Props {
   title?: string;
   description?: string;
+  canonicalUrl?: string;
 }
+
+const defaultCanonicalUrl = Astro.site?.toString() ?? 'http://localhost:4321';
 
 const {
   title = 'Robot - Body / Brain / Rooms',
   description = 'Portfolio scaffold for the Body / Brain / Rooms triptych.',
+  canonicalUrl = defaultCanonicalUrl,
 }: Props = Astro.props;
 ---
 
@@ -22,6 +26,11 @@ const {
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

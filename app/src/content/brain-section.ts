@@ -1,45 +1,69 @@
 import type { BrainNode, SectionHeader } from '../lib/types';
 
 export const brainHeader: SectionHeader = {
-  section: 'brain',
-  num: '/ 02 - BRAIN',
-  title: 'I train the brain.',
-  subtitle: 'SOFTWARE TRACK - RL - CV - SLAM - SIM',
+  tag: '/ 02 · BRAIN',
+  headingLead: 'I',
+  headingEmphasis: 'train',
+  headingTail: 'the brain.',
+  countTitle: 'SOFTWARE TRACK',
+  countMeta: 'RL · CV · SLAM · SIM',
 };
 
 export const brainNodes: BrainNode[] = [
   {
-    title: 'sim-to-real walker policy',
+    headerLeft: 'policy.pt · PPO',
+    headerRight: 'loss ↓ 0.043',
+    titleEmphasis: 'walker policy',
+    title: 'sim-to-real',
     description:
-      'PPO policy trained across 4096 parallel Isaac environments with domain randomization on mass, friction, and motor dynamics. Sim-to-real gap improved by 68 percent over baseline.',
+      'PPO policy trained across 4096 parallel Isaac envs with domain randomization on mass, friction, and motor dynamics. -68% sim-to-real gap vs. baseline.',
     tags: ['hw', 'sw'],
     width: 'w6',
+    includeLossCurve: true,
   },
   {
-    title: 'visual-grasp ranker',
+    headerLeft: 'perception.py',
+    headerRight: '12Hz · 94%',
+    title: 'visual-grasp',
+    titleEmphasis: 'ranker',
     description:
-      'ResNet-based segmentation feeds an analytic grasp-ranker. Validated with 94 percent success over 50 novel objects while running on-board at 12 Hz.',
+      'ResNet-based segmentation into an analytic grasp-ranker. 94% success across 50 novel objects, running on-board at 12 Hz.',
     tags: ['hw', 'sw'],
     width: 'w6',
+    codeLines: [
+      '# grasp_ranker.py',
+      'class GraspRanker(nn.Module):',
+      '  def forward(self, rgb, depth):',
+      '    return self.head(self.backbone(rgb))',
+    ],
   },
   {
-    title: 'outdoor SLAM',
+    headerLeft: 'slam.cpp',
+    headerRight: '±3cm/800m',
+    title: 'outdoor',
+    titleEmphasis: 'SLAM',
     description:
-      'LIO-SAM mapping pipeline with visual-odometry fallback. Holds drift to plus/minus 3 cm over an 800 m outdoor run.',
+      'LIO-SAM-based mapping with visual-odometry fallback. Holds ±3 cm drift over 800 m.',
     tags: ['hw', 'sw'],
     width: 'w4',
   },
   {
-    title: 'drone swarm',
+    headerLeft: 'swarm.py',
+    headerRight: '2.1M/s · 50ag',
+    title: 'drone',
+    titleEmphasis: 'swarm',
     description:
-      'Fifty-agent quadrotor swarm in Isaac with emergent flocking from local rules, sustaining 2.1 million environment steps per second.',
+      '50-agent quadrotor swarm in Isaac. Emergent flocking from local rules. 2.1M env-steps/sec.',
     tags: ['sw'],
     width: 'w4',
   },
   {
-    title: 'real-world RL',
+    headerLeft: 'cartpole.py · SAC',
+    headerRight: '<30min',
+    title: 'real-world',
+    titleEmphasis: 'RL',
     description:
-      'Physical cart-pole setup that learns balance in under 30 minutes of real interaction with a sim-to-real training loop.',
+      'Physical cart-pole that learns to balance in under 30 minutes of real interaction.',
     tags: ['hw', 'sw'],
     width: 'w4',
   },

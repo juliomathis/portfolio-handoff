@@ -3,7 +3,7 @@ import { siteMeta } from '../content';
 import Base from '../layouts/Base.astro';
 ---
 
-<Base title={siteMeta.title} description={siteMeta.description}>
+<Base title={siteMeta.title} description={siteMeta.description} canonicalUrl={siteMeta.canonicalUrl}>
   <header class="phase-header">
     <p class="phase-kicker mono">/ phase 1</p>
     <h1>Phase 1 scaffold</h1>

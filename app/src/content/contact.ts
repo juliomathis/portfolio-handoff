@@ -1,11 +1,18 @@
-import type { ContactLink } from '../lib/types';
+import type { ContactHeading, ContactLink } from '../lib/types';
 
-export const contactHeading = 'build the body, train the brain, fill the rooms.';
+export const contactHeading: ContactHeading = {
+  lead: 'build the',
+  body: 'body',
+  mid: 'train the',
+  brain: 'brain',
+  tailLead: 'fill the',
+  rooms: 'rooms',
+};
 
 export const contactLinks: ContactLink[] = [
-  { label: 'email', href: 'mailto:robot@placeholder.edu' },
-  { label: 'github', href: 'https://github.com/robot' },
-  { label: 'linkedin', href: 'https://linkedin.com/in/robot' },
-  { label: 'resume', href: '/resume_2026.pdf' },
-  { label: 'rooms events', href: '#rooms' },
+  { label: 'robot@placeholder.edu ->', href: 'mailto:robot@placeholder.edu' },
+  { label: 'github.com/robot ->', href: '#' },
+  { label: 'linkedin.com/in/robot ->', href: '#' },
+  { label: 'resume_2026.pdf ↓', href: '#' },
+  { label: '/ rooms · upcoming events ->', href: '#' },
 ];

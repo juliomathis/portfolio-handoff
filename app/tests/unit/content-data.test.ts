@@ -23,88 +23,117 @@ describe('site content data', () => {
       description: expect.any(String),
       topLeft: expect.any(String),
       topRight: expect.any(String),
+      canonicalUrl: expect.any(String),
     });
 
     expect(siteMeta.title.length).toBeGreaterThan(10);
     expect(siteMeta.description.length).toBeGreaterThan(30);
     expect(siteMeta.topLeft).toContain('portfolio_2026');
+    expect(siteMeta.topLeft).toContain('◉');
     expect(siteMeta.topRight).toContain('robot');
+    expect(siteMeta.topRight).toContain('·');
+    expect(siteMeta.canonicalUrl).toMatch(/^https?:\/\//);
   });
 
-  it('keeps navigation links valid, ordered, and unique', () => {
-    expect(navBrand).toBe('robot.dev');
+  it('keeps navigation links valid, ordered, and accent-scoped', () => {
+    expect(navBrand).toMatchObject({
+      name: 'robot',
+      suffix: '.dev',
+    });
 
     expect(navLinks).toHaveLength(5);
     expect(navLinks.map((link) => link.href)).toEqual(['#body', '#brain', '#rooms', '#all', '#contact']);
 
     const hrefs = navLinks.map((link) => link.href);
     const labels = navLinks.map((link) => link.label);
-    const sections = navLinks.map((link) => link.section);
+    const accents = navLinks.map((link) => (link as { accent?: string }).accent ?? null);
 
     expect(new Set(hrefs).size).toBe(hrefs.length);
     expect(new Set(labels).size).toBe(labels.length);
-    expect(new Set(sections).size).toBe(sections.length);
+    expect(accents).toEqual(['body', 'brain', 'rooms', null, null]);
 
     for (const link of navLinks) {
       expect(link.label).toMatch(/^\/\s.+/);
       expect(link.href).toMatch(/^#[a-z]+$/);
-      expect(['body', 'brain', 'rooms', 'projects', 'contact']).toContain(link.section);
     }
   });
 });
 
 describe('hero content data', () => {
-  it('keeps a triptych-oriented hero title', () => {
-    const lowerTitle = heroTitle.toLowerCase();
-
-    expect(heroTitle.length).toBeGreaterThan(40);
-    expect(lowerTitle).toContain('body');
-    expect(lowerTitle).toContain('brain');
-    expect(lowerTitle).toContain('rooms');
+  it('keeps a structured triptych-oriented hero title payload', () => {
+    expect(heroTitle).toMatchObject({
+      lead: expect.any(String),
+      body: 'body',
+      midA: expect.any(String),
+      brain: 'brain',
+      midB: expect.any(String),
+      rooms: 'rooms',
+      tail: expect.any(String),
+    });
   });
 
-  it('keeps three ordered columns with constrained motif settings', () => {
+  it('keeps three ordered columns with explicit phrase splits and motif settings', () => {
     expect(heroColumns).toHaveLength(3);
-    expect(heroColumns.map((column) => column.motifVariant)).toEqual(['body', 'brain', 'rooms']);
+    expect(heroColumns.map((column) => (column as { key: string }).key)).toEqual(['body', 'brain', 'rooms']);
+    expect(heroColumns.map((column) => (column as { number: string }).number)).toEqual([
+      '/ 01 - HARDWARE',
+      '/ 02 - SOFTWARE',
+      '/ 03 - ECOSYSTEM',
+    ]);
 
-    const emphases = heroColumns.map((column) => column.emphasis);
+    const emphases = heroColumns.map((column) => (column as { phraseEmphasis: string }).phraseEmphasis);
     expect(new Set(emphases).size).toBe(emphases.length);
 
-    for (const [index, column] of heroColumns.entries()) {
-      expect(column.num).toMatch(/^\/ 0[1-3] - [A-Z]+$/);
-      expect(column.phrase.length).toBeGreaterThan(8);
+    for (const column of heroColumns) {
+      expect((column as { phraseLead: string }).phraseLead).toBe('I');
+      expect((column as { phraseTail: string }).phraseTail.length).toBeGreaterThan(8);
       expect(column.caption.length).toBeGreaterThan(20);
-      expect(column.phrase.toLowerCase()).toContain(column.emphasis.toLowerCase());
-      expect(column.num).toContain(`0${index + 1}`);
+      expect((column as { motifVariant: string }).motifVariant).toMatch(/^(body|brain|rooms)$/);
 
-      if (column.motifVariant === 'brain') {
-        expect(column.motifStroke).toMatch(/^#[0-9A-F]{6}$/i);
-        expect(column.motifFill).toMatch(/^#[0-9A-F]{6}$/i);
+      if ((column as { motifVariant: string }).motifVariant === 'brain') {
+        expect((column as { motifStroke?: string }).motifStroke).toMatch(/^#[0-9A-F]{6}$/i);
+        expect((column as { motifFill?: string }).motifFill).toMatch(/^#[0-9A-F]{6}$/i);
       } else {
-        expect(column.motifStroke).toBeUndefined();
-        expect(column.motifFill).toBeUndefined();
+        expect((column as { motifStroke?: string }).motifStroke).toBeUndefined();
+        expect((column as { motifFill?: string }).motifFill).toBeUndefined();
       }
     }
   });
 });
 
 describe('body section content data', () => {
-  it('keeps body header structure and body section identity', () => {
+  it('keeps body header structure and triptych section framing', () => {
     expect(bodyHeader).toMatchObject({
-      section: 'body',
-      num: expect.any(String),
-      title: expect.any(String),
-      subtitle: expect.any(String),
+      tag: '/ 01 · BODY',
+      headingLead: 'I',
+      headingEmphasis: 'design',
+      headingTail: 'the body.',
+      countTitle: 'HARDWARE TRACK',
+      countMeta: 'CAD · PCB · FAB · METAL',
     });
-
-    expect(bodyHeader.num).toMatch(/^\/ 01 - BODY$/);
-    expect(bodyHeader.title.toLowerCase()).toContain('body');
-    expect(bodyHeader.subtitle).toContain('HARDWARE TRACK');
   });
 
-  it('keeps four distinct CAD cards with valid labels and constrained sizes', () => {
+  it('keeps four distinct CAD cards with blueprint headers and domain tags', () => {
     expect(bodyCards).toHaveLength(4);
-    expect(bodyCards[0]?.size).toBe('lg');
+    expect(bodyCards[0]).toMatchObject({
+      headerLeft: 'DWG-001 · BIPED-V3',
+      headerRight: 'SCALE 1:4',
+      title: 'bipedal',
+      titleEmphasis: 'walker v3',
+      imageLabel: 'biped_hero.jpg',
+      tags: ['hw', 'sw'],
+      large: true,
+    });
+    expect(bodyCards[1]).toMatchObject({
+      headerLeft: 'DWG-002 · GRIPPER',
+      headerRight: 'REV B',
+      tags: ['hw'],
+    });
+    expect(bodyCards[3]).toMatchObject({
+      headerRight: 'TORQUE 8Nm',
+      title: 'torque',
+      titleEmphasis: 'actuator',
+    });
 
     const titles = bodyCards.map((card) => card.title);
     const imageLabels = bodyCards.map((card) => card.imageLabel);
@@ -113,34 +142,53 @@ describe('body section content data', () => {
     expect(new Set(imageLabels).size).toBe(imageLabels.length);
 
     for (const card of bodyCards) {
-      expect(card.title.length).toBeGreaterThan(4);
+      expect(card.title.length).toBeGreaterThanOrEqual(4);
       expect(card.description.length).toBeGreaterThan(30);
       expect(card.imageLabel).toMatch(/^[a-z0-9_]+\.(jpg|png|cad)$/i);
-
-      if (card.size !== undefined) {
-        expect(['sm', 'md', 'lg']).toContain(card.size);
-      }
+      expect((card as { headerLeft: string }).headerLeft).toContain('DWG-');
+      expect((card as { headerRight: string }).headerRight.length).toBeGreaterThan(3);
+      expect((card as { tags: string[] }).tags.length).toBeGreaterThan(0);
+      expect((card as { tags: string[] }).tags.every((tag) => ['hw', 'sw', 'eco'].includes(tag))).toBe(true);
     }
   });
 });
 
 describe('brain section content data', () => {
-  it('keeps brain header anchored to software track', () => {
+  it('keeps brain header anchored to software track with split heading payload', () => {
     expect(brainHeader).toMatchObject({
-      section: 'brain',
-      num: '/ 02 - BRAIN',
-      title: expect.any(String),
-      subtitle: expect.any(String),
+      tag: '/ 02 · BRAIN',
+      headingLead: 'I',
+      headingEmphasis: 'train',
+      headingTail: 'the brain.',
+      countTitle: 'SOFTWARE TRACK',
+      countMeta: 'RL · CV · SLAM · SIM',
     });
-
-    expect(brainHeader.title.toLowerCase()).toContain('brain');
-    expect(brainHeader.subtitle?.toUpperCase()).toContain('SOFTWARE TRACK');
   });
 
-  it('keeps five node cards with valid widths and domain tags', () => {
+  it('keeps five node cards with telemetry headers and optional ornaments', () => {
     expect(brainNodes).toHaveLength(5);
     expect(brainNodes.filter((node) => node.width === 'w6')).toHaveLength(2);
     expect(brainNodes.filter((node) => node.width === 'w4')).toHaveLength(3);
+
+    expect(brainNodes[0]).toMatchObject({
+      headerLeft: 'policy.pt · PPO',
+      headerRight: 'loss ↓ 0.043',
+      title: 'sim-to-real',
+      titleEmphasis: 'walker policy',
+      includeLossCurve: true,
+    });
+    expect(brainNodes[1]).toMatchObject({
+      headerLeft: 'perception.py',
+      headerRight: '12Hz · 94%',
+      title: 'visual-grasp',
+      titleEmphasis: 'ranker',
+    });
+    expect((brainNodes[1] as { codeLines?: string[] }).codeLines).toEqual([
+      '# grasp_ranker.py',
+      'class GraspRanker(nn.Module):',
+      '  def forward(self, rgb, depth):',
+      '    return self.head(self.backbone(rgb))',
+    ]);
 
     const titles = brainNodes.map((node) => node.title);
     expect(new Set(titles).size).toBe(titles.length);
@@ -149,6 +197,9 @@ describe('brain section content data', () => {
       expect(node.description.length).toBeGreaterThan(30);
       expect(node.tags.length).toBeGreaterThan(0);
       expect(node.tags.every((tag) => ['hw', 'sw', 'eco'].includes(tag))).toBe(true);
+      expect((node as { headerLeft: string }).headerLeft.length).toBeGreaterThan(6);
+      expect((node as { headerRight: string }).headerRight.length).toBeGreaterThan(3);
+      expect((node as { titleEmphasis: string }).titleEmphasis.length).toBeGreaterThanOrEqual(2);
     }
   });
 });
@@ -156,34 +207,65 @@ describe('brain section content data', () => {
 describe('rooms section content data', () => {
   it('keeps rooms header and summary focused on ecosystem building', () => {
     expect(roomsHeader).toMatchObject({
-      section: 'rooms',
-      num: '/ 03 - ROOMS',
-      title: expect.any(String),
-      subtitle: expect.any(String),
+      tag: '/ 03 · ROOMS',
+      headingLead: 'I',
+      headingEmphasis: 'open',
+      headingTail: 'the rooms.',
+      countTitle: 'ECOSYSTEM TRACK',
+      countMeta: 'EVENTS · SUMMITS · HACKS',
     });
 
-    expect(roomsHeader.title.toLowerCase()).toContain('rooms');
-    expect(roomsHeader.subtitle?.toUpperCase()).toContain('ECOSYSTEM TRACK');
-
-    expect(roomsSummary.title.toLowerCase()).toContain('builders');
-    expect(roomsSummary.body.length).toBeGreaterThan(40);
-    expect(roomsSummary.tags).toEqual(['eco']);
+    expect(roomsSummary).toMatchObject({
+      kicker: 'Why rooms -',
+      titleLine1: 'good work',
+      titleLine2: 'happens where',
+      emphasis: 'builders meet.',
+      totalBuilders: '410+',
+      launchedProjects: '17',
+    });
   });
 
-  it('keeps three poster cards with unique labels', () => {
+  it('keeps three poster cards with ticket stubs, variants, and ecosystem tags', () => {
     expect(roomPosters).toHaveLength(3);
-    expect(roomPosters[0]?.size).toBe('lg');
+    expect(roomPosters[0]).toMatchObject({
+      large: true,
+      stubLeft: 'EST. 2024',
+      stubRight: 'N° 01',
+      kicker: 'The flagship -',
+      title: 'the Robotics',
+      titleEmphasis: 'Builders Summit',
+      statValue: '240',
+      statLabel: '// attendees · edition III (projected)',
+      tags: ['eco'],
+    });
+    expect(roomPosters[1]).toMatchObject({
+      variant: 'accent',
+      stubLeft: 'WEEKEND FORMAT',
+      stubRight: '24 HR',
+      kicker: 'Hack -',
+      title: 'robo',
+      titleEmphasis: 'hack /24',
+    });
+    expect(roomPosters[2]).toMatchObject({
+      variant: 'dark',
+      stubLeft: 'INVITE-ONLY',
+      stubRight: 'QUARTERLY',
+      kicker: 'Small rooms -',
+      title: 'the',
+      titleEmphasis: 'workshop series',
+    });
 
     const titles = roomPosters.map((poster) => poster.title);
-    const labels = roomPosters.map((poster) => poster.imageLabel);
 
     expect(new Set(titles).size).toBe(titles.length);
-    expect(new Set(labels).size).toBe(labels.length);
 
     for (const poster of roomPosters) {
-      expect(poster.subtitle.length).toBeGreaterThan(6);
+      expect((poster as { stubLeft: string }).stubLeft.length).toBeGreaterThan(3);
+      expect((poster as { stubRight: string }).stubRight.length).toBeGreaterThan(1);
+      expect((poster as { kicker: string }).kicker.length).toBeGreaterThan(4);
+      expect((poster as { titleEmphasis: string }).titleEmphasis.length).toBeGreaterThan(3);
       expect(poster.description.length).toBeGreaterThan(30);
-      expect(poster.imageLabel).toMatch(/^[a-z0-9_\-\.]+$/i);
+      expect((poster as { tags: string[] }).tags).toEqual(['eco']);
     }
   });
 });
@@ -193,11 +275,11 @@ describe('projects content data', () => {
     expect(projectsIntro.length).toBeGreaterThan(100);
     expect(projectsIntro.toLowerCase()).toContain('territories');
 
-    expect(vennLegend).toEqual({
-      hw: expect.stringContaining('hardware'),
-      sw: expect.stringContaining('intelligence'),
-      eco: expect.stringContaining('space'),
-    });
+    expect(vennLegend).toEqual([
+      { key: 'HW', text: 'I designed or fabricated hardware.' },
+      { key: 'SW', text: 'I wrote the intelligence.' },
+      { key: 'ECO', text: 'I built the space / event around it.' },
+    ]);
   });
 
   it('keeps twelve projects with valid years and domain booleans', () => {
@@ -221,19 +303,27 @@ describe('projects content data', () => {
 
 describe('contact content data', () => {
   it('keeps triptych call-to-action heading and stable contact links', () => {
-    const headingLower = contactHeading.toLowerCase();
-    expect(headingLower).toContain('body');
-    expect(headingLower).toContain('brain');
-    expect(headingLower).toContain('rooms');
+    expect(contactHeading).toMatchObject({
+      lead: 'build the',
+      body: 'body',
+      mid: 'train the',
+      brain: 'brain',
+      tailLead: 'fill the',
+      rooms: 'rooms',
+    });
 
     expect(contactLinks).toHaveLength(5);
 
     const labels = contactLinks.map((link) => link.label);
-    const hrefs = contactLinks.map((link) => link.href);
 
     expect(new Set(labels).size).toBe(labels.length);
-    expect(new Set(hrefs).size).toBe(hrefs.length);
-    expect(contactLinks.some((link) => link.href.startsWith('mailto:'))).toBe(true);
+    expect(contactLinks).toEqual([
+      { label: 'robot@placeholder.edu ->', href: 'mailto:robot@placeholder.edu' },
+      { label: 'github.com/robot ->', href: '#' },
+      { label: 'linkedin.com/in/robot ->', href: '#' },
+      { label: 'resume_2026.pdf ↓', href: '#' },
+      { label: '/ rooms · upcoming events ->', href: '#' },
+    ]);
   });
 });
 
