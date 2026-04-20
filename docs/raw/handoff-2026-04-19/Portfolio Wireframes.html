@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1280"/>
+<title>Robotics Portfolio — Wireframe Explorations</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css"/>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="dir1_notebook.jsx"></script>
+<script type="text/babel" src="dir2_terminal.jsx"></script>
+<script type="text/babel" src="dir3_schematic.jsx"></script>
+<script type="text/babel" src="dir4_editorial.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "defaultTab": 3,
+  "accent": "#B8D48A",
+  "showAnnotations": true,
+  "density": "normal"
+}/*EDITMODE-END*/;
+
+const DIRECTIONS = [
+  {id: 'notebook',  name: 'Engineering Notebook',  sub: 'lab-notebook / annotated / grid paper', Comp: DirNotebook},
+  {id: 'terminal',  name: 'Terminal Dashboard',    sub: 'sidebar nav / mono / robot OS',          Comp: DirTerminal},
+  {id: 'schematic', name: 'Schematic Grid',        sub: 'circuit diagram / nodes + traces',       Comp: DirSchematic},
+  {id: 'editorial', name: 'Bold Editorial',        sub: 'huge type / scroll strips',              Comp: DirEditorial},
+];
+
+const ACCENTS = [
+  {name: 'yellow', hex: '#FFD466', oklch: 'oklch(0.88 0.12 85)'},
+  {name: 'green',  hex: '#B8D48A', oklch: 'oklch(0.85 0.1 130)'},
+  {name: 'pink',   hex: '#F4B6C0', oklch: 'oklch(0.82 0.08 15)'},
+  {name: 'blue',   hex: '#A8C5E0', oklch: 'oklch(0.82 0.08 240)'},
+  {name: 'off',    hex: '#E8E2D0', oklch: 'oklch(0.9 0.02 80)'},
+];
+
+function App() {
+  const [tab, setTab] = useState(() => {
+    const saved = localStorage.getItem('rp_tab');
+    return saved !== null ? parseInt(saved) : TWEAKS.defaultTab;
+  });
+  const [editOpen, setEditOpen] = useState(false);
+  const [accent, setAccent] = useState(TWEAKS.accent);
+  const [showAnno, setShowAnno] = useState(TWEAKS.showAnnotations);
+  const [density, setDensity] = useState(TWEAKS.density);
+
+  useEffect(() => { localStorage.setItem('rp_tab', tab); }, [tab]);
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--highlight', accent);
+  }, [accent]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!e.data || !e.data.type) return;
+      if (e.data.type === '__activate_edit_mode') setEditOpen(true);
+      if (e.data.type === '__deactivate_edit_mode') setEditOpen(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({type: '__edit_mode_available'}, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const persist = (key, val) => {
+    window.parent.postMessage({type: '__edit_mode_set_keys', edits: {[key]: val}}, '*');
+  };
+
+  const Current = DIRECTIONS[tab].Comp;
+
+  return (
+    <div className={`app ${density === 'dense' ? 'dense' : density === 'roomy' ? 'roomy' : ''} ${!showAnno ? 'no-anno' : ''}`}>
+      <div className="app-header">
+        <div>
+          <h1>robotics portfolio · wireframes</h1>
+          <div className="mono" style={{color: 'var(--ink-2)', marginTop: 4}}>
+            4 directions · one-page scroll · technical / engineer vibe · placeholder content
+          </div>
+        </div>
+        <div className="meta">
+          robot / senior robotics<br/>
+          target: SU26 internship<br/>
+          status: exploring direction
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="tabs" data-screen-label="Wireframe tabs">
+        {DIRECTIONS.map((d, i) => (
+          <button
+            key={d.id}
+            className={`tab ${i === tab ? 'active' : ''}`}
+            onClick={() => setTab(i)}
+            data-screen-label={`0${i+1} ${d.name}`}
+          >
+            <span className="num">0{i+1}</span>{d.name.toLowerCase()}
+          </button>
+        ))}
+      </div>
+
+      {/* Current direction description */}
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'var(--ink-2)'}}>
+        <div>
+          <span style={{color: 'var(--ink)', fontWeight: 600}}>/{DIRECTIONS[tab].id}</span>
+          <span style={{margin: '0 8px'}}>—</span>
+          {DIRECTIONS[tab].sub}
+        </div>
+        <div>{String(tab+1).padStart(2,'0')} / 0{DIRECTIONS.length}</div>
+      </div>
+
+      {/* Frame */}
+      <div className="frame" data-screen-label={`Preview: ${DIRECTIONS[tab].name}`}>
+        <div className="frame-bar">
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="dot"></div>
+          <div className="url">robot.placeholder.dev / {DIRECTIONS[tab].id}</div>
+          <div style={{width: 40}}></div>
+        </div>
+        <div className="frame-body" key={tab}>
+          <Current showAnno={showAnno} />
+        </div>
+      </div>
+
+      {/* Footer annotation */}
+      <div style={{marginTop: 16, display: 'flex', justifyContent: 'space-between', fontFamily: 'Caveat, cursive', fontSize: 18}}>
+        <span>↑ scroll inside the frame to see full page</span>
+        <span style={{color: 'var(--ink-2)'}}>tap Tweaks in toolbar for options →</span>
+      </div>
+
+      {/* Tweaks panel */}
+      <div className={`tweaks ${editOpen ? 'open' : ''}`}>
+        <h3>Tweaks</h3>
+
+        <div className="row-tw">
+          <span>direction</span>
+          <select value={tab} onChange={e => { const v = parseInt(e.target.value); setTab(v); persist('defaultTab', v); }}>
+            {DIRECTIONS.map((d, i) => <option key={d.id} value={i}>0{i+1} {d.name}</option>)}
+          </select>
+        </div>
+
+        <div className="row-tw" style={{alignItems: 'flex-start'}}>
+          <span>accent</span>
+          <div className="swatches">
+            {ACCENTS.map(a => (
+              <div
+                key={a.name}
+                className={`sw ${accent === a.hex ? 'selected' : ''}`}
+                style={{background: a.hex}}
+                title={a.name}
+                onClick={() => { setAccent(a.hex); persist('accent', a.hex); }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="row-tw">
+          <span>annotations</span>
+          <button onClick={() => { const v = !showAnno; setShowAnno(v); persist('showAnnotations', v); }}>
+            {showAnno ? '● on' : '○ off'}
+          </button>
+        </div>
+
+        <div className="row-tw">
+          <span>density</span>
+          <select value={density} onChange={e => { setDensity(e.target.value); persist('density', e.target.value); }}>
+            <option value="dense">dense</option>
+            <option value="normal">normal</option>
+            <option value="roomy">roomy</option>
+          </select>
+        </div>
+
+        <div style={{marginTop: 12, paddingTop: 10, borderTop: '1px dashed var(--ink)', fontSize: 10, color: 'var(--ink-3)'}}>
+          tab ↔ arrow keys also work
+        </div>
+      </div>
+
+      <style>{`
+        .no-anno .anno { display: none !important; }
+      `}</style>
+    </div>
+  );
+}
+
+// Keyboard nav
+window.addEventListener('keydown', (e) => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT' || e.target.tagName === 'TEXTAREA') return;
+  const cur = parseInt(localStorage.getItem('rp_tab') || '0');
+  if (e.key === 'ArrowRight') {
+    localStorage.setItem('rp_tab', Math.min(3, cur+1));
+    location.reload();
+  } else if (e.key === 'ArrowLeft') {
+    localStorage.setItem('rp_tab', Math.max(0, cur-1));
+    location.reload();
+  }
+});
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
