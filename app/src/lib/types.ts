@@ -1,4 +1,4 @@
-export type SectionKey = 'hero' | 'body' | 'brain' | 'rooms' | 'projects' | 'contact';
+export type SectionKey = 'body' | 'brain' | 'rooms';
 
 export type DomainTag = 'hw' | 'sw' | 'eco';
 
@@ -7,18 +7,97 @@ export type FilterKey = 'all' | DomainTag | 'overlap' | 'trinity';
 export type SiteMeta = {
   title: string;
   description: string;
+  topLeft: string;
+  topRight: string;
   canonicalUrl: string;
 };
 
-export type SiteDisplayMeta = Omit<SiteMeta, 'canonicalUrl'> & {
-  topLeft: string;
-  topRight: string;
+export type NavBrand = {
+  name: string;
+  suffix: string;
 };
 
 export type NavLink = {
+  href: `#${string}`;
   label: string;
-  href: string;
-  section: SectionKey;
+  accent?: SectionKey;
+};
+
+export type HeroTitle = {
+  lead: string;
+  body: string;
+  midA: string;
+  brain: string;
+  midB: string;
+  rooms: string;
+  tail: string;
+};
+
+export type HeroColumn = {
+  key: SectionKey;
+  number: string;
+  phraseLead: string;
+  phraseEmphasis: string;
+  phraseTail: string;
+  caption: string;
+  motifVariant: SectionKey;
+  motifStroke?: string;
+  motifFill?: string;
+};
+
+export type SectionHeader = {
+  tag: string;
+  headingLead: string;
+  headingEmphasis: string;
+  headingTail: string;
+  countTitle: string;
+  countMeta: string;
+};
+
+export type BodyCard = {
+  headerLeft: string;
+  headerRight: string;
+  imageLabel: string;
+  title: string;
+  titleEmphasis: string;
+  description: string;
+  tags: DomainTag[];
+  large?: boolean;
+};
+
+export type BrainNode = {
+  width: 'w6' | 'w4' | 'w8';
+  headerLeft: string;
+  headerRight: string;
+  title: string;
+  titleEmphasis: string;
+  description: string;
+  tags: DomainTag[];
+  codeLines?: string[];
+  includeLossCurve?: boolean;
+};
+
+export type PosterCard = {
+  variant?: 'default' | 'accent' | 'dark';
+  large?: boolean;
+  stubLeft: string;
+  stubRight: string;
+  kicker: string;
+  title: string;
+  titleEmphasis: string;
+  description: string;
+  statValue?: string;
+  statLabel?: string;
+  tags: DomainTag[];
+};
+
+export type SummaryPanel = {
+  kicker: string;
+  titleLine1: string;
+  titleLine2: string;
+  emphasis: string;
+  totalBuilders: string;
+  launchedProjects: string;
 };
 
 export type Project = {
@@ -30,52 +109,13 @@ export type Project = {
   description: string;
 };
 
-export type HeroColumn = {
-  num: string;
-  phrase: string;
-  emphasis: string;
-  caption: string;
-  motifVariant: 'body' | 'brain' | 'rooms';
-};
-
-export type HeroColumnWithMotif = HeroColumn & {
-  motifStroke?: string;
-  motifFill?: string;
-};
-
-export type SectionHeader = {
-  section: SectionKey;
-  num: string;
-  title: string;
-  subtitle?: string;
-};
-
-export type BodyCard = {
-  title: string;
-  description: string;
-  imageLabel: string;
-  size?: 'sm' | 'md' | 'lg';
-};
-
-export type BrainNode = {
-  title: string;
-  description: string;
-  tags: DomainTag[];
-  width: 'w4' | 'w6' | 'w12';
-};
-
-export type PosterCard = {
-  title: string;
-  subtitle: string;
-  description: string;
-  imageLabel: string;
-  size?: 'sm' | 'lg';
-};
-
-export type SummaryPanel = {
-  title: string;
+export type ContactHeading = {
+  lead: string;
   body: string;
-  tags: DomainTag[];
+  mid: string;
+  brain: string;
+  tailLead: string;
+  rooms: string;
 };
 
 export type ContactLink = {

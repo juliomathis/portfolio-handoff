@@ -1,19 +1,23 @@
-import type { NavLink, SiteDisplayMeta } from '../lib/types';
+import type { NavBrand, NavLink, SiteMeta } from '../lib/types';
 
-export const siteMeta: SiteDisplayMeta = {
+export const siteMeta: SiteMeta = {
   title: 'Robot - Body / Brain / Rooms',
   description:
-    'I work across three territories: the body of the machine, the brain that runs it, and the rooms where others come to build theirs.',
-  topLeft: 'o portfolio_2026 - triptych',
-  topRight: 'robot - senior - robotics - ecosystem builder',
+    'Editorial robotics portfolio spanning hardware, software, and ecosystem building.',
+  topLeft: '◉ portfolio_2026 · triptych',
+  topRight: 'robot · senior · robotics · ecosystem builder',
+  canonicalUrl: 'https://portfolio.127-0-0-1.nip.io',
 };
 
-export const navBrand = 'robot.dev';
+export const navBrand: NavBrand = {
+  name: 'robot',
+  suffix: '.dev',
+};
 
 export const navLinks: NavLink[] = [
-  { label: '/ body', href: '#body', section: 'body' },
-  { label: '/ brain', href: '#brain', section: 'brain' },
-  { label: '/ rooms', href: '#rooms', section: 'rooms' },
-  { label: '/ all projects', href: '#all', section: 'projects' },
-  { label: '/ contact', href: '#contact', section: 'contact' },
+  { href: '#body', label: '/ body', accent: 'body' },
+  { href: '#brain', label: '/ brain', accent: 'brain' },
+  { href: '#rooms', label: '/ rooms', accent: 'rooms' },
+  { href: '#all', label: '/ all projects' },
+  { href: '#contact', label: '/ contact' },
 ];

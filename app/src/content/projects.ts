@@ -1,13 +1,13 @@
-import type { DomainTag, Project } from '../lib/types';
+import type { Project } from '../lib/types';
 
 export const projectsIntro =
-  'Every project sits in one, two, or three territories. The overlap is where things get interesting: a hardware kit that exists because a summit needed demo material, or a walking robot whose policy was workshopped in one of the rooms.';
+  'Every project sits in one, two, or three territories. The overlap is where things get interesting - a hardware kit that exists because a summit needed demo material; a walking robot whose policy was workshopped in one of the rooms.';
 
-export const vennLegend: Record<DomainTag, string> = {
-  hw: 'I designed or fabricated hardware.',
-  sw: 'I wrote the intelligence.',
-  eco: 'I built the space or event around it.',
-};
+export const vennLegend = [
+  { key: 'HW', text: 'I designed or fabricated hardware.' },
+  { key: 'SW', text: 'I wrote the intelligence.' },
+  { key: 'ECO', text: 'I built the space / event around it.' },
+] as const;
 
 export const allProjects: Project[] = [
   {
@@ -16,7 +16,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: true,
     eco: false,
-    description: 'Hand-built biped paired with PPO policy and sim-to-real transfer.',
+    description: 'Hand-built biped + PPO policy · sim-to-real.',
   },
   {
     title: 'slam rover outdoor',
@@ -24,7 +24,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: true,
     eco: false,
-    description: 'Custom chassis integrated with a LIO-SAM navigation stack.',
+    description: 'Custom chassis + LIO-SAM nav stack.',
   },
   {
     title: 'visual-grasp arm',
@@ -32,7 +32,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: true,
     eco: false,
-    description: 'Manipulator platform and CV pipeline for grasping novel objects.',
+    description: 'Arm + CV pipeline grasping novel objects.',
   },
   {
     title: 'drone swarm sim',
@@ -40,7 +40,7 @@ export const allProjects: Project[] = [
     hw: false,
     sw: true,
     eco: false,
-    description: 'Parallelized reinforcement learning experiments for drone swarms in Isaac.',
+    description: 'Parallelized swarm RL in Isaac Sim.',
   },
   {
     title: 'tactile gripper',
@@ -48,7 +48,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: false,
     eco: false,
-    description: 'Compliant gripper with capacitive touch and patent-pending architecture.',
+    description: 'Compliant gripper with cap touch, patent pending.',
   },
   {
     title: 'rl cart-pole bot',
@@ -56,7 +56,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: true,
     eco: false,
-    description: 'Real-world SAC setup with balance learned in under 30 minutes.',
+    description: 'Real-world SAC, sim-to-real in 30 min.',
   },
   {
     title: 'campus delivery rover',
@@ -64,7 +64,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: true,
     eco: true,
-    description: 'Club-built delivery rover launched publicly at a campus summit.',
+    description: 'Club project; launched live at a campus summit.',
   },
   {
     title: 'robotics builders summit',
@@ -72,7 +72,7 @@ export const allProjects: Project[] = [
     hw: false,
     sw: false,
     eco: true,
-    description: 'Annual regional summit for student robotics builders.',
+    description: 'Annual regional student robotics summit.',
   },
   {
     title: 'robohack /24',
@@ -80,7 +80,7 @@ export const allProjects: Project[] = [
     hw: false,
     sw: false,
     eco: true,
-    description: '24-hour robotics hackathon where physical robots are mandatory.',
+    description: '24-hour hardware-required hackathon.',
   },
   {
     title: 'workshop series',
@@ -88,7 +88,7 @@ export const allProjects: Project[] = [
     hw: false,
     sw: false,
     eco: true,
-    description: 'Invite-only quarterly sessions for peer review and bench work.',
+    description: 'Invite-only quarterly working sessions.',
   },
   {
     title: 'torque actuator kit',
@@ -96,7 +96,7 @@ export const allProjects: Project[] = [
     hw: true,
     sw: false,
     eco: true,
-    description: 'Open-source actuator kit released for summit demo teams.',
+    description: 'Open-source kit released at the summit.',
   },
   {
     title: 'sim-to-real paper',
@@ -104,6 +104,6 @@ export const allProjects: Project[] = [
     hw: false,
     sw: true,
     eco: false,
-    description: 'Research publication on actuator-dynamics transfer and policy robustness.',
+    description: 'ICRA 2025 · actuator-dynamics transfer.',
   },
 ];
