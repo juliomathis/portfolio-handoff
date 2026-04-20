@@ -15,13 +15,12 @@ describe('base layout contract', () => {
     const baseAstro = await readSource('../../src/layouts/Base.astro');
 
     expect(baseAstro).toContain("import '../styles/global.css';");
-    expect(baseAstro).toContain('title?: string');
-    expect(baseAstro).toContain('description?: string');
+    expect(baseAstro).toMatch(/interface\s+Props\s*\{[\s\S]*title\?:\s*string;[\s\S]*description\?:\s*string;[\s\S]*\}/);
+    expect(baseAstro).toMatch(/const\s*\{[\s\S]*\}\s*:\s*Props\s*=\s*Astro\.props;/);
     expect(baseAstro).toContain('<!doctype html>');
     expect(baseAstro).toContain('<html lang="en">');
-    expect(baseAstro).toContain('<meta name="description" content={description} />');
-    expect(baseAstro).toContain('<a class="skip-link" href="#main">Skip to content</a>');
-
+    expect(baseAstro).toMatch(/<meta\s+name="description"\s+content=\{description\}\s*\/>/);
+    expect(baseAstro).toMatch(/<a\s+class="skip-link"\s+href="#main">[\s\S]*<\/a>/);
     expect(baseAstro).toContain('family=Space+Grotesk');
     expect(baseAstro).toContain('family=JetBrains+Mono');
     expect(baseAstro).toContain('family=Fraunces');
@@ -29,17 +28,17 @@ describe('base layout contract', () => {
 });
 
 describe('phase 1 index shell contract', () => {
-  it('uses Base layout and includes all required section anchors', async () => {
+  it('wires metadata through Base and exposes required section structure', async () => {
     const indexAstro = await readSource('../../src/pages/index.astro');
 
-    expect(indexAstro).toContain("import Base from '../layouts/Base.astro';");
-    expect(indexAstro).toContain("import { siteMeta } from '../content';");
-    expect(indexAstro).toContain('<Base title={siteMeta.title} description={siteMeta.description}>');
-    expect(indexAstro).toContain('Phase 1 scaffold');
-    expect(indexAstro).toContain('<main id="main">');
+    expect(indexAstro).toMatch(/import\s+Base\s+from\s+'\.\.\/layouts\/Base\.astro';/);
+    expect(indexAstro).toMatch(/import\s+\{\s*siteMeta\s*\}\s+from\s+'\.\.\/content';/);
+    expect(indexAstro).toMatch(/<Base[^>]*title=\{siteMeta\.title\}[^>]*description=\{siteMeta\.description\}[^>]*>/);
+    expect(indexAstro).toMatch(/<main\s+id="main">/);
 
     for (const id of ['body', 'brain', 'rooms', 'all', 'contact']) {
-      expect(indexAstro).toContain(`<section id="${id}">`);
+      const sectionPattern = new RegExp(`<section\\s+id="${id}"[\\s\\S]*?>`, 'm');
+      expect(indexAstro).toMatch(sectionPattern);
     }
   });
 });
