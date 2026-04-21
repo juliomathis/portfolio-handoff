@@ -6,7 +6,6 @@ export const siteMeta: SiteMeta = {
     'Editorial robotics portfolio spanning hardware, software, and ecosystem building.',
   topLeft: '◉ portfolio_2026 · triptych',
   topRight: 'robot · senior · robotics · ecosystem builder',
-  canonicalUrl: 'https://portfolio.127-0-0-1.nip.io',
 };
 
 export const navBrand: NavBrand = {
