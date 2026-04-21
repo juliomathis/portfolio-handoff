@@ -11,4 +11,4 @@ Production implementation of the Claude Design portfolio handoff.
 
 ## Phase status
 
-This repository is currently in bootstrap. Follow `IMPLEMENTATION_PLAN.md` phase-by-phase.
+Phase 1 foundation is complete (Astro scaffold + typed content layer). Follow `IMPLEMENTATION_PLAN.md` phase-by-phase for the current task scope.

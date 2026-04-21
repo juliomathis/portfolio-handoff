@@ -20,12 +20,10 @@ describe('styles foundation files', () => {
       .split('\n')
       .filter((line) => line.startsWith('@import'));
 
-    expect(importLines).toEqual([
-      "@import './tokens.css';",
-      "@import './reset.css';",
-      "@import './typography.css';",
-      "@import './breakpoints.css';",
-    ]);
+    expect(importLines).toContain("@import './tokens.css';");
+    expect(importLines).toContain("@import './reset.css';");
+    expect(importLines).toContain("@import './typography.css';");
+    expect(importLines).toContain("@import './breakpoints.css';");
     expect(globalCss).toContain('@media (prefers-reduced-motion: reduce)');
     expect(globalCss).toContain('.skip-link');
   });

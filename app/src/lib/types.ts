@@ -9,7 +9,6 @@ export type SiteMeta = {
   description: string;
   topLeft: string;
   topRight: string;
-  canonicalUrl: string;
 };
 
 export type NavBrand = {
