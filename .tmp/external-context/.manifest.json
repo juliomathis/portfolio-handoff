@@ -1,0 +1,23 @@
+{
+  "updatedAt": "2026-04-22T00:00:00Z",
+  "entries": [
+    {
+      "package": "@playwright/test",
+      "path": ".tmp/external-context/playwright-test/astro-ts-phase3-local-setup.md",
+      "officialDocs": "https://playwright.dev/docs/intro",
+      "source": "Context7 API + official docs"
+    },
+    {
+      "package": "@axe-core/playwright",
+      "path": ".tmp/external-context/axe-core-playwright/astro-ts-phase3-local-setup.md",
+      "officialDocs": "https://github.com/dequelabs/axe-core-npm/tree/develop/packages/playwright",
+      "source": "Context7 API + official docs"
+    },
+    {
+      "package": "@lhci/cli",
+      "path": ".tmp/external-context/lhci-cli/astro-ts-phase3-local-setup.md",
+      "officialDocs": "https://googlechrome.github.io/lighthouse-ci/docs/configuration.html",
+      "source": "Context7 API + official docs"
+    }
+  ]
+}

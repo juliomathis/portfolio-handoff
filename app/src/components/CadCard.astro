@@ -1,0 +1,37 @@
+---
+import type { BodyCard, DomainTag } from '../lib/types';
+
+interface Props {
+  card: BodyCard;
+}
+
+const { card }: Props = Astro.props;
+
+const domainLabel: Record<DomainTag, string> = {
+  hw: 'HARDWARE',
+  sw: 'SOFTWARE',
+  eco: 'ECOSYSTEM',
+};
+---
+
+<article class:list={['cad-card', { lg: card.large }]}>
+  <div class="corner-ticks" aria-hidden="true"></div>
+  <div class="hdr mono">
+    <span>{card.headerLeft}</span>
+    <span>{card.headerRight}</span>
+  </div>
+  <div class="image" aria-hidden="true">
+    <span class="lbl mono">{card.imageLabel}</span>
+  </div>
+  <h3>
+    {card.title} <em>{card.titleEmphasis}</em>
+  </h3>
+  <p>{card.description}</p>
+  <div class="tags-row">
+    {
+      card.tags.map((tag) => (
+        <span class={`dom-tag ${tag}`}>{domainLabel[tag]}</span>
+      ))
+    }
+  </div>
+</article>

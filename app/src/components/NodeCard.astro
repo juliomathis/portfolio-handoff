@@ -1,0 +1,42 @@
+---
+import type { BrainNode, DomainTag } from '../lib/types';
+
+interface Props {
+  node: BrainNode;
+}
+
+const { node }: Props = Astro.props;
+
+const domainLabel: Record<DomainTag, string> = {
+  hw: 'HW',
+  sw: 'SW',
+  eco: 'ECO',
+};
+---
+
+<article class={`node-card ${node.width}`}>
+  <div class="hdr mono">
+    <span>{node.headerLeft}</span>
+    <span>{node.headerRight}</span>
+  </div>
+  <h3>
+    {node.title} <em>{node.titleEmphasis}</em>
+  </h3>
+  <p>{node.description}</p>
+
+  {
+    node.codeLines && (
+      <pre class="code"><code>{node.codeLines.join('\n')}</code></pre>
+    )
+  }
+
+  {node.includeLossCurve && <div class="loss-curve" aria-hidden="true"></div>}
+
+  <div class="tags-row">
+    {
+      node.tags.map((tag) => (
+        <span class={`dom-tag ${tag}`}>{domainLabel[tag]}</span>
+      ))
+    }
+  </div>
+</article>

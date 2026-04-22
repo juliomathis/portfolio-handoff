@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1280"/>
+<title>Robot — Robotics Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hifi.css"/>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="hifi_hero.jsx"></script>
+<script type="text/babel" src="hifi_projects.jsx"></script>
+<script type="text/babel" src="hifi_sections.jsx"></script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+const TWEAKS = /*EDITMODE-BEGIN*/{
+  "accentHue": 130,
+  "accentChroma": 0.11,
+  "theme": "paper",
+  "headlineItalic": true,
+  "showJoint": true
+}/*EDITMODE-END*/;
+
+function Nav() {
+  return (
+    <div className="nav">
+      <div className="nav-brand">
+        <div className="joint"/>
+        robot<span style={{color:'var(--ink-3)'}}>.dev</span>
+      </div>
+      <div className="nav-links">
+        <a href="#work">work</a>
+        <a href="#research">research</a>
+        <a href="#skills">toolkit</a>
+        <a href="#about">cv</a>
+        <a href="#videos">videos</a>
+        <a href="#contact" className="cta">hire me →</a>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [hue, setHue] = useState(TWEAKS.accentHue);
+  const [theme, setTheme] = useState(TWEAKS.theme);
+  const [italic, setItalic] = useState(TWEAKS.headlineItalic);
+  const [editOpen, setEditOpen] = useState(false);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    root.style.setProperty('--accent', `oklch(0.82 ${TWEAKS.accentChroma} ${hue})`);
+    root.style.setProperty('--accent-deep', `oklch(0.52 ${TWEAKS.accentChroma + 0.02} ${hue})`);
+    root.style.setProperty('--highlight', `oklch(0.82 ${TWEAKS.accentChroma} ${hue})`);
+  }, [hue]);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.style.setProperty('--paper', '#1A1917');
+      root.style.setProperty('--paper-2', '#23221F');
+      root.style.setProperty('--paper-3', '#2E2D2A');
+      root.style.setProperty('--ink', '#F5F1E8');
+      root.style.setProperty('--ink-2', '#CFCABC');
+      root.style.setProperty('--ink-3', '#8A877D');
+      root.style.setProperty('--ink-4', '#5A5852');
+    } else if (theme === 'bright') {
+      root.style.setProperty('--paper', '#FFFDF7');
+      root.style.setProperty('--paper-2', '#F2EDDA');
+      root.style.setProperty('--paper-3', '#E4DDC3');
+      root.style.setProperty('--ink', '#141413');
+      root.style.setProperty('--ink-2', '#3A3A37');
+      root.style.setProperty('--ink-3', '#6F6E68');
+      root.style.setProperty('--ink-4', '#A8A59A');
+    } else {
+      root.style.setProperty('--paper', '#F5F1E8');
+      root.style.setProperty('--paper-2', '#EBE6D7');
+      root.style.setProperty('--paper-3', '#DDD6C2');
+      root.style.setProperty('--ink', '#141413');
+      root.style.setProperty('--ink-2', '#3A3A37');
+      root.style.setProperty('--ink-3', '#6F6E68');
+      root.style.setProperty('--ink-4', '#A8A59A');
+    }
+  }, [theme]);
+
+  useEffect(() => {
+    document.body.classList.toggle('no-italic', !italic);
+  }, [italic]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!e.data || !e.data.type) return;
+      if (e.data.type === '__activate_edit_mode') setEditOpen(true);
+      if (e.data.type === '__deactivate_edit_mode') setEditOpen(false);
+    };
+    window.addEventListener('message', handler);
+    window.parent.postMessage({type:'__edit_mode_available'}, '*');
+    return () => window.removeEventListener('message', handler);
+  }, []);
+
+  const persist = (k, v) => window.parent.postMessage({type: '__edit_mode_set_keys', edits: {[k]: v}}, '*');
+
+  return (
+    <>
+      <Nav/>
+      <Hero/>
+      <Projects/>
+      <Research/>
+      <Skills/>
+      <CV/>
+      <Videos/>
+      <Contact/>
+      <Footer/>
+
+      <div className={`tweaks ${editOpen ? 'open' : ''}`}>
+        <h3>Tweaks</h3>
+        <div className="row-tw" style={{alignItems:'flex-start'}}>
+          <span>accent hue</span>
+          <div className="swatches">
+            {[{n:'sage',h:130},{n:'amber',h:70},{n:'coral',h:25},{n:'blue',h:240},{n:'violet',h:290}].map(x => (
+              <div key={x.n}
+                className={`sw ${hue === x.h ? 'selected' : ''}`}
+                style={{background:`oklch(0.82 0.11 ${x.h})`}}
+                title={x.n}
+                onClick={() => { setHue(x.h); persist('accentHue', x.h); }}/>
+            ))}
+          </div>
+        </div>
+        <div className="row-tw">
+          <span>theme</span>
+          <select value={theme} onChange={e => { setTheme(e.target.value); persist('theme', e.target.value); }}>
+            <option value="paper">paper</option>
+            <option value="bright">bright</option>
+            <option value="dark">dark</option>
+          </select>
+        </div>
+        <div className="row-tw">
+          <span>italic accents</span>
+          <button onClick={() => { const v = !italic; setItalic(v); persist('headlineItalic', v); }}>
+            {italic ? '● on' : '○ off'}
+          </button>
+        </div>
+      </div>
+
+      <style>{`
+        body.no-italic em { font-style: normal !important; background: transparent !important; transform: none !important; padding: 0 !important; }
+      `}</style>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

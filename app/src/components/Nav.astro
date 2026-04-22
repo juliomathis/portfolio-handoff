@@ -1,0 +1,35 @@
+---
+import { navBrand, navLinks } from '../content';
+---
+
+<header class="nav-shell">
+  <nav class="nav" aria-label="Primary">
+    <a class="nav-brand" href="#">
+      <span class="joint" aria-hidden="true"></span>
+      {navBrand.name}<span class="brand-suffix">{navBrand.suffix}</span>
+    </a>
+
+    <details class="nav-mobile">
+      <summary class="nav-mobile-toggle" aria-label="Toggle navigation">/ menu</summary>
+      <div class="nav-mobile-panel">
+        {
+          navLinks.map((link) => (
+            <a href={link.href} class:list={[link.accent]}>
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+    </details>
+
+    <div class="nav-links">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class:list={[link.accent]}>
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+</header>

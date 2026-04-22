@@ -1,0 +1,45 @@
+---
+import { roomPosters, roomsHeader, roomsSummary } from '../content';
+import Poster from './Poster.astro';
+---
+
+<section class="sec-rooms" id="rooms" aria-labelledby="rooms-heading">
+  <div class="sec-head-bar">
+    <span class="tag mono">{roomsHeader.tag}</span>
+    <h2 id="rooms-heading">
+      {roomsHeader.headingLead} <em>{roomsHeader.headingEmphasis}</em> {roomsHeader.headingTail}
+    </h2>
+    <span class="count mono">
+      {roomsHeader.countTitle}
+      <br />
+      {roomsHeader.countMeta}
+    </span>
+  </div>
+
+  <div class="poster-grid">
+    {roomPosters.map((poster) => <Poster poster={poster} />)}
+
+    <article class="poster rooms-summary">
+      <div>
+        <div class="kicker">{roomsSummary.kicker}</div>
+        <h3>
+          {roomsSummary.titleLine1}
+          <br />
+          {roomsSummary.titleLine2}
+          <br />
+          <em>{roomsSummary.emphasis}</em>
+        </h3>
+      </div>
+
+      <div>
+        <div class="stat-lbl mono">// total builders convened</div>
+        <div class="big-stat">{roomsSummary.totalBuilders}</div>
+      </div>
+
+      <div>
+        <div class="stat-lbl mono">// projects launched on-stage</div>
+        <div class="big-stat">{roomsSummary.launchedProjects}</div>
+      </div>
+    </article>
+  </div>
+</section>

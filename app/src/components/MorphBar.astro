@@ -1,0 +1,32 @@
+---
+import type { SectionKey } from '../lib/types';
+import MotifJoint from './MotifJoint.astro';
+
+interface Props {
+  from: string;
+  to: string;
+  fromVariant: SectionKey;
+  toVariant: SectionKey;
+  fromColor?: string;
+  toColor?: string;
+}
+
+const {
+  from,
+  to,
+  fromVariant,
+  toVariant,
+  fromColor = 'var(--paper)',
+  toColor = 'var(--paper)',
+}: Props = Astro.props;
+---
+
+<div class="morph-bar" aria-hidden="true">
+  <span class="from">/ leaving · {from}</span>
+  <div class="morph-icons">
+    <MotifJoint variant={fromVariant} size={40} fill={fromColor} />
+    <span class="morph-arrow">→</span>
+    <MotifJoint variant={toVariant} size={40} fill={toColor} />
+  </div>
+  <span class="to">arriving · {to} /</span>
+</div>

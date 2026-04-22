@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=1280"/>
+<title>Hero Headline Options</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Fraunces:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F5F1E8;
+    --paper-2: #EBE6D7;
+    --paper-3: #DDD6C2;
+    --ink: #141413;
+    --ink-2: #3A3A37;
+    --ink-3: #6F6E68;
+    --ink-4: #A8A59A;
+    --accent: oklch(0.82 0.11 130);
+    --accent-2: oklch(0.82 0.11 25);
+    --accent-3: oklch(0.82 0.11 240);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--paper-2); color: var(--ink); font-family: 'Space Grotesk', sans-serif; }
+
+  .page-head {
+    padding: 32px 48px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-bottom: 1.5px solid var(--ink);
+  }
+  .page-head h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 38px;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+  .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--ink-3);
+    text-transform: uppercase;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: var(--ink);
+  }
+  .opt {
+    background: var(--paper);
+    padding: 56px 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .opt-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 36px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ink-4);
+  }
+  .opt-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+  }
+  .opt-letter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 4px 10px;
+    letter-spacing: 0.1em;
+  }
+  .opt-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .opt-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-3);
+    letter-spacing: 0.05em;
+    max-width: 320px;
+    text-align: right;
+    line-height: 1.6;
+  }
+
+  /* ---- Base hero style ---- */
+  .hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 128px;
+    line-height: 0.88;
+    letter-spacing: -0.04em;
+    margin: 0;
+    font-weight: 500;
+  }
+  .hero-title em {
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent);
+    padding: 0 16px 4px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    margin: 0 2px;
+  }
+
+  /* ====== Option A — two italic accents, same treatment ====== */
+  /* uses base .hero-title */
+
+  /* ====== Option B — Parallel two-sentence, two accent blocks ====== */
+  .opt-c .hero-title {
+    font-size: 104px;
+  }
+  .opt-c em.a1 { background: var(--accent); }
+  .opt-c em.a2 { background: var(--accent-2); opacity: 0.85; transform: rotate(1deg); }
+
+  /* ====== Option C — Diagram-split: "body" vs "brain" columns ====== */
+  .opt-d .split {
+    display: grid;
+    grid-template-columns: 1fr 1.5px 1fr;
+    gap: 48px;
+    align-items: center;
+    position: relative;
+  }
+  .opt-d .divider {
+    background: var(--ink);
+    height: 200px;
+    align-self: center;
+  }
+  .opt-d .col-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 72px;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .opt-d .col-line em {
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent);
+    padding: 0 10px 2px;
+    display: inline-block;
+  }
+  .opt-d .col-line .r em { background: var(--accent-3); }
+  .opt-d .col-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-3);
+    letter-spacing: 0.1em;
+    margin-bottom: 14px;
+  }
+
+  /* ====== Option E — Labeled inline like a schematic ====== */
+  .opt-e .schem-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 104px;
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    font-weight: 500;
+    position: relative;
+  }
+  .opt-e .schem-title .bolts,
+  .opt-e .schem-title .behavior {
+    position: relative;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ink);
+    background: var(--accent);
+    padding: 0 12px 2px;
+    display: inline-block;
+  }
+  .opt-e .schem-title .behavior { background: var(--accent-2); }
+  .opt-e .schem-title .lbl {
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-3);
+    letter-spacing: 0.15em;
+    white-space: nowrap;
+  }
+  .opt-e .arrow {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 48px;
+    color: var(--ink-4);
+    margin: 0 12px;
+    vertical-align: middle;
+    font-weight: 300;
+  }
+
+  /* ====== Option F — Strike-replace / marker-over ====== */
+  .opt-f .hero-title {
+    font-size: 120px;
+  }
+  .opt-f .struck {
+    position: relative;
+    color: var(--ink-4);
+    font-style: italic;
+    font-weight: 400;
+  }
+  .opt-f .struck::after {
+    content: '';
+    position: absolute;
+    left: -4px; right: -4px;
+    top: 54%;
+    height: 5px;
+    background: var(--ink);
+  }
+  .opt-f .over {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent);
+    padding: 0 12px;
+    display: inline-block;
+    transform: rotate(-1deg);
+    margin-left: -6px;
+  }
+  .opt-f .added {
+    font-family: 'Space Grotesk', sans-serif;
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent-2);
+    padding: 0 12px 2px;
+    display: inline-block;
+    transform: rotate(1.5deg);
+  }
+
+  /* ====== Option G — Number + action manifesto ====== */
+  .opt-g {
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .opt-g .opt-head { border-bottom-color: #3A3A37; }
+  .opt-g .opt-name, .opt-g .opt-note { color: var(--paper); }
+  .opt-g .opt-note { color: var(--ink-4); }
+  .opt-g .manifesto {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    gap: 24px;
+    row-gap: 8px;
+    align-items: baseline;
+  }
+  .opt-g .m-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--ink-4);
+  }
+  .opt-g .m-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+  }
+  .opt-g .m-line em {
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent);
+    color: var(--ink);
+    padding: 0 10px 2px;
+    display: inline-block;
+  }
+  .opt-g .m-line:nth-child(4) em { background: var(--accent-2); color: var(--ink); }
+  .opt-g .m-line:nth-child(6) em { background: var(--paper); color: var(--ink); }
+
+  /* ====== Option H — Tall stack with interleaved labels ====== */
+  .opt-h .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .opt-h .stack-line {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+  }
+  .opt-h .stack-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-3);
+    width: 60px;
+    letter-spacing: 0.1em;
+    padding-top: 14px;
+    border-top: 1.5px solid var(--ink);
+  }
+  .opt-h .stack-text {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 88px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    padding-top: 10px;
+    border-top: 1.5px solid var(--ink);
+    flex: 1;
+  }
+  .opt-h .stack-text em {
+    font-style: italic;
+    font-weight: 400;
+    background: var(--accent);
+    padding: 0 10px 2px;
+    display: inline-block;
+  }
+  .opt-h .stack-line:nth-child(2) em { background: var(--accent-2); opacity: 0.85; }
+  .opt-h .stack-line:nth-child(3) em { background: var(--accent-3); opacity: 0.85; }
+
+  /* decorative corner mark */
+  .corner {
+    position: absolute;
+    top: 12px; right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    color: var(--ink-4);
+    letter-spacing: 0.1em;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <div>
+    <div class="mono">// hero / headline · option sheet</div>
+    <h1>machines that move themselves — headline options</h1>
+  </div>
+  <div class="mono" style="text-align:right; line-height: 1.6;">08 options<br/>8 treatments</div>
+</div>
+
+<div class="grid">
+
+  <!-- A: two accents, same treatment -->
+  <div class="opt">
+    <span class="corner">A · CURRENT+</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">A</span>
+        <span class="opt-name">Two italic accents, matched</span>
+      </div>
+      <div class="opt-note">closest to current layout · both verbs get same highlight · reads as one sentence</div>
+    </div>
+    <h1 class="hero-title">
+      i <em>build</em> the machines<br/>
+      that <em>move themselves.</em>
+    </h1>
+  </div>
+
+  <!-- B: two-color two-block -->
+  <div class="opt opt-c">
+    <span class="corner">B · DUAL-COLOR</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">B</span>
+        <span class="opt-name">Build + teach, two colors</span>
+      </div>
+      <div class="opt-note">distinct highlight colors separate "build" (green / hardware) and "teach" (coral / software)</div>
+    </div>
+    <h1 class="hero-title">
+      i <em class="a1">build</em> &amp;<br/>
+      <em class="a2">teach</em> machines<br/>
+      to move.
+    </h1>
+  </div>
+
+  <!-- C: split body/brain -->
+  <div class="opt opt-d">
+    <span class="corner">C · DIPTYCH</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">C</span>
+        <span class="opt-name">Body ↔ brain diptych</span>
+      </div>
+      <div class="opt-note">two statements, two columns · most explicit "I do both" · schematic-divider feel</div>
+    </div>
+    <div class="split">
+      <div>
+        <div class="col-tag">// 01 — HARDWARE</div>
+        <div class="col-line">i <em>design</em><br/>the body.</div>
+      </div>
+      <div class="divider"></div>
+      <div class="r">
+        <div class="col-tag">// 02 — SOFTWARE</div>
+        <div class="col-line r">i <em>train</em><br/>the brain.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- E: schematic labels -->
+  <div class="opt opt-e">
+    <span class="corner">D · SCHEMATIC</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">D</span>
+        <span class="opt-name">Bolts → behavior (schematic)</span>
+      </div>
+      <div class="opt-note">tight 4-word headline · two pills labeled like schematic nodes · engineering-poster feel</div>
+    </div>
+    <div class="schem-title" style="text-align:center; padding-top: 20px;">
+      from
+      <span class="bolts">bolts<span class="lbl">[01] HARDWARE</span></span>
+      <span class="arrow">→</span>
+      <span class="behavior">behavior<span class="lbl">[02] INTELLIGENCE</span></span>.
+    </div>
+    <div style="height: 40px;"></div>
+  </div>
+
+  <!-- F: strike-replace, version-control edit -->
+  <div class="opt opt-f">
+    <span class="corner">E · EDITED</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">E</span>
+        <span class="opt-name">"Edited headline" — strikethrough + added</span>
+      </div>
+      <div class="opt-note">original phrase struck through · new action appended · works because the craft IS iteration</div>
+    </div>
+    <h1 class="hero-title">
+      i <span class="struck">teach</span> <span class="added">build &amp; teach</span><br/>
+      machines to <em>move.</em>
+    </h1>
+  </div>
+
+  <!-- G: dark manifesto -->
+  <div class="opt opt-g">
+    <span class="corner">F · MANIFESTO</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">F</span>
+        <span class="opt-name">Three-line manifesto</span>
+      </div>
+      <div class="opt-note">dark background flips the palette · three verbs equal weight · feels like a credo</div>
+    </div>
+    <div class="manifesto">
+      <span class="m-num">/01</span><div class="m-line">I <em>design</em> the body.</div>
+      <span class="m-num">/02</span><div class="m-line">I <em>write</em> the brain.</div>
+      <span class="m-num">/03</span><div class="m-line">I <em>teach</em> it to move.</div>
+    </div>
+  </div>
+
+  <!-- H: layered stack w/ labels -->
+  <div class="opt opt-h">
+    <span class="corner">G · LAYER-STACK</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">G</span>
+        <span class="opt-name">Hardware / software / motion — layered stack</span>
+      </div>
+      <div class="opt-note">three rows like a system diagram · each layer labeled · covers the full stack</div>
+    </div>
+    <div class="stack">
+      <div class="stack-line">
+        <div class="stack-label">// HW</div>
+        <div class="stack-text">i <em>machine</em> the chassis.</div>
+      </div>
+      <div class="stack-line">
+        <div class="stack-label">// SW</div>
+        <div class="stack-text">i <em>train</em> the policy.</div>
+      </div>
+      <div class="stack-line">
+        <div class="stack-label">// OUT</div>
+        <div class="stack-text">and it <em>walks away.</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Compressed: hand-built / self-moving -->
+  <div class="opt">
+    <span class="corner">H · COMPRESSED</span>
+    <div class="opt-head">
+      <div class="opt-tag">
+        <span class="opt-letter">H</span>
+        <span class="opt-name">Hand-built / self-moving</span>
+      </div>
+      <div class="opt-note">adjective pair · craft + autonomy in two words each · feels like a clothing tag / stamp</div>
+    </div>
+    <h1 class="hero-title">
+      <em>hand-built</em><br/>
+      machines that<br/>
+      <em>move themselves.</em>
+    </h1>
+  </div>
+
+</div>
+
+<div style="padding: 40px 48px; background: var(--paper); border-top: 1.5px solid var(--ink);">
+  <div class="mono" style="color: var(--ink); margin-bottom: 12px;">// my picks, in order</div>
+  <div style="font-size: 18px; line-height: 1.6; max-width: 720px;">
+    <b>C · Diptych</b> — most unambiguous about "I do both," and the vertical divider fits your schematic visual system. Best for a recruiter skim.<br/>
+    <b>H · Hand-built / self-moving</b> — closest to your current layout, just swaps in two adjective phrases. Least work, most elegant.<br/>
+    <b>G · Layer-stack</b> — most distinctive; reads like a system diagram you'd see in a robotics paper.
+  </div>
+</div>
+
+</body>
+</html>

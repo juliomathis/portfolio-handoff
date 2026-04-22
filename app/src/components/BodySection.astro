@@ -1,0 +1,22 @@
+---
+import { bodyCards, bodyHeader } from '../content';
+import CadCard from './CadCard.astro';
+---
+
+<section class="sec-body" id="body" aria-labelledby="body-heading">
+  <div class="sec-head-bar">
+    <span class="tag mono">{bodyHeader.tag}</span>
+    <h2 id="body-heading">
+      {bodyHeader.headingLead} <em>{bodyHeader.headingEmphasis}</em> {bodyHeader.headingTail}
+    </h2>
+    <span class="count mono">
+      {bodyHeader.countTitle}
+      <br />
+      {bodyHeader.countMeta}
+    </span>
+  </div>
+
+  <div class="cad-grid">
+    {bodyCards.map((card) => <CadCard card={card} />)}
+  </div>
+</section>

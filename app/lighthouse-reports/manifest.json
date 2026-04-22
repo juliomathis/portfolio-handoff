@@ -1,0 +1,38 @@
+[
+  {
+    "url": "http://localhost:44249/index.html",
+    "isRepresentativeRun": false,
+    "htmlPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_10.report.html",
+    "jsonPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_10.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.98,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:44249/index.html",
+    "isRepresentativeRun": false,
+    "htmlPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_33.report.html",
+    "jsonPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_33.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.98,
+      "best-practices": 1,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:44249/index.html",
+    "isRepresentativeRun": true,
+    "htmlPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_22.report.html",
+    "jsonPath": "/data/Documents/01_Projects/Active/portfolio-handoff/app/lighthouse-reports/localhost-index_html-2026_04_22_12_46_22.report.json",
+    "summary": {
+      "performance": 1,
+      "accessibility": 0.98,
+      "best-practices": 1,
+      "seo": 1
+    }
+  }
+]

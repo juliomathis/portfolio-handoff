@@ -1,0 +1,39 @@
+---
+import { heroColumns, heroTitle, siteMeta } from '../content';
+import MotifJoint from './MotifJoint.astro';
+---
+
+<section class="triptych-hero" aria-labelledby="triptych-title">
+  <div class="th-top mono">
+    <span>{siteMeta.topLeft}</span>
+    <span>{siteMeta.topRight}</span>
+  </div>
+
+  <h1 class="th-title" id="triptych-title">
+    {heroTitle.lead} <em>{heroTitle.body}</em> {heroTitle.midA} <em>{heroTitle.brain}</em> {heroTitle.midB}{' '}
+    <em>{heroTitle.rooms}</em> {heroTitle.tail}
+  </h1>
+
+  <div class="th-triptych">
+    {
+      heroColumns.map((column) => (
+        <article class={`th-col c-${column.key}`}>
+          <div>
+            <div class="col-num">{column.number}</div>
+            <div class="col-phrase">
+              {column.phraseLead} <em>{column.phraseEmphasis}</em>
+              <br />
+              {column.phraseTail}
+            </div>
+            <div class="col-caption">{column.caption}</div>
+          </div>
+          <MotifJoint
+            variant={column.motifVariant}
+            stroke={column.motifStroke ?? 'var(--ink)'}
+            fill={column.motifFill ?? 'var(--paper)'}
+          />
+        </article>
+      ))
+    }
+  </div>
+</section>
