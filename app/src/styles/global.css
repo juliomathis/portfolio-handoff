@@ -2,6 +2,7 @@
 @import './reset.css';
 @import './typography.css';
 @import './breakpoints.css';
+@import './phase2.css';
 
 html {
   background: var(--paper);

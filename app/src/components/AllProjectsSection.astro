@@ -1,0 +1,37 @@
+---
+import { allProjects, projectsIntro, vennLegend } from '../content';
+import ProjectFilter from '../islands/ProjectFilter';
+
+const projects = allProjects;
+---
+
+<section class="sec-inter" id="all" aria-labelledby="all-heading">
+  <h2 id="all-heading">
+    the <em>whole</em> map.
+  </h2>
+  <p class="intro">{projectsIntro}</p>
+
+  <div class="venn">
+    <svg class="venn-svg" viewBox="0 0 280 180" aria-hidden="true" focusable="false">
+      <circle cx="100" cy="80" r="58" fill="oklch(0.82 0.11 130 / 0.5)" stroke="#141413" stroke-width="1.5" />
+      <circle cx="180" cy="80" r="58" fill="oklch(0.6 0.17 280 / 0.45)" stroke="#141413" stroke-width="1.5" />
+      <circle cx="140" cy="130" r="58" fill="oklch(0.74 0.15 50 / 0.5)" stroke="#141413" stroke-width="1.5" />
+      <text x="72" y="50" font-size="10" font-family="JetBrains Mono" fill="#141413">HW</text>
+      <text x="200" y="50" font-size="10" font-family="JetBrains Mono" fill="#141413">SW</text>
+      <text x="130" y="170" font-size="10" font-family="JetBrains Mono" fill="#141413">ECO</text>
+    </svg>
+
+    <div class="venn-legend">
+      {
+        vennLegend.map((legendItem) => (
+          <div class="legend-row">
+            <span class={`dom-tag ${legendItem.key.toLowerCase()}`}>{legendItem.key}</span>
+            <span>{legendItem.text}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <ProjectFilter client:visible projects={projects} />
+</section>

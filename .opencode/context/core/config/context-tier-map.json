@@ -1,0 +1,70 @@
+{
+  "version": "2026-04-22",
+  "default_tier": "core",
+  "qmd_first_enforced": true,
+  "qmd_first_order": [
+    "portfolio-core-wiki",
+    "portfolio-core-reference",
+    "portfolio-core-intel"
+  ],
+  "qmd_fallback_collection": "portfolio-opencode",
+  "tiers": {
+    "core": [
+      ".opencode/context/navigation.md",
+      ".opencode/context/importance-profile.md",
+      ".opencode/context/project-intelligence/navigation.md",
+      ".opencode/context/project-intelligence/business-domain.md",
+      ".opencode/context/project-intelligence/technical-domain.md",
+      ".opencode/context/project-intelligence/decisions-log.md",
+      ".opencode/context/project-intelligence/business-tech-bridge.md",
+      ".opencode/context/project-intelligence/living-notes.md",
+      ".opencode/context/project-wiki/**/*.md",
+      ".opencode/reference/navigation.md",
+      ".opencode/reference/reference/karpathy-llm-wiki.md",
+      ".opencode/reference/raw-handoff/2026-04-19/MANIFEST.md"
+    ],
+    "optional": [
+      ".opencode/context/core/**/*.md",
+      ".opencode/command/context.md",
+      ".opencode/command/test.md",
+      ".opencode/command/validate-repo.md",
+      ".opencode/skill/task-management/**/*.md",
+      ".opencode/skill/context7/**/*.md",
+      ".opencode/reference/raw-handoff/2026-04-19/*"
+    ],
+    "archive": [
+      ".opencode/agent/**/*.md",
+      ".opencode/command/analyze-patterns.md",
+      ".opencode/command/clean.md",
+      ".opencode/command/optimize.md",
+      ".opencode/command/commit.md",
+      ".opencode/plans/*.md",
+      ".opencode/context/project-intelligence/2026-04-22-opencode-only-agentic-docs-design.md"
+    ]
+  },
+  "optional_triggers": {
+    "engineering_standards": [
+      "security",
+      "test policy",
+      "code review",
+      "delegation",
+      "context system"
+    ],
+    "external_docs": [
+      "library docs",
+      "framework API",
+      "version-specific behavior"
+    ],
+    "task_cli": [
+      "task breakdown",
+      "task status",
+      "subtask completion"
+    ],
+    "complexity_gate": [
+      ">3 files changed",
+      "cross-domain changes",
+      "multi-agent orchestration"
+    ]
+  },
+  "archive_policy": "Never load archive tier during normal execution."
+}

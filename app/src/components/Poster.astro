@@ -1,0 +1,45 @@
+---
+import type { DomainTag, PosterCard } from '../lib/types';
+
+interface Props {
+  poster: PosterCard;
+}
+
+const { poster }: Props = Astro.props;
+
+const domainLabel: Record<DomainTag, string> = {
+  hw: 'HARDWARE',
+  sw: 'SOFTWARE',
+  eco: 'ECOSYSTEM',
+};
+---
+
+<article class:list={[
+  'poster',
+  {
+    lg: poster.large,
+    accent: poster.variant === 'accent',
+    dark: poster.variant === 'dark',
+  },
+]}>
+  <div class="stub mono">
+    <span>{poster.stubLeft}</span>
+    <span>{poster.stubRight}</span>
+  </div>
+  <div class="kicker">{poster.kicker}</div>
+  <h3>
+    {poster.title} <em>{poster.titleEmphasis}</em>
+  </h3>
+  <p>{poster.description}</p>
+
+  {poster.statValue && <div class="big-stat">{poster.statValue}</div>}
+  {poster.statLabel && <div class="stat-lbl mono">{poster.statLabel}</div>}
+
+  <div class="tags-row">
+    {
+      poster.tags.map((tag) => (
+        <span class={`dom-tag ${tag}`}>{domainLabel[tag]}</span>
+      ))
+    }
+  </div>
+</article>

@@ -31,22 +31,43 @@ describe('base layout contract', () => {
 });
 
 describe('phase 1 index shell contract', () => {
-  it('wires metadata through Base and exposes required section structure', async () => {
+  it('wires metadata through Base and composes phase-2 sections', async () => {
     const indexAstro = await readSource('../../src/pages/index.astro');
     const siteContent = await readSource('../../src/content/site.ts');
 
     expect(indexAstro).toMatch(/import\s+Base\s+from\s+'\.\.\/layouts\/Base\.astro';/);
     expect(indexAstro).toMatch(/import\s+\{\s*siteMeta\s*\}\s+from\s+'\.\.\/content';/);
+    expect(indexAstro).toMatch(/import\s+Nav\s+from\s+'\.\.\/components\/Nav\.astro';/);
+    expect(indexAstro).toMatch(/import\s+Hero\s+from\s+'\.\.\/components\/Hero\.astro';/);
+    expect(indexAstro).toMatch(/import\s+MorphBar\s+from\s+'\.\.\/components\/MorphBar\.astro';/);
+    expect(indexAstro).toMatch(/import\s+BodySection\s+from\s+'\.\.\/components\/BodySection\.astro';/);
+    expect(indexAstro).toMatch(/import\s+BrainSection\s+from\s+'\.\.\/components\/BrainSection\.astro';/);
+    expect(indexAstro).toMatch(/import\s+RoomsSection\s+from\s+'\.\.\/components\/RoomsSection\.astro';/);
+    expect(indexAstro).toMatch(/import\s+AllProjectsSection\s+from\s+'\.\.\/components\/AllProjectsSection\.astro';/);
+    expect(indexAstro).toMatch(/import\s+Contact\s+from\s+'\.\.\/components\/Contact\.astro';/);
+    expect(indexAstro).toMatch(/import\s+Footer\s+from\s+'\.\.\/components\/Footer\.astro';/);
     expect(indexAstro).toMatch(
       /<Base[^>]*title=\{siteMeta\.title\}[^>]*description=\{siteMeta\.description\}[^>]*>/,
     );
     expect(indexAstro).not.toContain('canonicalUrl={siteMeta.canonicalUrl}');
     expect(siteContent).not.toContain('canonicalUrl:');
     expect(indexAstro).toMatch(/<main\s+id="main">/);
-
-    for (const id of ['body', 'brain', 'rooms', 'all', 'contact']) {
-      const sectionPattern = new RegExp(`<section\\s+id="${id}"[\\s\\S]*?>`, 'm');
-      expect(indexAstro).toMatch(sectionPattern);
-    }
+    expect(indexAstro).toContain('<Nav />');
+    expect(indexAstro).toContain('<Hero />');
+    expect(indexAstro).toContain('<MorphBar from="hero" to="body" fromVariant="body" toVariant="body" />');
+    expect(indexAstro).toContain('<BodySection />');
+    expect(indexAstro).toContain(
+      '<MorphBar from="body (mechanical joint)" to="brain (neural node)" fromVariant="body" toVariant="brain" />',
+    );
+    expect(indexAstro).toContain('<BrainSection />');
+    expect(indexAstro).toContain(
+      '<MorphBar from="brain (neural node)" to="rooms (network)" fromVariant="brain" toVariant="rooms"',
+    );
+    expect(indexAstro).toContain('<RoomsSection />');
+    expect(indexAstro).toContain('<MorphBar from="rooms" to="the whole map" fromVariant="rooms" toVariant="body" />');
+    expect(indexAstro).toContain('<AllProjectsSection />');
+    expect(indexAstro).toContain('<Contact />');
+    expect(indexAstro).toContain('<Footer />');
+    expect(indexAstro).not.toContain('Phase 1 scaffold');
   });
 });

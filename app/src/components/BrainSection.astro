@@ -1,0 +1,22 @@
+---
+import { brainHeader, brainNodes } from '../content';
+import NodeCard from './NodeCard.astro';
+---
+
+<section class="sec-brain" id="brain" aria-labelledby="brain-heading">
+  <div class="sec-head-bar">
+    <span class="tag mono">{brainHeader.tag}</span>
+    <h2 id="brain-heading">
+      {brainHeader.headingLead} <em>{brainHeader.headingEmphasis}</em> {brainHeader.headingTail}
+    </h2>
+    <span class="count mono">
+      {brainHeader.countTitle}
+      <br />
+      {brainHeader.countMeta}
+    </span>
+  </div>
+
+  <div class="node-grid">
+    {brainNodes.map((node) => <NodeCard node={node} />)}
+  </div>
+</section>
