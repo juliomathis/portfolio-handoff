@@ -25,3 +25,16 @@ Run these from the repository root:
 | `pnpm --dir app check` | Run Astro type/content checks |
 | `pnpm --dir app test` | Run unit tests with Vitest |
 | `pnpm --dir app build` | Build the production bundle |
+
+## Container local verification
+
+Run these from the repository root:
+
+```sh
+docker build -t portfolio-phase4:local app
+docker run -d --rm --name portfolio-phase4 -p 8080:8080 portfolio-phase4:local
+curl -i http://localhost:8080/healthz
+curl -I http://localhost:8080/
+docker image inspect portfolio-phase4:local --format='{{.Size}}'
+docker stop portfolio-phase4
+```

@@ -34,10 +34,16 @@ For standards/workflows, load from `.opencode/context/core/navigation.md`.
 
 ## Repository shape (current)
 
-- `app/` — Astro + React-islands application (Phases 0–3 implemented)
+- `app/` — Astro + React-islands application (Phases 0–3 complete; Phase 4 containerization kickoff in progress)
 - `.opencode/context/` — canonical project intelligence + wiki
 - `.opencode/reference/` — immutable handoff/reference artifacts
 - `infra/`, `k8s/`, `.github/workflows/` — expected in later phases (not yet present)
+
+## Current phase focus
+
+- Active workstream: **Phase 4 — containerization**
+- Planned additions in `app/`: `Dockerfile`, `nginx.conf`, `.dockerignore`
+- Keep Phase 5+ infra surface (`infra/`, `k8s/`, `.github/workflows/`) out of scope until Phase 4 is complete
 
 ## Validation commands
 

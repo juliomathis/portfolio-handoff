@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/business | Priority: high | Version: 2.1 | Updated: 2026-04-22 -->
+<!-- Context: project-intelligence/business | Priority: high | Version: 2.2 | Updated: 2026-05-04 -->
 
 # Business Domain
 
@@ -19,7 +19,7 @@ Project Name:    Portfolio Handoff
 Tagline:         Production-grade personal portfolio as a portfolio artifact
 Owner:           Julio Mathis (jumathis@proton.me)
 Repo:            portfolio-handoff (GitHub)
-Current status:  Phase 0–3 implemented (2026-04-22)
+Current status:  Phase 4 kickoff active; Phases 0–3 complete (2026-05-04)
 ```
 
 ## Problem Statement
@@ -74,7 +74,7 @@ The project is done when all ten hold:
 | **Phase 1** | Astro scaffold, content layer, styles, Base layout, shell index.astro | ✅ Done |
 | **Phase 2** | Port all components + React island (ProjectFilter) | ✅ Implemented |
 | **Phase 3** | Tests (Vitest + Playwright + Lighthouse CI) | ✅ Implemented |
-| Phase 4 | Containerize (nginx:alpine) | |
+| Phase 4 | Containerize (nginx:alpine) | 🚧 Kickoff active |
 | Phase 5 | Terraform infra provisioning | |
 | Phase 6 | k8s manifests + ArgoCD bootstrap | |
 | Phase 7 | CI/CD wiring (GitHub Actions + GitHub App bot) | |
