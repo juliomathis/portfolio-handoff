@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.2 | Updated: 2026-05-04 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.3 | Updated: 2026-05-04 -->
 
 # Living Notes
 
@@ -20,11 +20,12 @@
 - ✅ **Phase 1** — Astro 6 + React 19 in `app/`, TypeScript strict, PostCSS toolchain (autoprefixer + nesting + custom-media), all `app/src/{content,layouts,lib,pages,styles}/` scaffolded, `Base.astro` + shell `index.astro`, content contracts hardened (PRs #4, #5, #6 on the working branch).
 - ✅ **Phase 2** — Component port complete (`app/src/components/*.astro` + `islands/ProjectFilter.tsx`) with responsive tuning in `app/src/styles/phase2.css`.
 - ✅ **Phase 3** — Testing stack in place (Vitest + Playwright + Lighthouse CI) with unit/E2E suites and committed responsive snapshots.
+- ✅ **Phase 4** — Containerization implemented on branch (`app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`) with local Docker build/run/health/header verification and a 50MB runtime baseline gate.
 
 **In flight:**
-- 🚧 **Phase 4** — Containerization kickoff (`app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`).
+- 🚧 **Phase 5** — Infrastructure provisioning prep (`infra/terraform/` scaffolding and local `terraform init/plan` workflow).
 
-**Branch state:** `main` synced to latest merged docs baseline, Phase 4 branch created (`feature/phase-4-containerization`), and old docs follow-up branch cleaned up locally/remotely. `.opencode/` is canonical for agentic docs; legacy docs remain temporary backup.
+**Branch state:** `feature/phase-4-containerization` contains Phase 4 runtime implementation and docs synchronization, with PR #10 opened against `main`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -77,6 +78,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-04: Cleaned transient `.tmp/external-context/pnpm/` artifacts, promoted Phase 4 to completed-on-branch status, and updated canonical runtime/context docs to prepare for Phase 5.
 - 2026-05-04: Verified docs follow-up branch fully merged into `main`, deleted `docs/new_arci-followup` locally/remotely, created `feature/phase-4-containerization`, and updated runtime/context docs for Phase 4 kickoff.
 - 2026-04-22: Phase 0–3 implementation audit completed; canonical status docs synced to match repository state.
 - `760aa32` Merge PR #6 (Phase 1 review hardening)

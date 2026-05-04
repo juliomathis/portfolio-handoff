@@ -2155,6 +2155,12 @@ Estimated total: **6–8 working days**. Phases can overlap slightly (e.g., docs
 - [ ] Tag `v0.1.0`.
 - [ ] Share live URL.
 
+### Phase transition gate (applies to every phase)
+- [ ] Sync phase-status docs before starting the next phase: `README.md`, `AGENTS.md`, `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`, and `.opencode/context/project-wiki/log.md`.
+- [ ] Verify there is an open PR for the active phase branch before handoff; if the previous PR was closed, create a new PR from the current branch.
+- [ ] After merge confirmation, switch to latest `main`, then create the next phase branch from `main`.
+- [ ] Delete merged phase branches locally and remotely to keep branch hygiene predictable.
+
 ### Timeline gantt (rough)
 
 ```

@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.2 | Updated: 2026-05-04 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.3 | Updated: 2026-05-04 -->
 
 # Technical Domain
 
@@ -69,7 +69,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–3 complete; Phase 4 in progress)
+├─ app/                        ← Astro application (Phases 1–4 complete; Phase 5 prep active)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -99,8 +99,9 @@ portfolio-handoff/
 - Phase 2 presentation styling in `app/src/styles/phase2.css`
 - Test stack configured: `vitest.config.ts`, `playwright.config.ts`, `lighthouserc.json`
 - Unit and E2E suites present in `app/tests/{unit,e2e}/` with responsive snapshots committed
+- Phase 4 containerization assets added: `app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore` with local runtime verification
 
-**In progress (Phase 4 kickoff):** `app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`.
+**In progress (Phase 5 preparation):** `infra/terraform/` scaffolding and local `terraform init/plan` workflow design.
 
 **Not yet:** any `infra/` or `k8s/` directory, `.github/workflows/`.
 
@@ -126,7 +127,7 @@ Shared via `@custom-media` at-rules in `breakpoints.css` (requires `postcss-cust
 ## Performance targets
 
 - Lighthouse perf ≥90, a11y ≥95, best-practices ≥95, SEO ≥95 (enforced in CI)
-- Image size: < 25 MB
+- Image size baseline (Phase 4 runtime): < 50 MB
 - Push-to-live: ~2.5 min
 - `terraform apply` to live site: ≤15 min from zero
 
