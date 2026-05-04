@@ -11,4 +11,4 @@ Production implementation of the Claude Design portfolio handoff.
 
 ## Phase status
 
-Phases 0–3 are implemented (repo init, Astro scaffold + typed content layer, component port, and testing stack). For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
+Phases 0–3 are implemented (repo init, Astro scaffold + typed content layer, component port, and testing stack). Phase 4 (containerization) is now the active workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.

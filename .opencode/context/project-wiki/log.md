@@ -6,6 +6,12 @@ type: project
 
 # Operations Log
 
+## [2026-05-04] ops | branch cleanup + phase 4 kickoff sync
+
+- Verified `docs/new_arci-followup` was fully merged into `main` (no commits left between branch and `origin/main`).
+- Switched to latest `main`, created `feature/phase-4-containerization`, and deleted `docs/new_arci-followup` both locally and on remote.
+- Updated runtime/docs context to mark Phase 4 as active (`README.md`, `AGENTS.md`, `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`).
+
 ## [2026-04-22] migrate | .opencode canonicalization started
 
 - Approved migration design in `.opencode/context/project-intelligence/2026-04-22-opencode-only-agentic-docs-design.md`

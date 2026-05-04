@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.1 | Updated: 2026-04-22 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.2 | Updated: 2026-05-04 -->
 
 # Living Notes
 
@@ -13,7 +13,7 @@
 - **Purpose**: Current state snapshot + open items + gotchas
 - **Update**: When a phase completes, when an issue lands, when a question resolves
 
-## Current state (2026-04-22)
+## Current state (2026-05-04)
 
 **Completed:**
 - ✅ **Phase 0** — Repo init, root scaffolding, `.opencode/reference/raw-handoff/2026-04-19/` imported, branch protection on `main`.
@@ -21,9 +21,10 @@
 - ✅ **Phase 2** — Component port complete (`app/src/components/*.astro` + `islands/ProjectFilter.tsx`) with responsive tuning in `app/src/styles/phase2.css`.
 - ✅ **Phase 3** — Testing stack in place (Vitest + Playwright + Lighthouse CI) with unit/E2E suites and committed responsive snapshots.
 
-**In flight:** None. Ready to begin Phase 4 (containerization).
+**In flight:**
+- 🚧 **Phase 4** — Containerization kickoff (`app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`).
 
-**Branch state:** Working branch is active. `.opencode/` is canonical for agentic docs. Legacy docs remain as temporary backup.
+**Branch state:** `main` synced to latest merged docs baseline, Phase 4 branch created (`feature/phase-4-containerization`), and old docs follow-up branch cleaned up locally/remotely. `.opencode/` is canonical for agentic docs; legacy docs remain temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -76,6 +77,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-04: Verified docs follow-up branch fully merged into `main`, deleted `docs/new_arci-followup` locally/remotely, created `feature/phase-4-containerization`, and updated runtime/context docs for Phase 4 kickoff.
 - 2026-04-22: Phase 0–3 implementation audit completed; canonical status docs synced to match repository state.
 - `760aa32` Merge PR #6 (Phase 1 review hardening)
 - `f68f430` fix(phase1): stabilize content contracts and canonical metadata ownership

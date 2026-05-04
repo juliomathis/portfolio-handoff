@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.1 | Updated: 2026-04-22 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.2 | Updated: 2026-05-04 -->
 
 # Technical Domain
 
@@ -69,7 +69,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–3 implemented)
+├─ app/                        ← Astro application (Phases 1–3 complete; Phase 4 in progress)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -100,7 +100,9 @@ portfolio-handoff/
 - Test stack configured: `vitest.config.ts`, `playwright.config.ts`, `lighthouserc.json`
 - Unit and E2E suites present in `app/tests/{unit,e2e}/` with responsive snapshots committed
 
-**Not yet:** `app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`, any `infra/` or `k8s/` directory, `.github/workflows/`.
+**In progress (Phase 4 kickoff):** `app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`.
+
+**Not yet:** any `infra/` or `k8s/` directory, `.github/workflows/`.
 
 ## Critical technical contracts
 
