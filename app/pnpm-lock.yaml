@@ -9,29 +9,29 @@ importers:
   .:
     dependencies:
       '@astrojs/react':
-        specifier: ^5.0.3
+        specifier: 5.0.3
         version: 5.0.3(@types/node@24.12.2)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.5(react@19.2.5))(react@19.2.5)(yaml@2.8.3)
       '@astrojs/sitemap':
-        specifier: ^3.7.2
+        specifier: 3.7.2
         version: 3.7.2
       astro:
-        specifier: ^6.1.8
+        specifier: 6.1.8
         version: 6.1.8(@types/node@24.12.2)(rollup@4.60.2)(typescript@5.9.3)(yaml@2.8.3)
       react:
-        specifier: ^19.2.5
+        specifier: 19.2.5
         version: 19.2.5
       react-dom:
-        specifier: ^19.2.5
+        specifier: 19.2.5
         version: 19.2.5(react@19.2.5)
     devDependencies:
       '@astrojs/check':
-        specifier: ^0.9.8
+        specifier: 0.9.8
         version: 0.9.8(prettier@3.8.3)(typescript@5.9.3)
       '@axe-core/playwright':
         specifier: 4.11.2
         version: 4.11.2(playwright-core@1.59.1)
       '@csstools/postcss-global-data':
-        specifier: ^3.1.0
+        specifier: 3.1.0
         version: 3.1.0(postcss@8.5.10)
       '@lhci/cli':
         specifier: 0.15.1
@@ -46,22 +46,22 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.14)
       autoprefixer:
-        specifier: ^10.5.0
+        specifier: 10.5.0
         version: 10.5.0(postcss@8.5.10)
       postcss:
-        specifier: ^8.5.10
+        specifier: 8.5.10
         version: 8.5.10
       postcss-custom-media:
-        specifier: ^12.0.1
+        specifier: 12.0.1
         version: 12.0.1(postcss@8.5.10)
       postcss-nesting:
-        specifier: ^14.0.0
+        specifier: 14.0.0
         version: 14.0.0(postcss@8.5.10)
       typescript:
         specifier: 5.9.3
         version: 5.9.3
       vitest:
-        specifier: ^4.1.4
+        specifier: 4.1.4
         version: 4.1.4(@types/node@24.12.2)(vite@7.3.2(@types/node@24.12.2)(yaml@2.8.3))
 
 packages:
