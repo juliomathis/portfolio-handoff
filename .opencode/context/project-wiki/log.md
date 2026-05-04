@@ -6,6 +6,12 @@ type: project
 
 # Operations Log
 
+## [2026-05-04] docs | phase 5 preparation sync
+
+- Removed transient lookup artifacts under `.tmp/external-context/pnpm/` after Phase 4 documentation and validation work.
+- Updated canonical status docs to mark Phase 4 containerization as implemented on branch and Phase 5 infrastructure provisioning prep as active (`README.md`, `AGENTS.md`, `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`).
+- Aligned technical baseline note for container runtime image size to the validated `<50 MB` threshold used in Phase 4 checks.
+
 ## [2026-05-04] ops | branch cleanup + phase 4 kickoff sync
 
 - Verified `docs/new_arci-followup` was fully merged into `main` (no commits left between branch and `origin/main`).
