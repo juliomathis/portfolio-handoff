@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.3 | Updated: 2026-05-05 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.4 | Updated: 2026-05-05 -->
 
 # Technical Domain
 
@@ -69,7 +69,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–5 complete; Phase 6 prep active)
+├─ app/                        ← Astro application (Phases 1–6 complete; Phase 7 prep active)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -79,7 +79,7 @@ portfolio-handoff/
 │  ├─ bootstrap/               ← ArgoCD install + AppProject + root app
 │  ├─ apps/                    ← one Application per stack (cert-manager, ingress-nginx, portfolio, cert-manager-issuers)
 │  └─ manifests/               ← plain kustomize for portfolio; cert-manager issuer configs
-├─ .github/workflows/          ← ci.yml, image.yml (NO terraform.yml in Phase 1)
+├─ .github/workflows/          ← Phase 7 target surface (CI/CD workflow authoring)
 └─ .opencode/{reference,context/project-wiki}/            ← canonical docs layout
 ```
 
@@ -103,9 +103,11 @@ portfolio-handoff/
 
 **Done (Phase 5):** `infra/terraform/` baseline scaffolding + local apply/destroy verification + on-demand lifecycle scripts (`up.sh`, `down.sh`).
 
-**In progress (Phase 6 preparation):** Kubernetes manifests + ArgoCD bootstrap authoring (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests` scaffolding now present on branch, with local `kubectl kustomize` render checks passing and an on-demand live bootstrap validation window completed).
+**Done (Phase 6):** Kubernetes manifests + ArgoCD bootstrap authoring (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`) with local `kubectl kustomize` render checks and an on-demand live bootstrap validation window.
 
-**Not yet:** `.github/workflows/` additions.
+**In progress (Phase 7):** CI/CD workflow wiring (GitHub Actions + GitHub App bot automation).
+
+**Not yet:** Phase 8+ documentation/sign-off surfaces.
 
 ## Critical technical contracts
 

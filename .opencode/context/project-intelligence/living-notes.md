@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.3 | Updated: 2026-05-05 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.4 | Updated: 2026-05-05 -->
 
 # Living Notes
 
@@ -22,18 +22,19 @@
 - ✅ **Phase 3** — Testing stack in place (Vitest + Playwright + Lighthouse CI) with unit/E2E suites and committed responsive snapshots.
 - ✅ **Phase 4** — Containerization implemented on branch (`app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`) with local Docker build/run/health/header verification and a 50MB runtime baseline gate.
 - ✅ **Phase 5** — Terraform infrastructure provisioning baseline implemented (`infra/terraform/`), including validated local apply/destroy flow and on-demand lifecycle scripts (`up.sh`, `down.sh`).
+- ✅ **Phase 6** — Kubernetes manifests + ArgoCD bootstrap baseline implemented (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), live-validated in an on-demand window, and merged via PR #14.
 
 **In flight:**
-- 🚧 **Phase 6** — Kubernetes manifests + ArgoCD bootstrap preparation (bootstrap/apps/manifests scaffolding created; local manifest render checks passing).
+- 🚧 **Phase 7** — CI/CD wiring (GitHub Actions + GitHub App bot automation).
 
-**Branch state:** `feature/phase-6-k8s-argocd-bootstrap-prep` is active after merging and cleaning up `feature/phase-5-infrastructure-provisioning`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
+**Branch state:** `feature/phase-7-ci-cd-github-actions-bot` is active after merging and cleaning up `feature/phase-6-k8s-argocd-bootstrap-prep`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
 | # | Question | Decide by | Status |
 |---|----------|-----------|--------|
 | 1 | Hetzner region (`nbg1` default vs `ash`/`hil`) | Before next production apply window | Open |
-| 2 | ArgoCD admin password — default or age-encrypted | Phase 6 | Deferred, port-forward is fine for P1 |
+| 2 | ArgoCD admin password — default or age-encrypted | Phase 7 | Deferred, port-forward is fine for P1 |
 | 3 | Analytics tool (Plausible/GoatCounter/Umami/none) | Post-ship | Deferred |
 | 4 | Case Study page — Phase 2.5? | After domain swap | Deferred |
 | 5 | Self-hosted fonts vs Google Fonts | Phase 3 if Lighthouse perf < 95 | Deferred |
@@ -80,6 +81,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-05: Merged PR #14 (Phase 6 bootstrap hardening + live validation evidence), switched to latest `main`, deleted `feature/phase-6-k8s-argocd-bootstrap-prep` locally/remotely, and created `feature/phase-7-ci-cd-github-actions-bot` for Phase 7 wiring.
 - 2026-05-05: Executed Phase 6 live bootstrap validation window (`up.sh`), fixed Argo bootstrap blockers (`AppProject` destination scope + root destination namespace), confirmed TLS issuance and `HTTP/2 200` on `portfolio.178-105-89-214.nip.io`, then tore infra down with `down.sh`.
 - 2026-05-05: Began Phase 6 scaffold (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), validated manifest rendering via `kubectl kustomize`, and used on-demand infra windows (`up.sh`/`down.sh`) for safe bootstrap checks.
 - 2026-05-05: Merged PR #12 (Phase 5 baseline + on-demand infra lifecycle), switched to latest `main`, deleted `feature/phase-5-infrastructure-provisioning` locally/remotely, and created `feature/phase-6-k8s-argocd-bootstrap-prep` for Phase 6 preparation.
