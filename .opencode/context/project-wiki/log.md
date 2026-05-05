@@ -6,6 +6,14 @@ type: project
 
 # Operations Log
 
+## [2026-05-05] infra | phase 6 live bootstrap validation window
+
+- Ran on-demand validation window via `./infra/terraform/up.sh`, then verified bootstrap readiness (`cloud-init status --wait`, node `Ready`, core pods running).
+- Diagnosed and fixed bootstrap blockers: Argo root app destination namespace omission (runtime patch) and missing `kube-system` destination in `AppProject: portfolio` (persisted in `infra/terraform/cloud-init.tftpl` and `k8s/bootstrap/argocd-appproject.yaml`).
+- Validated cert-manager + issuer reconciliation and successful TLS issuance for `portfolio.<dashed-ip>.nip.io`.
+- Built local portfolio image (`ghcr.io/juliomathis/portfolio:phase6-f3d8d2b`), imported into k3s runtime for this validation window, and confirmed `curl -I https://portfolio.178-105-89-214.nip.io` returns `HTTP/2 200`.
+- Ended validation window with `./infra/terraform/down.sh` to return compute spend to zero.
+
 ## [2026-05-05] ops | phase 5 merge cleanup + phase 6 branch kickoff
 
 - Confirmed PR #12 merged to `main` and fast-forwarded local `main`.

@@ -103,7 +103,7 @@ portfolio-handoff/
 
 **Done (Phase 5):** `infra/terraform/` baseline scaffolding + local apply/destroy verification + on-demand lifecycle scripts (`up.sh`, `down.sh`).
 
-**In progress (Phase 6 preparation):** Kubernetes manifests + ArgoCD bootstrap authoring (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests` scaffolding now present on branch, with local `kubectl kustomize` render checks passing).
+**In progress (Phase 6 preparation):** Kubernetes manifests + ArgoCD bootstrap authoring (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests` scaffolding now present on branch, with local `kubectl kustomize` render checks passing and an on-demand live bootstrap validation window completed).
 
 **Not yet:** `.github/workflows/` additions.
 

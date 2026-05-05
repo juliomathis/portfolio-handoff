@@ -80,6 +80,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-05: Executed Phase 6 live bootstrap validation window (`up.sh`), fixed Argo bootstrap blockers (`AppProject` destination scope + root destination namespace), confirmed TLS issuance and `HTTP/2 200` on `portfolio.178-105-89-214.nip.io`, then tore infra down with `down.sh`.
 - 2026-05-05: Began Phase 6 scaffold (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), validated manifest rendering via `kubectl kustomize`, and used on-demand infra windows (`up.sh`/`down.sh`) for safe bootstrap checks.
 - 2026-05-05: Merged PR #12 (Phase 5 baseline + on-demand infra lifecycle), switched to latest `main`, deleted `feature/phase-5-infrastructure-provisioning` locally/remotely, and created `feature/phase-6-k8s-argocd-bootstrap-prep` for Phase 6 preparation.
 - 2026-05-05: Executed `terraform apply`, verified cloud-init and k3s readiness, then executed `terraform destroy` to return cost-bearing resources to zero.
