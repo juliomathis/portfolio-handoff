@@ -6,6 +6,32 @@ type: project
 
 # Operations Log
 
+## [2026-05-05] docs | on-demand infra lifecycle runbook hardening
+
+- Documented canonical on-demand lifecycle usage in `AGENTS.md`, `project-wiki/infrastructure.md`, and `project-wiki/operations.md`.
+- Standardized operator workflow: `./infra/terraform/up.sh` before validation and `./infra/terraform/down.sh` immediately after.
+- Added explicit token-handling and cost-control guidance to reduce accidental always-on spend.
+
+## [2026-05-05] infra | phase 5 apply-destroy validation + on-demand lifecycle
+
+- Ran `terraform apply` for Phase 5 validation; initial server create failed because `cx11` is unavailable in the selected region/account.
+- Queried available server types, switched to `cx23`, and re-ran `terraform apply` successfully.
+- Verified bootstrap readiness (`cloud-init status --wait`, k3s node Ready, core pods Running), then executed `terraform destroy` to stop ongoing compute cost.
+- Added `infra/terraform/up.sh` and `infra/terraform/down.sh` for on-demand server lifecycle (spin up only when needed, tear down after verification).
+- Updated defaults/docs for lifecycle safety (`server_type` default to `cx23`, Phase 5 marked complete, Phase 6 prep active).
+
+## [2026-05-05] infra | phase 5 local plan validation
+
+- Loaded local Hetzner token from operator-managed shell secret source and executed `terraform plan -input=false -refresh=false` in `infra/terraform/`.
+- Plan result: create-only baseline (`hcloud_ssh_key`, `hcloud_firewall`, `hcloud_server`) with expected outputs; no apply executed.
+- Updated canonical status docs to reflect that local `terraform init/fmt/validate/plan` is complete and `terraform apply` is a deliberate pending decision.
+
+## [2026-05-05] infra | phase 5 terraform scaffolding baseline
+
+- Added `infra/terraform/` baseline files: `versions.tf`, `backend.tf`, `main.tf`, `variables.tf`, `outputs.tf`, `cloud-init.tftpl`, `terraform.tfvars.example`, and local Terraform `.gitignore`.
+- Installed Terraform 1.15.1 on the operator workstation and verified local non-mutating checks (`terraform init`, `terraform fmt -check`, `terraform validate`).
+- Deferred token-gated `terraform plan` until Hetzner API token creation is unblocked.
+
 ## [2026-05-04] docs | phase 5 preparation sync
 
 - Removed transient lookup artifacts under `.tmp/external-context/pnpm/` after Phase 4 documentation and validation work.

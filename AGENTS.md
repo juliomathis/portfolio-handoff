@@ -34,16 +34,43 @@ For standards/workflows, load from `.opencode/context/core/navigation.md`.
 
 ## Repository shape (current)
 
-- `app/` — Astro + React-islands application (Phases 0–4 complete on this branch; Phase 5 preparation active)
+- `app/` — Astro + React-islands application (Phases 0–5 complete on this branch; Phase 6 preparation active)
 - `.opencode/context/` — canonical project intelligence + wiki
 - `.opencode/reference/` — immutable handoff/reference artifacts
-- `infra/`, `k8s/`, `.github/workflows/` — expected in later phases (not yet present)
+- `infra/terraform/` — Phase 5 baseline complete on this branch (on-demand `up.sh`/`down.sh` lifecycle)
+- `k8s/`, `.github/workflows/` — expected in later phases (not yet present)
 
 ## Current phase focus
 
-- Active workstream: **Phase 5 — infrastructure provisioning prep**
-- Planned additions in `infra/terraform/`: baseline HCL scaffolding + local `terraform init/plan` workflow
-- Keep Phase 6+ surfaces (`k8s/`, `.github/workflows/`) out of scope until Phase 5 is complete
+- Active workstream: **Phase 6 — Kubernetes manifests + ArgoCD bootstrap prep**
+- Current state in `infra/terraform/`: baseline HCL scaffolding plus on-demand lifecycle scripts (`up.sh`, `down.sh`) are in place; local apply/destroy workflow is validated
+- Keep Phase 7+ surfaces (`.github/workflows/`) out of scope until Phase 6 is complete
+
+## On-demand infrastructure lifecycle (Phase 5 baseline)
+
+- Goal: keep cost-bearing Hetzner servers off unless actively validating infrastructure.
+- Default operator workflow:
+  1. `./infra/terraform/up.sh` to create infrastructure for a validation session
+  2. run validation checks
+  3. `./infra/terraform/down.sh` immediately after tests to stop spend
+- `up.sh` behavior:
+  - sources token from `~/.config/portfolio-handoff/secrets.env` (expects `TF_VAR_hcloud_token`)
+  - detects current public IPv4 and injects `admin_ip_cidr=<current_ip>/32` for SSH safety
+  - runs `terraform init`, `terraform fmt -check`, `terraform validate`, `terraform plan`, `terraform apply`
+- `down.sh` behavior:
+  - sources token from `~/.config/portfolio-handoff/secrets.env`
+  - runs `terraform destroy -auto-approve`
+- Never commit secrets (`terraform.tfvars` remains untracked; prefer environment-based token loading).
+
+## Execution cadence
+
+- Continue across subtasks within a phase without stopping for per-task confirmation.
+- Pause only when:
+  1. reaching a phase boundary,
+  2. a decision/scope change is required,
+  3. a hard error or validation failure requires user input.
+- Do not interrupt momentum with “continue?” prompts between dependent subtasks.
+- If the user explicitly asks to pause, follow that request immediately.
 
 ## Phase transition checklist (required)
 
