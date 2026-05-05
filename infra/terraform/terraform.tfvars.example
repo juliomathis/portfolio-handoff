@@ -1,0 +1,10 @@
+hcloud_token = "replace-with-hcloud-token"
+ssh_public_key = "ssh-ed25519 AAAA...replace-with-public-key"
+admin_ip_cidr = "203.0.113.42/32"
+server_type = "cx23"
+location = "nbg1"
+github_repo = "https://github.com/<user>/portfolio-handoff"
+
+# Phase 2 only
+# cloudflare_api_token = "replace-with-cloudflare-token"
+# cloudflare_zone_id   = "replace-with-zone-id"

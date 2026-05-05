@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.3 | Updated: 2026-05-04 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.3 | Updated: 2026-05-05 -->
 
 # Technical Domain
 
@@ -23,7 +23,7 @@
 | Registry | GHCR | — | GitHub-native, free for public repos |
 | CI | GitHub Actions | — | Native integration |
 | Cluster | k3s (single-node) | v1.30+ | Lightweight, cheapest real k8s |
-| Host | Hetzner CX11 VPS | — | ~$4/mo, educational, full control |
+| Host | Hetzner CX23 VPS | — | Low-cost, educational, full control |
 | GitOps | ArgoCD | — | Declarative, k8s-native, high resume signal |
 | TLS | cert-manager + Let's Encrypt | — | Automatic, standard |
 | DNS (P1) | `nip.io` wildcard (dash form) | — | No domain purchase needed to test full pipeline |
@@ -69,12 +69,12 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–4 complete; Phase 5 prep active)
+├─ app/                        ← Astro application (Phases 1–5 complete; Phase 6 prep active)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
 │  └─ package.json             ← Astro 6, React 19, postcss-*
-├─ infra/terraform/            ← Phase 5
+├─ infra/terraform/            ← Phase 5 (`up.sh`/`down.sh` on-demand lifecycle)
 ├─ k8s/
 │  ├─ bootstrap/               ← ArgoCD install + AppProject + root app
 │  ├─ apps/                    ← one Application per stack (cert-manager, ingress-nginx, portfolio, cert-manager-issuers)
@@ -101,9 +101,11 @@ portfolio-handoff/
 - Unit and E2E suites present in `app/tests/{unit,e2e}/` with responsive snapshots committed
 - Phase 4 containerization assets added: `app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore` with local runtime verification
 
-**In progress (Phase 5 preparation):** `infra/terraform/` scaffolding and local `terraform init/plan` workflow design.
+**Done (Phase 5):** `infra/terraform/` baseline scaffolding + local apply/destroy verification + on-demand lifecycle scripts (`up.sh`, `down.sh`).
 
-**Not yet:** any `infra/` or `k8s/` directory, `.github/workflows/`.
+**In progress (Phase 6 preparation):** Kubernetes manifests + ArgoCD bootstrap authoring.
+
+**Not yet:** `k8s/` and `.github/workflows/` additions.
 
 ## Critical technical contracts
 

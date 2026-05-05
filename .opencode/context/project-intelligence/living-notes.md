@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.3 | Updated: 2026-05-04 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.3 | Updated: 2026-05-05 -->
 
 # Living Notes
 
@@ -13,7 +13,7 @@
 - **Purpose**: Current state snapshot + open items + gotchas
 - **Update**: When a phase completes, when an issue lands, when a question resolves
 
-## Current state (2026-05-04)
+## Current state (2026-05-05)
 
 **Completed:**
 - ✅ **Phase 0** — Repo init, root scaffolding, `.opencode/reference/raw-handoff/2026-04-19/` imported, branch protection on `main`.
@@ -21,17 +21,18 @@
 - ✅ **Phase 2** — Component port complete (`app/src/components/*.astro` + `islands/ProjectFilter.tsx`) with responsive tuning in `app/src/styles/phase2.css`.
 - ✅ **Phase 3** — Testing stack in place (Vitest + Playwright + Lighthouse CI) with unit/E2E suites and committed responsive snapshots.
 - ✅ **Phase 4** — Containerization implemented on branch (`app/Dockerfile`, `app/nginx.conf`, `app/.dockerignore`) with local Docker build/run/health/header verification and a 50MB runtime baseline gate.
+- ✅ **Phase 5** — Terraform infrastructure provisioning baseline implemented (`infra/terraform/`), including validated local apply/destroy flow and on-demand lifecycle scripts (`up.sh`, `down.sh`).
 
 **In flight:**
-- 🚧 **Phase 5** — Infrastructure provisioning prep (`infra/terraform/` scaffolding and local `terraform init/plan` workflow).
+- 🚧 **Phase 6** — Kubernetes manifests + ArgoCD bootstrap preparation.
 
-**Branch state:** `feature/phase-4-containerization` contains Phase 4 runtime implementation and docs synchronization, with PR #10 opened against `main`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
+**Branch state:** `feature/phase-5-infrastructure-provisioning` contains completed Phase 5 Terraform baseline work and Phase 6 preparation context updates. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
 | # | Question | Decide by | Status |
 |---|----------|-----------|--------|
-| 1 | Hetzner region (`nbg1` default vs `ash`/`hil`) | Before Phase 5 `terraform apply` | Open |
+| 1 | Hetzner region (`nbg1` default vs `ash`/`hil`) | Before next production apply window | Open |
 | 2 | ArgoCD admin password — default or age-encrypted | Phase 6 | Deferred, port-forward is fine for P1 |
 | 3 | Analytics tool (Plausible/GoatCounter/Umami/none) | Post-ship | Deferred |
 | 4 | Case Study page — Phase 2.5? | After domain swap | Deferred |
@@ -54,7 +55,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 | Risk | Likelihood | Monitoring |
 |------|------------|------------|
-| k3s OOM on CX11 (2GB) under full stack | Med | `kubectl top` after Phase 6 bootstrap; upgrade to CX21 if >75% sustained |
+| k3s OOM on CX23 under full stack | Med | `kubectl top` after Phase 6 bootstrap; scale up if sustained >75% |
 | LE HTTP-01 fails on first issue during cloud-init | Low | cloud-init waits for ingress; manual `kubectl delete certificate` retry |
 | CI bot commit loop | Low | Path filters + staged-diff guard; test in Phase 7 |
 | New Claude Design handoff breaks content contract | Med | `tsc --noEmit` in CI surfaces the break |
@@ -69,6 +70,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 5. **No `.github/workflows/terraform.yml` in Phase 1** — Terraform is local-only until Phase 1.5 remote state. Don't "add CI for completeness."
 6. **Kubeconfig is `0600` on the node** — `sudo` required for `kubectl`. Documented UX cost; don't "fix" it.
 7. **Image tags are git SHAs, never `latest`** — paired with `imagePullPolicy: Always`.
+8. **Use on-demand infra lifecycle** — start with `./infra/terraform/up.sh`, stop with `./infra/terraform/down.sh` after validation to avoid idle server cost.
 
 ## Patterns worth preserving
 
@@ -78,6 +80,9 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-05: Executed `terraform apply`, verified cloud-init and k3s readiness, then executed `terraform destroy` to return cost-bearing resources to zero.
+- 2026-05-05: Added on-demand infrastructure lifecycle scripts (`infra/terraform/up.sh`, `infra/terraform/down.sh`) so servers run only when needed.
+- 2026-05-05: Added `infra/terraform/` baseline files (`versions.tf`, `backend.tf`, `main.tf`, `variables.tf`, `outputs.tf`, `cloud-init.tftpl`, `.gitignore`, `terraform.tfvars.example`) and completed local `terraform init/fmt/validate/plan`.
 - 2026-05-04: Cleaned transient `.tmp/external-context/pnpm/` artifacts, promoted Phase 4 to completed-on-branch status, and updated canonical runtime/context docs to prepare for Phase 5.
 - 2026-05-04: Verified docs follow-up branch fully merged into `main`, deleted `docs/new_arci-followup` locally/remotely, created `feature/phase-4-containerization`, and updated runtime/context docs for Phase 4 kickoff.
 - 2026-04-22: Phase 0–3 implementation audit completed; canonical status docs synced to match repository state.
