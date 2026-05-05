@@ -42,6 +42,8 @@ runcmd:
           server: https://kubernetes.default.svc
         - namespace: portfolio
           server: https://kubernetes.default.svc
+        - namespace: kube-system
+          server: https://kubernetes.default.svc
       clusterResourceWhitelist:
         - group: ""
           kind: Namespace
@@ -80,6 +82,7 @@ runcmd:
         path: k8s/apps
       destination:
         server: https://kubernetes.default.svc
+        namespace: argocd
       syncPolicy:
         automated:
           prune: true
