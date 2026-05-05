@@ -3,7 +3,7 @@ import type { NavBrand, NavLink, SiteMeta } from '../lib/types';
 export const siteMeta: SiteMeta = {
   title: 'Robot - Body / Brain / Rooms',
   description:
-    'Editorial robotics portfolio spanning hardware, software, and ecosystem building.',
+    'Editorial robotics portfolio spanning hardware, software, and ecosystem-building work.',
   topLeft: '◉ portfolio_2026 · triptych',
   topRight: 'robot · senior · robotics · ecosystem builder',
 };

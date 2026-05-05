@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  pull_request:
+    paths:
+      - "app/**"
+      - ".github/workflows/ci.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate app quality gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: app/pnpm-lock.yaml
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm --dir app install --frozen-lockfile
+
+      - name: Install Playwright browser dependencies
+        run: pnpm --dir app test:e2e:install
+
+      - name: Type and Astro checks
+        run: pnpm --dir app check
+
+      - name: Unit tests
+        run: pnpm --dir app test
+
+      - name: Build application
+        run: pnpm --dir app build
+
+      - name: End-to-end tests
+        run: pnpm --dir app test:e2e
+
+      - name: Lighthouse quality gate
+        run: pnpm --dir app lhci

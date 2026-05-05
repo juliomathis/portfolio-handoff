@@ -1,0 +1,9 @@
+# Phase 7 CI/CD and deployment governance
+/.github/workflows/* @juliomathis
+/k8s/manifests/portfolio/deployment.yaml @juliomathis
+
+# Sensitive infrastructure and GitOps control paths
+/k8s/apps/** @juliomathis
+/k8s/bootstrap/** @juliomathis
+/k8s/manifests/cert-manager/** @juliomathis
+/infra/** @juliomathis

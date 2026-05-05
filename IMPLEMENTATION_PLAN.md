@@ -1541,7 +1541,7 @@ Phase 1 policy:
 
 **CI image-tag bumps and branch protection**: the default `GITHUB_TOKEN` (and plain deploy keys) do NOT bypass branch protection. Three viable mechanisms, in order of preference:
 
-1. **(Chosen) GitHub App with bypass permission.** Create a private GitHub App ("portfolio-bot"), install it on the repo with `contents: write`, add it to the branch-protection "Allow specified actors to bypass required pull requests" list. In the workflow, mint an ephemeral installation token via `actions/create-github-app-token@v1`. This is the current industry-standard pattern; no long-lived PAT, fine-grained scope, auditable.
+1. **(Chosen) GitHub App with bypass permission.** Create a private GitHub App ("portfolio-bot"), install it on the repo with `contents: write`, add it to the branch-protection "Allow specified actors to bypass required pull requests" list. In the workflow, mint an ephemeral installation token via `actions/create-github-app-token@v3`. This is the current industry-standard pattern; no long-lived PAT, fine-grained scope, auditable.
 2. **Auto-merging PRs.** The image-bump workflow opens a PR instead of pushing to main; a second workflow auto-approves and auto-merges it. Cleaner blast radius but adds a ~30s lag and noisier PR history.
 3. **Self-hosted PAT with bypass.** A user PAT added to the bypass list. Rejected: ties deployments to one human, needs rotation discipline.
 
@@ -1552,6 +1552,14 @@ Complementary guardrails for the repo-wide `contents: write` token:
 - `image.yml` short-circuits no-op reruns and otherwise hard-fails before commit unless the staged diff is exactly `k8s/manifests/portfolio/deployment.yaml`.
 
 **No direct pushes to `main` from humans** — even for trivial changes, a PR is required.
+
+### 10.6 Phase 7 implementation snapshot (current branch)
+
+- `.github/workflows/ci.yml` is configured as the PR quality gate workflow (`pull_request` for `app/**` and workflow changes) and runs: `pnpm --dir app check`, `pnpm --dir app test`, `pnpm --dir app build`, `pnpm --dir app test:e2e`, and `pnpm --dir app lhci`.
+- `.github/workflows/image.yml` is configured for `push` to `main` on `app/**`, builds/pushes immutable image tags `ghcr.io/juliomathis/portfolio:<git-sha>`, and performs deployment image bump automation.
+- GitHub App secrets required for bot token generation: `PORTFOLIO_BOT_APP_ID` and `PORTFOLIO_BOT_PRIVATE_KEY`.
+- Deployment bump logic is constrained to `k8s/manifests/portfolio/deployment.yaml` with both no-op rerun short-circuiting and a staged-diff hard guard.
+- Terraform workflow remains out of scope in Phase 7: no `.github/workflows/terraform.yml` should be added until Phase 1.5 remote-state enablement.
 
 ---
 
