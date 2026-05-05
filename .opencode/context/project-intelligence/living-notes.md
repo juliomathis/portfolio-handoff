@@ -24,9 +24,9 @@
 - ✅ **Phase 5** — Terraform infrastructure provisioning baseline implemented (`infra/terraform/`), including validated local apply/destroy flow and on-demand lifecycle scripts (`up.sh`, `down.sh`).
 
 **In flight:**
-- 🚧 **Phase 6** — Kubernetes manifests + ArgoCD bootstrap preparation.
+- 🚧 **Phase 6** — Kubernetes manifests + ArgoCD bootstrap preparation (bootstrap/apps/manifests scaffolding created; local manifest render checks passing).
 
-**Branch state:** `feature/phase-5-infrastructure-provisioning` contains completed Phase 5 Terraform baseline work and Phase 6 preparation context updates. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
+**Branch state:** `feature/phase-6-k8s-argocd-bootstrap-prep` is active after merging and cleaning up `feature/phase-5-infrastructure-provisioning`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -80,6 +80,8 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-05: Began Phase 6 scaffold (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), validated manifest rendering via `kubectl kustomize`, and used on-demand infra windows (`up.sh`/`down.sh`) for safe bootstrap checks.
+- 2026-05-05: Merged PR #12 (Phase 5 baseline + on-demand infra lifecycle), switched to latest `main`, deleted `feature/phase-5-infrastructure-provisioning` locally/remotely, and created `feature/phase-6-k8s-argocd-bootstrap-prep` for Phase 6 preparation.
 - 2026-05-05: Executed `terraform apply`, verified cloud-init and k3s readiness, then executed `terraform destroy` to return cost-bearing resources to zero.
 - 2026-05-05: Added on-demand infrastructure lifecycle scripts (`infra/terraform/up.sh`, `infra/terraform/down.sh`) so servers run only when needed.
 - 2026-05-05: Added `infra/terraform/` baseline files (`versions.tf`, `backend.tf`, `main.tf`, `variables.tf`, `outputs.tf`, `cloud-init.tftpl`, `.gitignore`, `terraform.tfvars.example`) and completed local `terraform init/fmt/validate/plan`.

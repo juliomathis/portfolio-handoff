@@ -6,6 +6,12 @@ type: project
 
 # Operations Log
 
+## [2026-05-05] ops | phase 5 merge cleanup + phase 6 branch kickoff
+
+- Confirmed PR #12 merged to `main` and fast-forwarded local `main`.
+- Deleted merged Phase 5 branch `feature/phase-5-infrastructure-provisioning` locally and remotely.
+- Created `feature/phase-6-k8s-argocd-bootstrap-prep` from updated `main` to begin Phase 6 preparation.
+
 ## [2026-05-05] docs | on-demand infra lifecycle runbook hardening
 
 - Documented canonical on-demand lifecycle usage in `AGENTS.md`, `project-wiki/infrastructure.md`, and `project-wiki/operations.md`.
