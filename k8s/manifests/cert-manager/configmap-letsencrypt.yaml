@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: letsencrypt-config
+  namespace: cert-manager
+data:
+  email: jumathis@proton.me

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: portfolio-ingress-config
+  namespace: portfolio
+data:
+  host: portfolio.replace-with-dashed-ip.nip.io

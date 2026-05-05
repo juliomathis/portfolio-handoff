@@ -38,7 +38,8 @@ For standards/workflows, load from `.opencode/context/core/navigation.md`.
 - `.opencode/context/` — canonical project intelligence + wiki
 - `.opencode/reference/` — immutable handoff/reference artifacts
 - `infra/terraform/` — Phase 5 baseline complete on this branch (on-demand `up.sh`/`down.sh` lifecycle)
-- `k8s/`, `.github/workflows/` — expected in later phases (not yet present)
+- `k8s/` — Phase 6 bootstrap/apps/manifests scaffolding active on this branch
+- `.github/workflows/` — expected in later phases (not yet present)
 
 ## Current phase focus
 
