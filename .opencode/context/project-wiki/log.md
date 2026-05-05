@@ -6,6 +6,13 @@ type: project
 
 # Operations Log
 
+## [2026-05-05] ops | phase 6 merge cleanup + phase 7 branch kickoff
+
+- Confirmed PR #14 merged to `main` and fast-forwarded local `main`.
+- Deleted merged Phase 6 branch `feature/phase-6-k8s-argocd-bootstrap-prep` locally and remotely.
+- Created `feature/phase-7-ci-cd-github-actions-bot` from updated `main` to begin Phase 7 wiring.
+- Synced canonical phase status docs across `README.md`, `AGENTS.md`, and `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`.
+
 ## [2026-05-05] infra | phase 6 live bootstrap validation window
 
 - Ran on-demand validation window via `./infra/terraform/up.sh`, then verified bootstrap readiness (`cloud-init status --wait`, node `Ready`, core pods running).
