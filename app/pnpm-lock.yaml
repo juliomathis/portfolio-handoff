@@ -31,8 +31,8 @@ importers:
         specifier: 4.11.3
         version: 4.11.3(playwright-core@1.59.1)
       '@csstools/postcss-global-data':
-        specifier: 3.1.0
-        version: 3.1.0(postcss@8.5.14)
+        specifier: 4.0.0
+        version: 4.0.0(postcss@8.5.14)
       '@lhci/cli':
         specifier: 0.15.1
         version: 0.15.1
@@ -243,9 +243,9 @@ packages:
       '@csstools/css-parser-algorithms': ^4.0.0
       '@csstools/css-tokenizer': ^4.0.0
 
-  '@csstools/postcss-global-data@3.1.0':
-    resolution: {integrity: sha512-qfS0bUxBukuyxEyxTTZG+px2xwAQPf7Qk6B7lFdjWnovb/O6h0t3sxrVY81nJLh7z0KvEMhjxTURNtEmOrADpQ==}
-    engines: {node: '>=18'}
+  '@csstools/postcss-global-data@4.0.0':
+    resolution: {integrity: sha512-mPKrL3Tzt8k1V+hTkU8XTH6JKRekB97oKHv/MekC9nfmRa+gMf1swlHRt8YK722sYN4xOipl17FZst99jsScLA==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
       postcss: ^8.4
 
@@ -3505,7 +3505,7 @@ snapshots:
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-tokenizer': 4.0.0
 
-  '@csstools/postcss-global-data@3.1.0(postcss@8.5.14)':
+  '@csstools/postcss-global-data@4.0.0(postcss@8.5.14)':
     dependencies:
       postcss: 8.5.14
 
