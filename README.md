@@ -11,7 +11,7 @@ Production implementation of the Claude Design portfolio handoff.
 
 ## Phase status
 
-Phases 0–8 are implemented on `main` (including Phase 7 CI/CD wiring and Phase 8 canonical runbook hardening under `.opencode/`). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. Phase 9 (verification and sign-off toward `v0.1.0`) is the current workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
+Phases 0–9 are completed on `main` (including Phase 7 CI/CD wiring, Phase 8 canonical runbook hardening, and Phase 9 verification/sign-off evidence updates under `.opencode/`). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. For `v0.1.0` sign-off, criteria 1–7, 9, and 10 are evidenced as pass; criterion 8 (Phase 2 domain-swap content PR) is explicitly deferred until the first real domain migration window. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
 
 ## Phase 7 CI/CD wiring (completed baseline)
 
@@ -27,11 +27,11 @@ Phases 0–8 are implemented on `main` (including Phase 7 CI/CD wiring and Phase
 - Operations runbook now includes a Phase 9 success-criteria evidence matrix.
 - Handoff-ingestion workflow is documented under content authoring guidance.
 
-## Phase 9 verification + sign-off (current branch)
+## Phase 9 verification + sign-off (completed baseline)
 
-- Execute evidence capture against success criteria in `.opencode/context/project-wiki/operations.md`.
-- Record verification outputs in `.opencode/context/project-wiki/log.md`.
-- Prepare final sign-off path toward release tagging (`v0.1.0`).
+- Verification evidence matrix is captured in `.opencode/context/project-wiki/operations.md`.
+- Session-by-session validation evidence is logged in `.opencode/context/project-wiki/log.md`.
+- Live nip.io TLS and direct Argo rollout timing evidence have been captured in on-demand infra windows.
 
 ## On-demand infrastructure lifecycle
 

@@ -6,6 +6,13 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] ops | phase 9 sign-off closeout
+
+- Confirmed Phase 9 implementation/evidence merges on `main`: PR #39 (`e18a590`) and PR #40 (`7946c60`).
+- Updated success matrix after direct Argo rollout timing capture: criterion 7 now pass (`24s` operation on revision `b61ff095`).
+- Finalized Phase 9 sign-off decision for `v0.1.0`: criteria 1-7, 9, and 10 pass; criterion 8 is an explicit deferred item for the first real Phase 2 domain migration window.
+- Synced Phase 9 closeout status across canonical summary docs (`README.md`, `AGENTS.md`, and project-intelligence pages).
+
 ## [2026-05-06] infra | phase 9 direct argo rollout timing evidence
 
 - Provisioned a fresh validation window with `/usr/bin/time -p ./infra/terraform/up.sh` (`real 25.36` seconds), then disabled root self-heal and pointed the portfolio app at validation branches for controlled timing capture.

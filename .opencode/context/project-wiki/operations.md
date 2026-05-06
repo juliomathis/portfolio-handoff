@@ -83,13 +83,18 @@ Use this matrix during Phase 9 sign-off.
 
 | Criterion | Status | Notes |
 |---|---|---|
-| 1. nip.io endpoint serves site with valid TLS | Pass (branch validated) | Phase 9 follow-up branch revision `a33b710` introduced a PostSync host-reconciler hook; live validation now shows reconciled dashed host and `curl -I https://portfolio.178-105-89-214.nip.io` returning `HTTP/2 200`. |
+| 1. nip.io endpoint serves site with valid TLS | Pass | Host-reconciler hardening merged on `main` (`#39`, `#40`); live validation shows reconciled dashed host and `curl -I https://portfolio.178-105-89-214.nip.io` returning `HTTP/2 200`. |
 | 2. Visual alignment with prototype at desktop | Pass (automated) | `playwright` desktop snapshot baseline test passed (`responsive.spec.ts`). |
 | 3. Usable at 375/768/1280 | Pass | Responsive snapshot suite passed at all three target widths. |
 | 4. Lighthouse thresholds met | Pass | `lhci` passed with representative scores perf 1.00, a11y 0.98, bp 1.00, SEO 1.00. |
 | 5. Content editable without component changes | Pass (contract) | Typed content boundary and contract tests pass (`content-data`/`components-phase2` coverage). |
 | 6. `terraform apply` <=15 min from zero | Pass | Timed 2026-05-06 run: `/usr/bin/time -p ./infra/terraform/up.sh` completed in `real 28.21` seconds from zero state. |
 | 7. Image bump to rollout <=3 min | Pass (live) | Live validation branch `validation/phase9-rollout-timing` (`b61ff095`) changed deployment image; Argo operation `startedAt=2026-05-06T15:12:57Z` and `finishedAt=2026-05-06T15:13:21Z` (24s) with deployment rollout success. |
-| 8. Phase 2 domain swap <=5-file content PR | Deferred | No merged domain-swap PR exists yet in current phase history. |
+| 8. Phase 2 domain swap <=5-file content PR | Deferred (accepted for v0.1.0) | Deferred until first real domain migration window (requires external domain purchase/Cloudflare inputs); tracked as explicit non-blocking defer for Phase 9 sign-off. |
 | 9. Wiki queryable via qmd | Pass | `qmd query "ArgoCD"` returns core wiki docs (`adr/002`, `operations`, `infrastructure`). |
 | 10. New handoff ingest workflow documented | Pass | Documented under `content-authoring.md` (`New Handoff Ingestion Workflow`). |
+
+## Phase 9 Sign-off Decision (2026-05-06)
+
+- `v0.1.0` Phase 9 sign-off is accepted with criteria 1-7, 9, and 10 evidenced as pass.
+- Criterion 8 is an explicit defer tied to the first real Phase 2 domain migration PR (domain + Cloudflare credentials not provisioned during this sign-off window).

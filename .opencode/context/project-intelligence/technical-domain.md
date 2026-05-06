@@ -71,7 +71,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–8 complete; Phase 9 verification/sign-off active)
+├─ app/                        ← Astro application (Phases 1–9 complete)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -111,7 +111,7 @@ portfolio-handoff/
 
 **Done (Phase 8):** canonical project wiki hardening completed (`architecture`, `testing`, `content-authoring`, `design-system`, `operations` evidence matrix).
 
-**In progress (Phase 9):** verification evidence capture and final sign-off prep.
+**Done (Phase 9):** verification evidence capture and sign-off completed on `main`; criterion 8 remains an explicit defer pending first real Phase 2 domain migration PR.
 
 ## Critical technical contracts
 

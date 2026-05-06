@@ -19,7 +19,7 @@ Project Name:    Portfolio Handoff
 Tagline:         Production-grade personal portfolio as a portfolio artifact
 Owner:           Julio Mathis (jumathis@proton.me)
 Repo:            portfolio-handoff (GitHub)
-Current status:  Phase 9 active; Phase 8 canonical documentation hardening completed on main (2026-05-06)
+Current status:  Phase 9 completed on main (2026-05-06); v0.1.0 sign-off captured with criterion 8 deferred to first real Phase 2 domain migration window
 ```
 
 ## Problem Statement
@@ -37,7 +37,7 @@ The second audience is load-bearing. **Every infrastructure choice is made knowi
 
 ## Success criteria (from `../project-wiki/index.md`)
 
-The project is done when all ten hold:
+The sign-off matrix tracks ten criteria. For `v0.1.0`, criteria 1-7, 9, and 10 are evidenced as pass; criterion 8 is an explicit defer tied to the first real Phase 2 domain migration PR:
 
 | # | Criterion |
 |---|---|
@@ -79,7 +79,7 @@ The project is done when all ten hold:
 | Phase 6 | k8s manifests + ArgoCD bootstrap | ✅ Implemented (merged) |
 | Phase 7 | CI/CD wiring (GitHub Actions + GitHub App bot) | ✅ Completed |
 | Phase 8 | Karpathy three-layer docs | ✅ Completed |
-| Phase 9 | Verification + sign-off (v0.1.0 tag) | 🚧 Active |
+| Phase 9 | Verification + sign-off (v0.1.0 tag) | ✅ Completed |
 
 Estimated total: 6–8 working days end-to-end.
 
