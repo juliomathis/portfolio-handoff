@@ -11,7 +11,7 @@ Production implementation of the Claude Design portfolio handoff.
 
 ## Phase status
 
-Phases 0–7 are implemented on `main` (including Phase 7 CI/CD wiring for PR quality gates and automated deploy-bump PR fallback on protected `main`). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. Phase 8 (canonical documentation hardening + verification/sign-off preparation) is the current workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
+Phases 0–8 are implemented on `main` (including Phase 7 CI/CD wiring and Phase 8 canonical runbook hardening under `.opencode/`). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. Phase 9 (verification and sign-off toward `v0.1.0`) is the current workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
 
 ## Phase 7 CI/CD wiring (completed baseline)
 
@@ -21,11 +21,17 @@ Phases 0–7 are implemented on `main` (including Phase 7 CI/CD wiring for PR qu
 - Bot credentials: GitHub App token generation requires Actions secrets `PORTFOLIO_BOT_APP_ID` and `PORTFOLIO_BOT_PRIVATE_KEY`; GHCR push uses `GITHUB_TOKEN` with `packages: write`.
 - Out of scope in Phase 7: do **not** add `.github/workflows/terraform.yml`; Terraform remains operator-run via `./infra/terraform/up.sh` and `./infra/terraform/down.sh`.
 
-## Phase 8 documentation prep (current branch)
+## Phase 8 documentation hardening (completed baseline)
 
-- Sync phase-transition status across `README.md`, `AGENTS.md`, `.opencode/context/project-intelligence/*`, and `.opencode/context/project-wiki/log.md`.
-- Continue hardening canonical runbooks under `.opencode/context/project-wiki/` as the source of truth for implementation and operations.
-- Keep Phase 9 verification/tag-release work out of scope until Phase 8 docs are complete.
+- Canonical wiki pages for architecture/testing/content/design/operations were expanded to reviewer-grade runbooks.
+- Operations runbook now includes a Phase 9 success-criteria evidence matrix.
+- Handoff-ingestion workflow is documented under content authoring guidance.
+
+## Phase 9 verification + sign-off (current branch)
+
+- Execute evidence capture against success criteria in `.opencode/context/project-wiki/operations.md`.
+- Record verification outputs in `.opencode/context/project-wiki/log.md`.
+- Prepare final sign-off path toward release tagging (`v0.1.0`).
 
 ## On-demand infrastructure lifecycle
 

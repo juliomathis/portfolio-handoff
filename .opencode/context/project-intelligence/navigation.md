@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/nav | Priority: high | Version: 2.6 | Updated: 2026-05-06 -->
+<!-- Context: project-intelligence/nav | Priority: high | Version: 2.7 | Updated: 2026-05-06 -->
 
 # Project Intelligence — portfolio-handoff
 
@@ -10,7 +10,7 @@
 
 A production-grade personal portfolio site for Julio Mathis, shipped as an Astro + React-islands single-page app on a self-managed k3s cluster — built so the **repository itself is a portfolio artifact** for DevOps/SRE/full-stack reviewers.
 
-**Current phase:** Phase 8 active (documentation hardening + sign-off prep), with Phase 7 CI/CD wiring completed on `main`.
+**Current phase:** Phase 9 active (verification + sign-off), with Phase 8 documentation hardening completed on `main`.
 
 ## Structure
 
@@ -49,7 +49,7 @@ A production-grade personal portfolio site for Julio Mathis, shipped as an Astro
 
 - **Files are summaries, not canonical.** If a summary contradicts `../project-wiki/index.md`, the wiki wins. Open an update task.
 - **MVI rule:** each file < 200 lines. If growing past that, split or push detail into `../project-wiki/` pages.
-- **Updated 2026-05-06** to reflect Phase 7 completion and Phase 8 kickoff scope.
+- **Updated 2026-05-06** to reflect Phase 8 completion and Phase 9 kickoff scope.
 
 ## Maintenance
 

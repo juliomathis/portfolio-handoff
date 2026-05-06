@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.6 | Updated: 2026-05-06 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.7 | Updated: 2026-05-06 -->
 
 # Technical Domain
 
@@ -71,7 +71,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–7 complete; Phase 8 documentation prep active)
+├─ app/                        ← Astro application (Phases 1–8 complete; Phase 9 verification/sign-off active)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -109,9 +109,9 @@ portfolio-handoff/
 
 **Done (Phase 7):** CI/CD workflow wiring is merged and validated on `main`, including protected-main deploy-bump PR fallback and merged image bump PRs (`#30`, `#32`).
 
-**In progress (Phase 8):** canonical documentation hardening and sign-off preparation.
+**Done (Phase 8):** canonical project wiki hardening completed (`architecture`, `testing`, `content-authoring`, `design-system`, `operations` evidence matrix).
 
-**Not yet:** Phase 9 verification/tag-release surfaces.
+**In progress (Phase 9):** verification evidence capture and final sign-off prep.
 
 ## Critical technical contracts
 
