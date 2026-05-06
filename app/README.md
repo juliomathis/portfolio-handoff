@@ -4,6 +4,8 @@ This directory contains the Astro app scaffold used in phase 1.
 
 ## Setup
 
+Requires Node.js 22+ (see `app/package.json` engines).
+
 ```sh
 pnpm --dir app install
 ```
