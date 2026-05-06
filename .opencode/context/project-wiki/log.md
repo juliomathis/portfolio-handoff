@@ -6,6 +6,14 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] infra | phase 9 timed on-demand validation window
+
+- Executed `/usr/bin/time -p ./infra/terraform/up.sh` with required runtime vars (`TF_VAR_ssh_public_key`, `TF_VAR_github_repo`) and recorded `real 28.21` seconds from zero state.
+- Verified bootstrap readiness on node (`cloud-init status --wait`, `k3s kubectl get nodes -o wide`, `k3s kubectl get pods -A` all healthy).
+- Probed `https://portfolio.178-105-89-214.nip.io`; endpoint progressed from connect-refused to TLS SAN mismatch (`curl: (60)`), so valid host certificate was not yet served.
+- Confirmed ingress/certificate hostname remained templated as `portfolio.replace-with-dashed-ip.nip.io`, with cert-manager order/challenge bound to the placeholder host.
+- Ran `./infra/terraform/down.sh` immediately after evidence capture; first attempt failed on missing required vars, rerun with explicit `TF_VAR_*` values succeeded (`Destroy complete`, `real 16.77` seconds).
+
 ## [2026-05-06] verify | phase 9 evidence capture (local gates + qmd)
 
 - Switched to `feature/phase-9-evidence-capture` from latest `origin/main`; deleted merged kickoff branch `feature/phase-9-verification-signoff` locally/remotely.
