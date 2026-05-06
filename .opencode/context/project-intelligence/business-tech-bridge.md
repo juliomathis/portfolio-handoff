@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/bridge | Priority: high | Version: 2.0 | Updated: 2026-04-22 -->
+<!-- Context: project-intelligence/bridge | Priority: high | Version: 2.1 | Updated: 2026-05-06 -->
 
 # Business ↔ Tech Bridge
 
@@ -18,12 +18,12 @@
 
 | Portfolio goal | Technical choice | Why this mapping |
 |----------------|------------------|------------------|
-| Demonstrate DevOps/SRE judgment | k3s on Hetzner CX11 (not Vercel) | Infra IS the demo. Managed platforms hide the interesting choices. |
+| Demonstrate DevOps/SRE judgment | k3s on Hetzner CX23 (not Vercel) | Infra IS the demo. Managed platforms hide the interesting choices. |
 | Demonstrate GitOps practice | ArgoCD with scoped `AppProject` | Default `default` project is a red flag to any reviewer. |
 | Demonstrate secret hygiene | SOPS + age + KSOPS in Phase 2 | No plaintext secrets in git, no external KMS dependency. |
-| Demonstrate CI/branch-protection discipline | GitHub App bot + `image.yml` with single-path staged-diff guard | Deploy keys/`GITHUB_TOKEN` can't bypass branch protection — GitHub Apps can, *with* audit. |
+| Demonstrate CI/branch-protection discipline | GitHub App bot + `image.yml` protected-main fallback PR flow + single-path staged-diff guard | Keep strict PR-only `main` protection while preserving automated, auditable deployment bumps. |
 | Demonstrate testing discipline | Vitest + Playwright + Lighthouse CI | "Mid polish" is disciplined without bloat. |
-| Demonstrate cost awareness | CX11 ($4/mo), public GHCR (free), nip.io (free) | Shows judgment: match tool to scale, defer spend until Phase 2. |
+| Demonstrate cost awareness | CX23 baseline, public GHCR (free), nip.io (free) | Shows judgment: match tool to scale, defer spend until Phase 2. |
 | Edit content without touching components (success criterion 5) | Typed `app/src/content/*.ts` + `lib/types.ts` contract | Separates the "author" concern from the "designer/dev" concern. |
 | Reviewable in ≤15 min | Full `terraform apply` → live site in ≤15 min | A reviewer can clone, provision, and see the site before interest wanes. |
 
@@ -45,9 +45,9 @@
 ### Feature: GitHub App bot for CI → main
 
 **Business context:** Branch protection on `main` is table stakes. CI still needs to commit image tag bumps.
-**Technical:** Dedicated GitHub App (`portfolio-bot`) with bypass permission, ephemeral scoped installation tokens, single-path staged-diff guard in `image.yml`.
-**Trade-off considered:** Deploy key (no bypass), PAT on owner's account (audit nightmare), disable branch protection for bot commits (defeats the point).
-**Reviewer signal:** Candidate has hit the `GITHUB_TOKEN ≠ bypass` wall and solved it properly.
+**Technical:** `image.yml` commits the bump with a GitHub App installation token, attempts direct `main` push, then falls back to `bot/deploy-image-<sha>` + PR creation using `github.token`; staged-diff guard limits changes to `k8s/manifests/portfolio/deployment.yaml`.
+**Trade-off considered:** Keep app bypass actor on `main` (not available in this repo), deploy key/PAT (poor audit boundary), or weaken branch protection (rejected).
+**Reviewer signal:** Candidate preserves PR-only branch protection and still closes the automation loop with an auditable fallback.
 
 ### Feature: KSOPS on custom `argocd-repo-server` image (Phase 2)
 
@@ -68,7 +68,7 @@
 ## Common reviewer questions (and the answer)
 
 - **"Why k8s for one page?"** → Infra is the portfolio artifact (see `../project-wiki/index.md`). Vercel hides what the reviewer wants to see.
-- **"Why not managed k8s?"** → Cost + learning signal. CX11 at $4/mo proves judgment about scale.
+- **"Why not managed k8s?"** → Cost + learning signal. A low-cost single-node CX23 keeps spend aligned with portfolio scale.
 - **"Why two phases for DNS?"** → Test the full TLS/ingress pipeline on free DNS before committing to a domain. Cheap insurance.
 - **"Why not SPA?"** → Perf budget + JS-as-last-resort discipline. One island, native `<details>`, zero over-hydration.
 - **"KSOPS trade-off?"** → Known, documented in `../project-wiki/operations.md`, mitigated by 6 compensating controls, and has a narrowing path for Phase 3.
