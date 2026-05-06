@@ -26,6 +26,7 @@ Run these from the repository root:
 | `pnpm --dir app test` | Run unit tests with Vitest |
 | `pnpm --dir app test:e2e` | Run Playwright end-to-end tests |
 | `pnpm --dir app build` | Build the production bundle |
+| `pnpm --dir app preview` | Serve the built app locally |
 | `pnpm --dir app lhci` | Run Lighthouse CI quality assertions |
 
 ## Container local verification
