@@ -6,6 +6,13 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] ops | phase 7 closeout + phase 8 kickoff prep
+
+- Confirmed Phase 7 closeout merges on `main`: Dependabot PR #20 (`818ea7c`) followed by bot deploy-bump PR #32 (`ffce26d`) with single-file scope (`k8s/manifests/portfolio/deployment.yaml`).
+- Created `feature/phase-8-documentation-signoff` from latest `origin/main` to start the Phase 8 documentation and sign-off preparation track.
+- Hardened `.github/workflows/image.yml` fallback matching so deploy-bump PR fallback is used for both branch-protection rejections (`GH006`) and non-fast-forward race rejections (`fetch first`).
+- Synced phase-transition status across `README.md`, `AGENTS.md`, and `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`.
+
 ## [2026-05-06] ci | phase 7 protected-main image workflow validation
 
 - Investigated `Image` workflow failure on run `25431964338`: image build/push succeeded, but deploy bump failed at `git push origin HEAD:main` with `GH006` (`Changes must be made through a pull request.`).

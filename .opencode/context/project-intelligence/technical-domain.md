@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/technical | Priority: high | Version: 2.5 | Updated: 2026-05-06 -->
+<!-- Context: project-intelligence/technical | Priority: high | Version: 2.6 | Updated: 2026-05-06 -->
 
 # Technical Domain
 
@@ -71,7 +71,7 @@ Author → main → GitHub Actions image.yml
 portfolio-handoff/
 ├─ README.md, LICENSE, CLAUDE.md, .opencode/context/project-wiki/index.md
 ├─ .editorconfig, .gitignore, .gitattributes, .sops.yaml
-├─ app/                        ← Astro application (Phases 1–6 complete; Phase 7 validation activity active)
+├─ app/                        ← Astro application (Phases 1–7 complete; Phase 8 documentation prep active)
 │  ├─ src/{pages,layouts,components,islands,content,styles,lib}/
 │  ├─ tests/{unit,e2e}/
 │  ├─ Dockerfile, nginx.conf   ← Phase 4
@@ -81,7 +81,7 @@ portfolio-handoff/
 │  ├─ bootstrap/               ← ArgoCD install + AppProject + root app
 │  ├─ apps/                    ← one Application per stack (cert-manager, ingress-nginx, portfolio, cert-manager-issuers)
 │  └─ manifests/               ← plain kustomize for portfolio; cert-manager issuer configs
-├─ .github/workflows/          ← Phase 7 active surface (CI/CD workflow wiring + hardening)
+├─ .github/workflows/          ← Phase 7 baseline complete (CI/CD wiring + deploy-bump fallback)
 └─ .opencode/{reference,context/project-wiki}/            ← canonical docs layout
 ```
 
@@ -107,9 +107,11 @@ portfolio-handoff/
 
 **Done (Phase 6):** Kubernetes manifests + ArgoCD bootstrap authoring (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`) with local `kubectl kustomize` render checks and an on-demand live bootstrap validation window.
 
-**In progress (Phase 7 closeout):** CI/CD workflow wiring is merged; protected-main image-bump fallback has been validated on `main` via bot PR flow.
+**Done (Phase 7):** CI/CD workflow wiring is merged and validated on `main`, including protected-main deploy-bump PR fallback and merged image bump PRs (`#30`, `#32`).
 
-**Not yet:** Phase 8+ documentation/sign-off surfaces.
+**In progress (Phase 8):** canonical documentation hardening and sign-off preparation.
+
+**Not yet:** Phase 9 verification/tag-release surfaces.
 
 ## Critical technical contracts
 
@@ -118,7 +120,7 @@ portfolio-handoff/
 3. **Image tags are immutable SHAs.** `ghcr.io/<user>/portfolio:<git-sha>`. No `latest`. `imagePullPolicy: Always` paired with digest match for cheap hardening.
 4. **`AppProject: portfolio`** (scoped), not `default`. Hardcoded allow-lists for sourceRepos and clusterResourceWhitelist per `../project-wiki/deployment.md`.
 5. **Kubeconfig is `0600` root-only** on the node. `sudo` required for `kubectl`. Small UX cost, real hardening.
-6. **CI image-bump uses hybrid auth paths.** GitHub App token handles checkout/commit/branch push; if direct push to `main` is rejected by branch protection, workflow opens a PR with `github.token` (`pull-requests: write`) and merge proceeds through normal review/merge policy. See `../project-wiki/deployment.md`.
+6. **CI image-bump uses hybrid auth paths.** GitHub App token handles checkout/commit/branch push; if direct push to `main` is rejected by branch protection (`GH006`) or a non-fast-forward race (`fetch first`), workflow opens a PR with `github.token` (`pull-requests: write`) and merge proceeds through normal review/merge policy. See `../project-wiki/deployment.md`.
 7. **Terraform is local-only in Phase 1.** Remote state is Phase 1.5. CI has NO `terraform.yml` (v4.6 unblock).
 8. **KSOPS is the Phase 2 secret runtime.** Custom `argocd-repo-server` image with pinned `ksops` binary + age Secret + `kustomize.buildOptions: --enable-alpha-plugins --enable-exec`. Security trade-off documented in `../project-wiki/operations.md`.
 

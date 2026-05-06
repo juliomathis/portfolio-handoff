@@ -11,15 +11,21 @@ Production implementation of the Claude Design portfolio handoff.
 
 ## Phase status
 
-Phases 0–6 are implemented on `main` (including Phase 6 Kubernetes manifests + ArgoCD bootstrap baseline with live on-demand validation). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. Phase 7 (CI/CD wiring via GitHub Actions + GitHub App bot automation) is the current workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
+Phases 0–7 are implemented on `main` (including Phase 7 CI/CD wiring for PR quality gates and automated deploy-bump PR fallback on protected `main`). `infra/terraform/` supports an on-demand lifecycle via `up.sh`/`down.sh` so cost-bearing servers run only when needed. Phase 8 (canonical documentation hardening + verification/sign-off preparation) is the current workstream. For current task scope, use canonical docs under `.opencode/context/project-wiki/` and `.opencode/context/project-intelligence/`; treat `IMPLEMENTATION_PLAN.md` as a legacy baseline/checklist reference.
 
-## Phase 7 CI/CD wiring (current branch)
+## Phase 7 CI/CD wiring (completed baseline)
 
 - PR quality gate: `.github/workflows/ci.yml` runs `pnpm --dir app check`, `test`, `build`, `test:e2e`, and `lhci` on pull requests for `app/**` and CI workflow changes.
 - Main deploy automation: `.github/workflows/image.yml` runs on `main` pushes for `app/**`, builds and pushes `ghcr.io/juliomathis/portfolio:<git-sha>`, then updates only `k8s/manifests/portfolio/deployment.yaml`.
-- Deployment bump safety: image workflow short-circuits no-op reruns and hard-fails if staged changes include any path other than `k8s/manifests/portfolio/deployment.yaml`.
+- Deployment bump safety: image workflow short-circuits no-op reruns, hard-fails if staged changes include any path other than `k8s/manifests/portfolio/deployment.yaml`, and falls back to bot branch + PR when direct push fails due branch protection (`GH006`) or non-fast-forward races.
 - Bot credentials: GitHub App token generation requires Actions secrets `PORTFOLIO_BOT_APP_ID` and `PORTFOLIO_BOT_PRIVATE_KEY`; GHCR push uses `GITHUB_TOKEN` with `packages: write`.
 - Out of scope in Phase 7: do **not** add `.github/workflows/terraform.yml`; Terraform remains operator-run via `./infra/terraform/up.sh` and `./infra/terraform/down.sh`.
+
+## Phase 8 documentation prep (current branch)
+
+- Sync phase-transition status across `README.md`, `AGENTS.md`, `.opencode/context/project-intelligence/*`, and `.opencode/context/project-wiki/log.md`.
+- Continue hardening canonical runbooks under `.opencode/context/project-wiki/` as the source of truth for implementation and operations.
+- Keep Phase 9 verification/tag-release work out of scope until Phase 8 docs are complete.
 
 ## On-demand infrastructure lifecycle
 

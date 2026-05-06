@@ -19,7 +19,7 @@ type: project
 3. Stage guard: fail unless the staged diff is exactly `k8s/manifests/portfolio/deployment.yaml`.
 4. Commit as app bot identity (`<app-slug>[bot]`).
 5. Attempt direct `git push origin HEAD:main`.
-6. If branch protection rejects push with `GH006` (`Changes must be made through a pull request.`):
+6. If direct push fails due branch protection (`GH006`) or a non-fast-forward race (`fetch first`/`non-fast-forward`):
    - push branch `bot/deploy-image-<sha>`
    - create PR `chore(deploy): bump portfolio image to <sha>`
 7. Merge bot PR through normal branch-protection policy.
