@@ -1,0 +1,91 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: portfolio-ingress-host-reconciler
+  namespace: portfolio
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: portfolio-ingress-host-reconciler
+  namespace: portfolio
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    resourceNames:
+      - portfolio-ingress-config
+    verbs:
+      - get
+      - patch
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - ingresses
+    resourceNames:
+      - portfolio
+    verbs:
+      - get
+      - patch
+  - apiGroups:
+      - cert-manager.io
+    resources:
+      - certificates
+    resourceNames:
+      - portfolio-tls
+    verbs:
+      - get
+      - patch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: portfolio-ingress-host-reconciler
+  namespace: portfolio
+subjects:
+  - kind: ServiceAccount
+    name: portfolio-ingress-host-reconciler
+    namespace: portfolio
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: portfolio-ingress-host-reconciler
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: portfolio-ingress-host-reconciler
+  namespace: portfolio
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  ttlSecondsAfterFinished: 300
+  backoffLimit: 2
+  template:
+    spec:
+      serviceAccountName: portfolio-ingress-host-reconciler
+      restartPolicy: OnFailure
+      containers:
+        - name: reconcile-host
+          image: registry.k8s.io/kubectl:v1.35.4
+          command:
+            - /bin/sh
+            - -ceu
+            - |
+              DASHED_IP="$(printf '%s' "${HOST_IP}" | tr '.' '-')"
+              HOST="portfolio.${DASHED_IP}.nip.io"
+
+              kubectl -n portfolio patch configmap portfolio-ingress-config --type merge -p "{\"data\":{\"host\":\"${HOST}\"}}"
+
+              kubectl -n portfolio patch ingress portfolio --type json -p "[{\"op\":\"replace\",\"path\":\"/spec/rules/0/host\",\"value\":\"${HOST}\"},{\"op\":\"replace\",\"path\":\"/spec/tls/0/hosts/0\",\"value\":\"${HOST}\"}]"
+
+              if kubectl -n portfolio get certificate portfolio-tls >/dev/null 2>&1; then
+                kubectl -n portfolio patch certificate portfolio-tls --type json -p "[{\"op\":\"replace\",\"path\":\"/spec/dnsNames/0\",\"value\":\"${HOST}\"}]"
+              fi
+          env:
+            - name: HOST_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
