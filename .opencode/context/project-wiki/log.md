@@ -6,6 +6,14 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] docs | phase 8 canonical wiki hardening (architecture/testing/content)
+
+- Expanded `architecture.md` from brief summary to explicit runtime/deploy/provisioning flows, invariants, and responsibility boundaries.
+- Expanded `testing.md` with canonical command matrix, layer-specific scope (Vitest/Playwright/LHCI), and failure triage guidance.
+- Expanded `content-authoring.md` with file-by-file ownership map, content-edit workflows, and type-change guardrails.
+- Added handoff-ingestion workflow documentation in `content-authoring.md` and a Phase 9 sign-off evidence matrix in `operations.md`.
+- Expanded `design-system.md` with token layer definitions, typography/layout rules, accessibility constraints, and style-change workflow.
+
 ## [2026-05-06] ops | phase 7 closeout + phase 8 kickoff prep
 
 - Confirmed Phase 7 closeout merges on `main`: Dependabot PR #20 (`818ea7c`) followed by bot deploy-bump PR #32 (`ffce26d`) with single-file scope (`k8s/manifests/portfolio/deployment.yaml`).

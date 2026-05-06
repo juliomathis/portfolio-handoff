@@ -61,3 +61,20 @@ Precondition: Execute only during Phase 2 domain migration window.
 1. Revert the rollout commit on `main` (or restore the previous deployment manifest tag).
 2. Let ArgoCD reconcile previous desired state.
 3. Verify endpoint health and cert validity.
+
+## Success Criteria Evidence Matrix
+
+Use this matrix during Phase 9 sign-off.
+
+| Criterion | Evidence source |
+|---|---|
+| 1. nip.io endpoint serves site with valid TLS | `curl -I https://portfolio.<ip-with-dashes>.nip.io` output captured in ops log |
+| 2. Visual alignment with prototype at desktop | `app/tests/e2e/responsive.spec.ts` desktop snapshot review |
+| 3. Usable at 375/768/1280 | Playwright responsive snapshots and passing E2E run |
+| 4. Lighthouse thresholds met | `pnpm --dir app lhci` pass output + reports |
+| 5. Content editable without component changes | content-only PR diff + unit contract tests |
+| 6. `terraform apply` <=15 min from zero | timed validation window recorded in ops log |
+| 7. Image bump to rollout <=3 min | `Image` run + bump PR merge + Argo reconcile timing note |
+| 8. Phase 2 domain swap <=5-file content PR | migration PR diff statistics in ops log |
+| 9. Wiki queryable via qmd | `qmd query "ArgoCD"` returns project wiki docs |
+| 10. New handoff ingest workflow documented | `.opencode/context/project-wiki/content-authoring.md` ingestion section |
