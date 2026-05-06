@@ -89,7 +89,7 @@ Use this matrix during Phase 9 sign-off.
 | 4. Lighthouse thresholds met | Pass | `lhci` passed with representative scores perf 1.00, a11y 0.98, bp 1.00, SEO 1.00. |
 | 5. Content editable without component changes | Pass (contract) | Typed content boundary and contract tests pass (`content-data`/`components-phase2` coverage). |
 | 6. `terraform apply` <=15 min from zero | Pass | Timed 2026-05-06 run: `/usr/bin/time -p ./infra/terraform/up.sh` completed in `real 28.21` seconds from zero state. |
-| 7. Image bump to rollout <=3 min | Partial | Successful Image runs observed (2m04 and 3m59), but direct Argo rollout timing from a live cluster session is not yet captured. |
+| 7. Image bump to rollout <=3 min | Pass (live) | Live validation branch `validation/phase9-rollout-timing` (`b61ff095`) changed deployment image; Argo operation `startedAt=2026-05-06T15:12:57Z` and `finishedAt=2026-05-06T15:13:21Z` (24s) with deployment rollout success. |
 | 8. Phase 2 domain swap <=5-file content PR | Deferred | No merged domain-swap PR exists yet in current phase history. |
 | 9. Wiki queryable via qmd | Pass | `qmd query "ArgoCD"` returns core wiki docs (`adr/002`, `operations`, `infrastructure`). |
 | 10. New handoff ingest workflow documented | Pass | Documented under `content-authoring.md` (`New Handoff Ingestion Workflow`). |

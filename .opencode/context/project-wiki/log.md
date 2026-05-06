@@ -6,6 +6,15 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] infra | phase 9 direct argo rollout timing evidence
+
+- Provisioned a fresh validation window with `/usr/bin/time -p ./infra/terraform/up.sh` (`real 25.36` seconds), then disabled root self-heal and pointed the portfolio app at validation branches for controlled timing capture.
+- Created and pushed `validation/phase9-rollout-timing` (`b61ff095`) with a single deployment image-tag bump (`818ea7c...` -> `db20a63...`) to trigger a real GitOps rollout.
+- Captured Argo operation timing directly from application status: `startedAt=2026-05-06T15:12:57Z`, `finishedAt=2026-05-06T15:13:21Z` (24 seconds total).
+- Verified rollout outcome: `k3s kubectl -n portfolio rollout status deployment/portfolio` succeeded and deployment image resolved to `ghcr.io/juliomathis/portfolio:db20a63ca7e3e60aadc24e8da0a763919d91059c`.
+- Verified live endpoint after rollout: `curl -I https://portfolio.178-105-89-214.nip.io` returned `HTTP/2 200`.
+- Ended validation session with `/usr/bin/time -p ./infra/terraform/down.sh` (`Destroy complete`, `real 64.45` seconds).
+
 ## [2026-05-06] infra | phase 9 nip.io host-reconciler fix + live validation
 
 - Implemented `k8s/manifests/portfolio/ingress-host-reconciler.yaml` and wired it into `k8s/manifests/portfolio/kustomization.yaml` as an Argo `PostSync` hook, plus `ignoreDifferences` on host fields in `k8s/apps/root.yaml`.
