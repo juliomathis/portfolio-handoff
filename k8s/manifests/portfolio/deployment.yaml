@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: portfolio
-          image: ghcr.io/juliomathis/portfolio:db20a63ca7e3e60aadc24e8da0a763919d91059c
+          image: ghcr.io/juliomathis/portfolio:818ea7c37e97ecedf4ea6f6e076b925ef1fb30d3
           imagePullPolicy: Always
           ports:
             - name: http
