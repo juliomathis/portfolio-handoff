@@ -40,8 +40,9 @@ Use this when `Image` workflow runs after `main` merges.
 1. Check latest run: `gh run list --workflow Image --branch main --limit 1`.
 2. If bump step fails, inspect logs: `gh run view <run-id> --log-failed`.
 3. Expected protected-main behavior:
-   - direct push to `main` may fail with `GH006`
-   - workflow then pushes `bot/deploy-image-<sha>` and opens a PR bump
+    - direct push to `main` may fail with `GH006`
+    - direct push may also fail with non-fast-forward (`fetch first`) when `main` advances during the run
+    - workflow then pushes `bot/deploy-image-<sha>` and opens a PR bump
 4. If PR creation fails with permission errors, verify:
    - `.github/workflows/image.yml` includes `permissions.pull-requests: write`
    - repo Actions workflow setting allows GitHub Actions to create pull requests

@@ -132,6 +132,9 @@ jobs:
             *"Changes must be made through a pull request."*)
               echo "Direct push blocked by branch protection; opening PR fallback."
               ;;
+            *"fetch first"*|*"non-fast-forward"*|*"remote contains work that you do not have locally"*)
+              echo "Main advanced during this workflow run; opening PR fallback from bot branch."
+              ;;
             *)
               echo "Push to main failed for an unexpected reason."
               exit "${PUSH_STATUS}"
