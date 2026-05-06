@@ -54,5 +54,10 @@ jobs:
       - name: End-to-end tests
         run: pnpm --dir app test:e2e
 
+      - name: Build application for Lighthouse
+        env:
+          PUBLIC_FONT_DISPLAY: optional
+        run: pnpm --dir app build
+
       - name: Lighthouse quality gate
         run: pnpm --dir app lhci
