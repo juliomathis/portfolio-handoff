@@ -89,6 +89,20 @@ spec:
     repoURL: https://github.com/juliomathis/portfolio-handoff
     targetRevision: main
     path: k8s/manifests/portfolio
+  ignoreDifferences:
+    - group: ""
+      kind: ConfigMap
+      name: portfolio-ingress-config
+      namespace: portfolio
+      jsonPointers:
+        - /data/host
+    - group: networking.k8s.io
+      kind: Ingress
+      name: portfolio
+      namespace: portfolio
+      jsonPointers:
+        - /spec/rules/0/host
+        - /spec/tls/0/hosts/0
   destination:
     server: https://kubernetes.default.svc
     namespace: portfolio
