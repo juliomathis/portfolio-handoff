@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
   packages: write
+  pull-requests: write
 
 concurrency:
   group: image-build-main
@@ -81,14 +82,20 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: Bump deployment image tag and push
+      - name: Bump deployment image tag and update GitOps target
         env:
           APP_TOKEN: ${{ steps.app-token.outputs.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          IMAGE_TAG="${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}"
-          sed -i "s|^\([[:space:]]*image:[[:space:]]*\)ghcr.io/juliomathis/portfolio:.*$|\\1${IMAGE_TAG}|" k8s/manifests/portfolio/deployment.yaml
+          set -euo pipefail
 
-          git add k8s/manifests/portfolio/deployment.yaml
+          IMAGE_TAG="${REGISTRY}/${IMAGE_NAME}:${GITHUB_SHA}"
+          DEPLOYMENT_FILE="k8s/manifests/portfolio/deployment.yaml"
+          BUMP_BRANCH="bot/deploy-image-${GITHUB_SHA}"
+
+          sed -i "s|^\([[:space:]]*image:[[:space:]]*\)ghcr.io/juliomathis/portfolio:.*$|\\1${IMAGE_TAG}|" "${DEPLOYMENT_FILE}"
+
+          git add "${DEPLOYMENT_FILE}"
 
           if git diff --cached --quiet; then
             echo "No-op rerun: deployment already points at ${IMAGE_TAG}."
@@ -96,7 +103,7 @@ jobs:
           fi
 
           CHANGED_FILES="$(git diff --name-only --cached)"
-          if [ "${CHANGED_FILES}" != "k8s/manifests/portfolio/deployment.yaml" ]; then
+          if [ "${CHANGED_FILES}" != "${DEPLOYMENT_FILE}" ]; then
             echo "Refusing push: staged files are not limited to deployment.yaml"
             git diff --name-only --cached
             exit 1
@@ -107,4 +114,40 @@ jobs:
           git commit -m "chore(deploy): bump portfolio image to ${GITHUB_SHA}"
 
           git remote set-url origin "https://x-access-token:${APP_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-          git push origin HEAD:main
+
+          set +e
+          PUSH_OUTPUT="$(git push origin HEAD:main 2>&1)"
+          PUSH_STATUS=$?
+          set -e
+
+          if [ "${PUSH_STATUS}" -eq 0 ]; then
+            echo "${PUSH_OUTPUT}"
+            echo "Pushed deployment bump directly to main."
+            exit 0
+          fi
+
+          echo "${PUSH_OUTPUT}"
+
+          case "${PUSH_OUTPUT}" in
+            *"Changes must be made through a pull request."*)
+              echo "Direct push blocked by branch protection; opening PR fallback."
+              ;;
+            *)
+              echo "Push to main failed for an unexpected reason."
+              exit "${PUSH_STATUS}"
+              ;;
+          esac
+
+          git push --force-with-lease origin HEAD:"${BUMP_BRANCH}"
+
+          EXISTING_PR="$(gh pr list --state open --base main --head "${BUMP_BRANCH}" --json number --jq '.[0].number')"
+          if [ -n "${EXISTING_PR}" ]; then
+            echo "Deployment bump PR already open: #${EXISTING_PR}"
+            exit 0
+          fi
+
+          gh pr create \
+            --base main \
+            --head "${BUMP_BRANCH}" \
+            --title "chore(deploy): bump portfolio image to ${GITHUB_SHA}" \
+            --body "Automated deployment image bump after publishing \`${IMAGE_TAG}\`."
