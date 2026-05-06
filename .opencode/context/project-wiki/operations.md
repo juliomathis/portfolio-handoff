@@ -33,6 +33,20 @@ If validation fails mid-session, still run `down.sh` after collecting diagnostic
 - Required variable: `TF_VAR_hcloud_token`.
 - Never commit token-bearing tfvars files.
 
+## CI Deploy-Bump Runbook (Phase 7)
+
+Use this when `Image` workflow runs after `main` merges.
+
+1. Check latest run: `gh run list --workflow Image --branch main --limit 1`.
+2. If bump step fails, inspect logs: `gh run view <run-id> --log-failed`.
+3. Expected protected-main behavior:
+   - direct push to `main` may fail with `GH006`
+   - workflow then pushes `bot/deploy-image-<sha>` and opens a PR bump
+4. If PR creation fails with permission errors, verify:
+   - `.github/workflows/image.yml` includes `permissions.pull-requests: write`
+   - repo Actions workflow setting allows GitHub Actions to create pull requests
+5. Merge created bump PR, then verify only `k8s/manifests/portfolio/deployment.yaml` changed.
+
 ## Domain Cutover Runbook
 
 Precondition: Execute only during Phase 2 domain migration window.

@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/business | Priority: high | Version: 2.4 | Updated: 2026-05-05 -->
+<!-- Context: project-intelligence/business | Priority: high | Version: 2.5 | Updated: 2026-05-06 -->
 
 # Business Domain
 
@@ -19,7 +19,7 @@ Project Name:    Portfolio Handoff
 Tagline:         Production-grade personal portfolio as a portfolio artifact
 Owner:           Julio Mathis (jumathis@proton.me)
 Repo:            portfolio-handoff (GitHub)
-Current status:  Phase 7 kickoff active; Phases 0–6 complete on main (2026-05-05)
+Current status:  Phase 7 active; CI/CD protected-main fallback validated on main (2026-05-06)
 ```
 
 ## Problem Statement
@@ -74,10 +74,10 @@ The project is done when all ten hold:
 | **Phase 1** | Astro scaffold, content layer, styles, Base layout, shell index.astro | ✅ Done |
 | **Phase 2** | Port all components + React island (ProjectFilter) | ✅ Implemented |
 | **Phase 3** | Tests (Vitest + Playwright + Lighthouse CI) | ✅ Implemented |
-| Phase 4 | Containerize (nginx:alpine) | ✅ Implemented (branch) |
+| Phase 4 | Containerize (nginx:alpine) | ✅ Implemented (merged) |
 | Phase 5 | Terraform infra provisioning | ✅ Implemented (on-demand apply/destroy workflow) |
 | Phase 6 | k8s manifests + ArgoCD bootstrap | ✅ Implemented (merged) |
-| Phase 7 | CI/CD wiring (GitHub Actions + GitHub App bot) | 🚧 Active |
+| Phase 7 | CI/CD wiring (GitHub Actions + GitHub App bot) | 🚧 Active (post-merge validation completed; closeout docs in progress) |
 | Phase 8 | Karpathy three-layer docs | |
 | Phase 9 | Verification + sign-off (v0.1.0 tag) | |
 

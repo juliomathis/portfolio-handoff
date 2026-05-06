@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.4 | Updated: 2026-05-05 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.5 | Updated: 2026-05-06 -->
 
 # Living Notes
 
@@ -13,7 +13,7 @@
 - **Purpose**: Current state snapshot + open items + gotchas
 - **Update**: When a phase completes, when an issue lands, when a question resolves
 
-## Current state (2026-05-05)
+## Current state (2026-05-06)
 
 **Completed:**
 - ✅ **Phase 0** — Repo init, root scaffolding, `.opencode/reference/raw-handoff/2026-04-19/` imported, branch protection on `main`.
@@ -25,9 +25,9 @@
 - ✅ **Phase 6** — Kubernetes manifests + ArgoCD bootstrap baseline implemented (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), live-validated in an on-demand window, and merged via PR #14.
 
 **In flight:**
-- 🚧 **Phase 7** — CI/CD wiring (GitHub Actions + GitHub App bot automation).
+- 🚧 **Phase 7** — CI/CD wiring closeout. `Image` workflow now handles protected `main` via fallback PR flow and has been validated with a successful `main` run plus merged bot bump PR.
 
-**Branch state:** `feature/phase-7-ci-cd-github-actions-bot` is active after merging and cleaning up `feature/phase-6-k8s-argocd-bootstrap-prep`. `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
+**Branch state:** `main` includes Phase 7 remediation sequence for protected-branch image bumps (`#23`, `#24`, `#26`, `#27`, `#28`, `#29`, `#30`). `.opencode/` remains canonical for agentic docs; legacy docs stay temporary backup.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -58,7 +58,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 |------|------------|------------|
 | k3s OOM on CX23 under full stack | Med | `kubectl top` after Phase 6 bootstrap; scale up if sustained >75% |
 | LE HTTP-01 fails on first issue during cloud-init | Low | cloud-init waits for ingress; manual `kubectl delete certificate` retry |
-| CI bot commit loop | Low | Path filters + staged-diff guard; test in Phase 7 |
+| CI bot commit loop | Low | Path filters + staged-diff guard + successful protected-main fallback validation (`Image` run `25432877022`) |
 | New Claude Design handoff breaks content contract | Med | `tsc --noEmit` in CI surfaces the break |
 | Lighthouse CI flakes on cold runs | Med | `numberOfRuns: 3` averages |
 
@@ -81,6 +81,9 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-06: Validated `Image` workflow on `main` with successful run `25432877022`; direct push to protected `main` was rejected as expected (`GH006`), fallback branch/PR automation succeeded, and bot PR #30 merged with only `k8s/manifests/portfolio/deployment.yaml` changed.
+- 2026-05-06: Iterated Phase 7 post-merge fixes across PRs #23, #26, and #28 to stabilize protected-main deploy bump behavior, including token path split (`APP_TOKEN` for git push, `github.token` for `gh pr create`) and workflow `pull-requests: write` permission.
+- 2026-05-06: Triggered `Image` validations via app-path docs PRs #24, #27, and #29 because `image.yml` is scoped to `on.push.paths: app/**` and has no `workflow_dispatch` trigger.
 - 2026-05-05: Merged PR #14 (Phase 6 bootstrap hardening + live validation evidence), switched to latest `main`, deleted `feature/phase-6-k8s-argocd-bootstrap-prep` locally/remotely, and created `feature/phase-7-ci-cd-github-actions-bot` for Phase 7 wiring.
 - 2026-05-05: Executed Phase 6 live bootstrap validation window (`up.sh`), fixed Argo bootstrap blockers (`AppProject` destination scope + root destination namespace), confirmed TLS issuance and `HTTP/2 200` on `portfolio.178-105-89-214.nip.io`, then tore infra down with `down.sh`.
 - 2026-05-05: Began Phase 6 scaffold (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), validated manifest rendering via `kubectl kustomize`, and used on-demand infra windows (`up.sh`/`down.sh`) for safe bootstrap checks.

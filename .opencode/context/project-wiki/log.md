@@ -6,6 +6,15 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] ci | phase 7 protected-main image workflow validation
+
+- Investigated `Image` workflow failure on run `25431964338`: image build/push succeeded, but deploy bump failed at `git push origin HEAD:main` with `GH006` (`Changes must be made through a pull request.`).
+- Shipped fallback automation in `.github/workflows/image.yml` via PR #23 (`dd410f8`) so bump logic opens a PR when direct push is blocked.
+- Resolved fallback auth/permission issues through PR #26 (`de38267`) and PR #28 (`78de54c`), landing the working split: app token for git write path, `github.token` + `pull-requests: write` for `gh pr create`.
+- Enabled repository Actions workflow permission gate (`can_approve_pull_request_reviews: true`) required for workflow-created PR operations.
+- Triggered validation runs using app-path docs PRs #24 (`40993e4`), #27 (`2509b8f`), and #29 (`db20a63`) because `image.yml` is scoped to `on.push.paths: app/**`.
+- Confirmed successful protected-main fallback on run `25432877022`: workflow created bot PR #30 (`bot/deploy-image-db20a63ca7e3e60aadc24e8da0a763919d91059c`), diff scope was only `k8s/manifests/portfolio/deployment.yaml`, and merged commit `9546fa5` updated image tag to immutable SHA `db20a63ca7e3e60aadc24e8da0a763919d91059c`.
+
 ## [2026-05-05] ops | phase 6 merge cleanup + phase 7 branch kickoff
 
 - Confirmed PR #14 merged to `main` and fast-forwarded local `main`.

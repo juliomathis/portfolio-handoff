@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/decisions | Priority: high | Version: 2.1 | Updated: 2026-04-22 -->
+<!-- Context: project-intelligence/decisions | Priority: high | Version: 2.2 | Updated: 2026-05-06 -->
 
 # Decisions Log
 
@@ -10,7 +10,7 @@
 
 - **Purpose**: Record why each architectural choice was made
 - **18 decisions total** — 6 have dedicated ADRs (001–006); the rest are "standard by consensus"
-- **Status of all below:** Decided (2026-04-19), still in force as of 2026-04-22
+- **Status of all below:** Decided (2026-04-19), still in force as of 2026-05-06
 
 ## The six ADR-tracked decisions
 
@@ -18,9 +18,9 @@
 **ADR:** 003 | **Status:** Decided | **Date:** 2026-04-19
 
 **Context:** Where to host the portfolio site.
-**Decision:** Self-managed k3s on single-node Hetzner CX11.
+**Decision:** Self-managed k3s on single-node Hetzner CX23.
 **Alternatives:** Vercel, GitHub Pages, plain VPS, managed k8s.
-**Rationale:** Infrastructure is part of the portfolio artifact. Demonstrating k8s competence is a feature, not overhead. Cheapest real cluster ($4/mo).
+**Rationale:** Infrastructure is part of the portfolio artifact. Demonstrating k8s competence is a feature, not overhead. Low-cost real cluster baseline.
 **Impact (+):** Full control, full stack demo-able.
 **Impact (−):** Single point of failure (accepted trade-off; see `../project-wiki/operations.md`); OOM risk on 2GB RAM (mitigation: resource limits + top monitoring).
 
@@ -76,7 +76,7 @@ These were user-approved during brainstorming; no separate ADR because they're i
 | 12 | Polish level | "Mid" (unit + E2E + Lighthouse CI + probes + Prom annotations) | Disciplined without bloat |
 | 13 | Cluster type | Self-managed k3s single-node | Cheapest real cluster |
 | 14 | ArgoCD project | Scoped `AppProject` named `portfolio`, not `default` | `default` permits any source/destination — standing red flag |
-| 15 | CI → main mechanism | GitHub App with bypass permission | Deploy keys and `GITHUB_TOKEN` can't bypass branch protection |
+| 15 | CI image-bump integration with protected `main` | GitHub App commit path + protected-main PR fallback in `image.yml` | Preserves PR-only branch protection while keeping deployment tag bumps automated and auditable |
 | 16 | Mobile nav | Native `<details>`/`<summary>` (no JS) | Keeps interactivity to one island; no focus trap/scroll-lock documented as deliberate P1 constraint |
 | 17 | Image pull policy | `Always` + immutable SHAs | Cheap hardening against tag-reuse edge cases |
 | 18 | Kubeconfig mode | `0600` root-only | Default `0644` leaks cluster-admin to any non-root process |
@@ -105,6 +105,7 @@ These are known compromises that were explicitly reviewed and kept:
 | 1.1–1.11 | 2026-04-19 | Eleven review passes on `.opencode/context/project-wiki/index.md` (see its revision table) |
 | 2.0 | 2026-04-22 | Summarized here after Phase 0 + Phase 1 completion |
 | 2.1 | 2026-04-22 | Status metadata refreshed after Phase 0-3 audit; decisions unchanged |
+| 2.2 | 2026-05-06 | Updated decision #15 wording after protected-main fallback validation in Phase 7 |
 
 ## Related Files
 
