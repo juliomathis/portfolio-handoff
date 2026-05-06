@@ -25,11 +25,9 @@
 - ✅ **Phase 6** — Kubernetes manifests + ArgoCD bootstrap baseline implemented (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), live-validated in an on-demand window, and merged via PR #14.
 - ✅ **Phase 7** — CI/CD wiring completed (`.github/workflows/{ci,image}.yml`) with protected-main deploy-bump fallback validated and merged (`#30`, `#32`).
 - ✅ **Phase 8** — Canonical documentation hardening completed (`#33`, `#34`) with expanded runbooks and a Phase 9 evidence matrix.
+- ✅ **Phase 9** — Verification evidence capture + sign-off completed on `main` (`#38`, `#39`, `#40`), with criterion 8 explicitly deferred to the first real Phase 2 domain migration PR.
 
-**In flight:**
-- 🚧 **Phase 9** — Verification evidence capture + sign-off preparation (`v0.1.0`).
-
-**Branch state:** `main` includes Phase 8 documentation hardening merges (`#33`, `#34`) on top of the Phase 7 remediation sequence. Active Phase 9 branch: `feature/phase-9-evidence-followup`.
+**Branch state:** `main` includes merged Phase 9 sign-off + host-reconciler updates (`#38`, `#39`, `#40`). Active maintenance branch: `feature/phase-9-closeout`.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -83,6 +81,8 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-06: Merged PR #39 (`e18a590`) and PR #40 (`7946c60`) to land nip.io host-reconciler hardening + Phase 9 evidence updates on `main`.
+- 2026-05-06: Captured direct Argo image-rollout timing evidence in a live window using validation branch `validation/phase9-rollout-timing` (`b61ff095`): operation duration `24s` (`15:12:57Z` -> `15:13:21Z`), deployment rollout succeeded, and endpoint remained `HTTP/2 200`.
 - 2026-05-06: Implemented and live-validated PostSync nip.io host reconciliation (`k8s/apps/root.yaml`, `k8s/manifests/portfolio/ingress-host-reconciler.yaml`) on `feature/phase-9-evidence-followup`; Argo hook succeeded at revision `a33b710` and `curl -I https://portfolio.178-105-89-214.nip.io` now returns `HTTP/2 200` with valid TLS.
 - 2026-05-06: Ran Phase 9 timed on-demand infra window (`up.sh` real `28.21s`, `down.sh` real `16.77s`); criterion 6 now has passing evidence, while criterion 1 is blocked by placeholder ingress host (`portfolio.replace-with-dashed-ip.nip.io`) causing TLS SAN mismatch.
 - 2026-05-06: Captured Phase 9 verification snapshot entry in `project-wiki/log.md` with passing local gates (`check`, `test`, `test:e2e`, `build`, `lhci`) and qmd query evidence for wiki discoverability.

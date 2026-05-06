@@ -10,7 +10,7 @@
 
 A production-grade personal portfolio site for Julio Mathis, shipped as an Astro + React-islands single-page app on a self-managed k3s cluster — built so the **repository itself is a portfolio artifact** for DevOps/SRE/full-stack reviewers.
 
-**Current phase:** Phase 9 active (verification + sign-off), with Phase 8 documentation hardening completed on `main`.
+**Current phase:** Phase 9 completed on `main` (verification + sign-off captured), with post-sign-off maintenance only.
 
 ## Structure
 

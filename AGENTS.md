@@ -34,7 +34,7 @@ For standards/workflows, load from `.opencode/context/core/navigation.md`.
 
 ## Repository shape (current)
 
-- `app/` — Astro + React-islands application (Phases 0–8 complete; Phase 9 verification/sign-off active)
+- `app/` — Astro + React-islands application (Phases 0–9 complete)
 - `.opencode/context/` — canonical project intelligence + wiki
 - `.opencode/reference/` — immutable handoff/reference artifacts
 - `infra/terraform/` — Phase 5 baseline complete on this branch (on-demand `up.sh`/`down.sh` lifecycle)
@@ -43,9 +43,9 @@ For standards/workflows, load from `.opencode/context/core/navigation.md`.
 
 ## Current phase focus
 
-- Active workstream: **Phase 9 — verification + sign-off (`v0.1.0` preparation)**
-- Current state in `infra/terraform/` + `k8s/` + `.github/workflows/` + `.opencode/context/project-wiki/`: Phases 5–8 baselines are merged and validated on `main`
-- Keep post-sign-off enhancement surfaces out of scope until Phase 9 is complete
+- Active workstream: **Post-Phase 9 maintenance + release hygiene (`v0.1.0`)**
+- Current state in `infra/terraform/` + `k8s/` + `.github/workflows/` + `.opencode/context/project-wiki/`: Phases 5–9 baselines are merged and validated on `main` (with criterion 8 explicitly deferred to Phase 2 domain migration)
+- Keep post-sign-off enhancement surfaces out of scope unless explicitly requested
 
 ## On-demand infrastructure lifecycle (Phase 5 baseline)
 
