@@ -78,3 +78,18 @@ Use this matrix during Phase 9 sign-off.
 | 8. Phase 2 domain swap <=5-file content PR | migration PR diff statistics in ops log |
 | 9. Wiki queryable via qmd | `qmd query "ArgoCD"` returns project wiki docs |
 | 10. New handoff ingest workflow documented | `.opencode/context/project-wiki/content-authoring.md` ingestion section |
+
+## Phase 9 Verification Snapshot (2026-05-06)
+
+| Criterion | Status | Notes |
+|---|---|---|
+| 1. nip.io endpoint serves site with valid TLS | Pending | Historical success captured on 2026-05-05; current probe timed out while infra is intentionally down (on-demand cost control). |
+| 2. Visual alignment with prototype at desktop | Pass (automated) | `playwright` desktop snapshot baseline test passed (`responsive.spec.ts`). |
+| 3. Usable at 375/768/1280 | Pass | Responsive snapshot suite passed at all three target widths. |
+| 4. Lighthouse thresholds met | Pass | `lhci` passed with representative scores perf 1.00, a11y 0.98, bp 1.00, SEO 1.00. |
+| 5. Content editable without component changes | Pass (contract) | Typed content boundary and contract tests pass (`content-data`/`components-phase2` coverage). |
+| 6. `terraform apply` <=15 min from zero | Pending | Requires fresh timed on-demand validation window (`up.sh` -> checks -> `down.sh`). |
+| 7. Image bump to rollout <=3 min | Partial | Successful Image runs observed (2m04 and 3m59), but direct Argo rollout timing from a live cluster session is not yet captured. |
+| 8. Phase 2 domain swap <=5-file content PR | Deferred | No merged domain-swap PR exists yet in current phase history. |
+| 9. Wiki queryable via qmd | Pass | `qmd query "ArgoCD"` returns core wiki docs (`adr/002`, `operations`, `infrastructure`). |
+| 10. New handoff ingest workflow documented | Pass | Documented under `content-authoring.md` (`New Handoff Ingestion Workflow`). |

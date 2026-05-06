@@ -6,6 +6,20 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] verify | phase 9 evidence capture (local gates + qmd)
+
+- Switched to `feature/phase-9-evidence-capture` from latest `origin/main`; deleted merged kickoff branch `feature/phase-9-verification-signoff` locally/remotely.
+- Local validation suite passed in this session:
+  - `pnpm --dir app check`
+  - `pnpm --dir app test`
+  - `pnpm --dir app test:e2e`
+  - `pnpm --dir app build`
+  - `PUBLIC_FONT_DISPLAY=optional pnpm --dir app build`
+  - `pnpm --dir app lhci`
+- Lighthouse representative run summary from `app/lighthouse-reports/manifest.json`: performance `1.00`, accessibility `0.98`, best-practices `1.00`, SEO `1.00`.
+- `qmd query "ArgoCD" -c portfolio-core-wiki -c portfolio-core-reference --no-rerank -C 20 -n 5` returned canonical wiki docs (`adr/002-gitops-argocd.md`, `operations.md`, `infrastructure.md`).
+- Remaining sign-off items requiring additional windows/evidence: live nip.io TLS probe with infra up, timed `terraform apply` <=15 min session, and direct Argo rollout timing capture for image-bump <=3 min criterion.
+
 ## [2026-05-06] ops | phase 8 merge cleanup + phase 9 kickoff
 
 - Confirmed PR #34 merged to `main` (`cd8f932`) and completed Phase 8 canonical runbook hardening scope.

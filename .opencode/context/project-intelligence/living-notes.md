@@ -29,7 +29,7 @@
 **In flight:**
 - 🚧 **Phase 9** — Verification evidence capture + sign-off preparation (`v0.1.0`).
 
-**Branch state:** `main` includes Phase 8 documentation hardening merges (`#33`, `#34`) on top of the Phase 7 remediation sequence. Phase 9 kickoff branch: `feature/phase-9-verification-signoff`.
+**Branch state:** `main` includes Phase 8 documentation hardening merges (`#33`, `#34`) on top of the Phase 7 remediation sequence. Active Phase 9 branch: `feature/phase-9-evidence-capture`.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
@@ -83,6 +83,8 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-06: Captured Phase 9 verification snapshot entry in `project-wiki/log.md` with passing local gates (`check`, `test`, `test:e2e`, `build`, `lhci`) and qmd query evidence for wiki discoverability.
+- 2026-05-06: Merged PR #35 (`bb701c5`) to sync Phase 9 kickoff status docs, then rolled forward to active evidence branch `feature/phase-9-evidence-capture` for sign-off data capture.
 - 2026-05-06: Merged PR #34 (`cd8f932`) to complete Phase 8 canonical wiki hardening and finalized the Phase 9 sign-off evidence matrix in `project-wiki/operations.md`.
 - 2026-05-06: Merged PR #33 (`8cab52d`) to sync Phase 8 kickoff status docs and harden image workflow fallback handling for non-fast-forward push races.
 - 2026-05-06: Merged Dependabot app dependency PR #20 and subsequent bot deploy-bump PR #32; `main` now carries image tag `ghcr.io/juliomathis/portfolio:818ea7c37e97ecedf4ea6f6e076b925ef1fb30d3` in `k8s/manifests/portfolio/deployment.yaml`.
