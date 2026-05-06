@@ -43,31 +43,6 @@ roleRef:
   kind: Role
   name: portfolio-ingress-host-reconciler
 ---
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: portfolio-ingress-host-reconciler
-rules:
-  - apiGroups:
-      - ""
-    resources:
-      - nodes
-    verbs:
-      - get
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: portfolio-ingress-host-reconciler
-subjects:
-  - kind: ServiceAccount
-    name: portfolio-ingress-host-reconciler
-    namespace: portfolio
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: portfolio-ingress-host-reconciler
----
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -90,10 +65,18 @@ spec:
             - /bin/sh
             - -ceu
             - |
-              NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}' | tr ' ' '\n' | grep -E '^[0-9]+(\.[0-9]+){3}$' | head -n 1)"
+              NODE_IP=""
+              for _ in $(seq 1 30); do
+                NODE_IP="$(kubectl -n portfolio get ingress portfolio -o jsonpath='{.status.loadBalancer.ingress[0].ip}' 2>/dev/null || true)"
+                if [ -n "${NODE_IP}" ]; then
+                  break
+                fi
+                sleep 2
+              done
               if [ -z "${NODE_IP}" ]; then
-                NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}' | tr ' ' '\n' | grep -E '^[0-9]+(\.[0-9]+){3}$' | head -n 1)"
+                NODE_IP="$(kubectl -n portfolio get ingress portfolio -o jsonpath='{.status.loadBalancer.ingress[0].hostname}' 2>/dev/null || true)"
               fi
+              NODE_IP="$(printf '%s' "${NODE_IP}" | tr ' ' '\n' | grep -E '^[0-9]+(\.[0-9]+){3}$' | head -n 1)"
               if [ -z "${NODE_IP}" ]; then
                 echo "No IPv4 node address found" >&2
                 exit 1
@@ -104,8 +87,3 @@ spec:
               kubectl -n portfolio patch configmap portfolio-ingress-config --type merge -p "{\"data\":{\"host\":\"${HOST}\"}}"
 
               kubectl -n portfolio patch ingress portfolio --type json -p "[{\"op\":\"replace\",\"path\":\"/spec/rules/0/host\",\"value\":\"${HOST}\"},{\"op\":\"replace\",\"path\":\"/spec/tls/0/hosts/0\",\"value\":\"${HOST}\"}]"
-          env:
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
