@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/notes | Priority: high | Version: 2.6 | Updated: 2026-05-06 -->
+<!-- Context: project-intelligence/notes | Priority: high | Version: 2.7 | Updated: 2026-05-06 -->
 
 # Living Notes
 
@@ -24,18 +24,19 @@
 - ✅ **Phase 5** — Terraform infrastructure provisioning baseline implemented (`infra/terraform/`), including validated local apply/destroy flow and on-demand lifecycle scripts (`up.sh`, `down.sh`).
 - ✅ **Phase 6** — Kubernetes manifests + ArgoCD bootstrap baseline implemented (`k8s/bootstrap`, `k8s/apps`, `k8s/manifests`), live-validated in an on-demand window, and merged via PR #14.
 - ✅ **Phase 7** — CI/CD wiring completed (`.github/workflows/{ci,image}.yml`) with protected-main deploy-bump fallback validated and merged (`#30`, `#32`).
+- ✅ **Phase 8** — Canonical documentation hardening completed (`#33`, `#34`) with expanded runbooks and a Phase 9 evidence matrix.
 
 **In flight:**
-- 🚧 **Phase 8** — Canonical documentation hardening + verification/sign-off preparation.
+- 🚧 **Phase 9** — Verification evidence capture + sign-off preparation (`v0.1.0`).
 
-**Branch state:** `main` includes the full Phase 7 remediation sequence for protected-branch image bumps (`#23`, `#24`, `#26`, `#27`, `#28`, `#29`, `#30`, `#32`). Phase 8 kickoff branch: `feature/phase-8-documentation-signoff`.
+**Branch state:** `main` includes Phase 8 documentation hardening merges (`#33`, `#34`) on top of the Phase 7 remediation sequence. Phase 9 kickoff branch: `feature/phase-9-verification-signoff`.
 
 ## Open questions (deferred, from `../project-wiki/index.md`)
 
 | # | Question | Decide by | Status |
 |---|----------|-----------|--------|
 | 1 | Hetzner region (`nbg1` default vs `ash`/`hil`) | Before next production apply window | Open |
-| 2 | ArgoCD admin password — default or age-encrypted | Phase 8 | Deferred, port-forward is fine for P1 |
+| 2 | ArgoCD admin password — default or age-encrypted | Phase 9 | Deferred, port-forward is fine for P1 |
 | 3 | Analytics tool (Plausible/GoatCounter/Umami/none) | Post-ship | Deferred |
 | 4 | Case Study page — Phase 2.5? | After domain swap | Deferred |
 | 5 | Self-hosted fonts vs Google Fonts | Phase 3 if Lighthouse perf < 95 | Deferred |
@@ -82,6 +83,8 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-06: Merged PR #34 (`cd8f932`) to complete Phase 8 canonical wiki hardening and finalized the Phase 9 sign-off evidence matrix in `project-wiki/operations.md`.
+- 2026-05-06: Merged PR #33 (`8cab52d`) to sync Phase 8 kickoff status docs and harden image workflow fallback handling for non-fast-forward push races.
 - 2026-05-06: Merged Dependabot app dependency PR #20 and subsequent bot deploy-bump PR #32; `main` now carries image tag `ghcr.io/juliomathis/portfolio:818ea7c37e97ecedf4ea6f6e076b925ef1fb30d3` in `k8s/manifests/portfolio/deployment.yaml`.
 - 2026-05-06: Validated `Image` workflow on `main` with successful run `25432877022`; direct push to protected `main` was rejected as expected (`GH006`), fallback branch/PR automation succeeded, and bot PR #30 merged with only `k8s/manifests/portfolio/deployment.yaml` changed.
 - 2026-05-06: Iterated Phase 7 post-merge fixes across PRs #23, #26, and #28 to stabilize protected-main deploy bump behavior, including token path split (`APP_TOKEN` for git push, `github.token` for `gh pr create`) and workflow `pull-requests: write` permission.

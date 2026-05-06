@@ -6,6 +6,12 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] ops | phase 8 merge cleanup + phase 9 kickoff
+
+- Confirmed PR #34 merged to `main` (`cd8f932`) and completed Phase 8 canonical runbook hardening scope.
+- Switched to latest `origin/main`, created `feature/phase-9-verification-signoff`, and deleted merged Phase 8 branch `feature/phase-8-docs-hardening` locally/remotely.
+- Synced phase-transition status across `README.md`, `AGENTS.md`, and `.opencode/context/project-intelligence/{navigation,business-domain,technical-domain,living-notes}.md`.
+
 ## [2026-05-06] docs | phase 8 canonical wiki hardening (architecture/testing/content)
 
 - Expanded `architecture.md` from brief summary to explicit runtime/deploy/provisioning flows, invariants, and responsibility boundaries.

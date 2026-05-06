@@ -1,4 +1,4 @@
-<!-- Context: project-intelligence/business | Priority: high | Version: 2.6 | Updated: 2026-05-06 -->
+<!-- Context: project-intelligence/business | Priority: high | Version: 2.7 | Updated: 2026-05-06 -->
 
 # Business Domain
 
@@ -19,7 +19,7 @@ Project Name:    Portfolio Handoff
 Tagline:         Production-grade personal portfolio as a portfolio artifact
 Owner:           Julio Mathis (jumathis@proton.me)
 Repo:            portfolio-handoff (GitHub)
-Current status:  Phase 8 active; Phase 7 CI/CD wiring completed on main (2026-05-06)
+Current status:  Phase 9 active; Phase 8 canonical documentation hardening completed on main (2026-05-06)
 ```
 
 ## Problem Statement
@@ -78,8 +78,8 @@ The project is done when all ten hold:
 | Phase 5 | Terraform infra provisioning | ✅ Implemented (on-demand apply/destroy workflow) |
 | Phase 6 | k8s manifests + ArgoCD bootstrap | ✅ Implemented (merged) |
 | Phase 7 | CI/CD wiring (GitHub Actions + GitHub App bot) | ✅ Completed |
-| Phase 8 | Karpathy three-layer docs | 🚧 Active |
-| Phase 9 | Verification + sign-off (v0.1.0 tag) | |
+| Phase 8 | Karpathy three-layer docs | ✅ Completed |
+| Phase 9 | Verification + sign-off (v0.1.0 tag) | 🚧 Active |
 
 Estimated total: 6–8 working days end-to-end.
 
