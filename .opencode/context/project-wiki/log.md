@@ -6,6 +6,15 @@ type: project
 
 # Operations Log
 
+## [2026-05-06] infra | phase 9 nip.io host-reconciler fix + live validation
+
+- Implemented `k8s/manifests/portfolio/ingress-host-reconciler.yaml` and wired it into `k8s/manifests/portfolio/kustomization.yaml` as an Argo `PostSync` hook, plus `ignoreDifferences` on host fields in `k8s/apps/root.yaml`.
+- Reproduced hook failures in a live window and fixed root causes: non-shell kubectl image and invalid dual-stack host construction; final hook resolves IPv4 from ingress status and patches configmap + ingress host fields.
+- Validated Argo sync at revision `a33b710` shows hook success (`kind: Job`, `hookType: PostSync`, message `Reached expected number of succeeded pods`).
+- Verified reconciled runtime state: `portfolio-ingress-config.data.host` and ingress rule host both set to `portfolio.178-105-89-214.nip.io`.
+- Verified criterion endpoint: `curl -I https://portfolio.178-105-89-214.nip.io` returns `HTTP/2 200` with valid TLS.
+- Ended validation session with `./infra/terraform/down.sh` (`Destroy complete`, `real 32.32` seconds).
+
 ## [2026-05-06] infra | phase 9 timed on-demand validation window
 
 - Executed `/usr/bin/time -p ./infra/terraform/up.sh` with required runtime vars (`TF_VAR_ssh_public_key`, `TF_VAR_github_repo`) and recorded `real 28.21` seconds from zero state.
