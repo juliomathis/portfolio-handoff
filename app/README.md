@@ -24,7 +24,9 @@ Run these from the repository root:
 | `pnpm --dir app dev` | Start the dev server |
 | `pnpm --dir app check` | Run Astro type/content checks |
 | `pnpm --dir app test` | Run unit tests with Vitest |
+| `pnpm --dir app test:e2e` | Run Playwright end-to-end tests |
 | `pnpm --dir app build` | Build the production bundle |
+| `pnpm --dir app lhci` | Run Lighthouse CI quality assertions |
 
 ## Container local verification
 
