@@ -83,7 +83,7 @@ Use this matrix during Phase 9 sign-off.
 
 | Criterion | Status | Notes |
 |---|---|---|
-| 1. nip.io endpoint serves site with valid TLS | Blocked | 2026-05-06 live window reached HTTPS endpoint, but `curl -I` returns TLS SAN mismatch because ingress/certificate host remains `portfolio.replace-with-dashed-ip.nip.io`. |
+| 1. nip.io endpoint serves site with valid TLS | Pass (branch validated) | Phase 9 follow-up branch revision `a33b710` introduced a PostSync host-reconciler hook; live validation now shows reconciled dashed host and `curl -I https://portfolio.178-105-89-214.nip.io` returning `HTTP/2 200`. |
 | 2. Visual alignment with prototype at desktop | Pass (automated) | `playwright` desktop snapshot baseline test passed (`responsive.spec.ts`). |
 | 3. Usable at 375/768/1280 | Pass | Responsive snapshot suite passed at all three target widths. |
 | 4. Lighthouse thresholds met | Pass | `lhci` passed with representative scores perf 1.00, a11y 0.98, bp 1.00, SEO 1.00. |
