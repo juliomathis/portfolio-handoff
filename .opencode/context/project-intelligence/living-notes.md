@@ -83,6 +83,7 @@ These are not problems to fix — they're known compromises kept with intent. Fl
 
 ## Recent activity (git log summary)
 
+- 2026-05-06: Ran Phase 9 timed on-demand infra window (`up.sh` real `28.21s`, `down.sh` real `16.77s`); criterion 6 now has passing evidence, while criterion 1 is blocked by placeholder ingress host (`portfolio.replace-with-dashed-ip.nip.io`) causing TLS SAN mismatch.
 - 2026-05-06: Captured Phase 9 verification snapshot entry in `project-wiki/log.md` with passing local gates (`check`, `test`, `test:e2e`, `build`, `lhci`) and qmd query evidence for wiki discoverability.
 - 2026-05-06: Merged PR #35 (`bb701c5`) to sync Phase 9 kickoff status docs, then rolled forward to active evidence branch `feature/phase-9-evidence-capture` for sign-off data capture.
 - 2026-05-06: Merged PR #34 (`cd8f932`) to complete Phase 8 canonical wiki hardening and finalized the Phase 9 sign-off evidence matrix in `project-wiki/operations.md`.
