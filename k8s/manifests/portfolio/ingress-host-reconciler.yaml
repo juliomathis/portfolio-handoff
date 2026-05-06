@@ -90,9 +90,13 @@ spec:
             - /bin/sh
             - -ceu
             - |
-              NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}')"
+              NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="ExternalIP")].address}' | tr ' ' '\n' | grep -E '^[0-9]+(\.[0-9]+){3}$' | head -n 1)"
               if [ -z "${NODE_IP}" ]; then
-                NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}')"
+                NODE_IP="$(kubectl get node "${NODE_NAME}" -o jsonpath='{.status.addresses[?(@.type=="InternalIP")].address}' | tr ' ' '\n' | grep -E '^[0-9]+(\.[0-9]+){3}$' | head -n 1)"
+              fi
+              if [ -z "${NODE_IP}" ]; then
+                echo "No IPv4 node address found" >&2
+                exit 1
               fi
               DASHED_IP="$(printf '%s' "${NODE_IP}" | tr '.' '-')"
               HOST="portfolio.${DASHED_IP}.nip.io"
